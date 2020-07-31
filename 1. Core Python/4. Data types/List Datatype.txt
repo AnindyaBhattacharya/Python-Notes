@@ -1,0 +1,384 @@
+List Datatype: Full Details @ https://www.programiz.com/python-programming/list 
+--------------
+Characteristics of list -
+
+1.represents group of objects, both homogeneous or heterogeneous
+2.indexing is followed : both backward and forward indexing
+3.duplicate objects are allowed
+4.insertion order is preserved. input member order is same as output member order.
+5.declared inside [] 
+7.mutuable, modifications are allowed
+
+
+Declaring list -
+-----------------
+l. l=[10,20,30]
+2. l=list(10)
+3. l=list()
+
+4.
+>>> l=list("anindya")  		      # every character is broken down into list members
+>>> l
+['a', 'n', 'i', 'n', 'd', 'y', 'a']
+
+5.
+>>> l=list("anindya","bhattacharya")  # list function takes only one arg
+Traceback (most recent call last):
+  File "<pyshell#8>", line 1, in <module>
+    l=list("anindya","bhattacharya")
+TypeError: list expected at most 1 arguments, got 2 
+
+6.
+>>> l=["anindya","bhattacharya"] #nested list."anindya" is considered as a list with each characters as members,same for "bhattacharya".Thus two lists inside the parent list.
+>>> l
+['anindya', 'bhattacharya']  	 #accessing the 8th memeber of the 2nd list("bhattacharya").
+>>> l[1][7]
+'h'
+
+Unpacking Lists - Assigning members to variables
+------------------------------------------------
+
+>>> l=[10,20.5,"anindya"]
+>>> a,b,c=l
+>>> print(type(a),type(b),type(c))
+<class 'int'> <class 'float'> <class 'str'>
+
+>>> a,b=l  					# no of variables less than number of members, throws error
+Traceback (most recent call last):
+  File "<pyshell#51>", line 1, in <module>
+    a,b=l
+ValueError: too many values to unpack (expected 2)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. sort and sorted  (Note - only done for homogeneous list. else error. list having string and int can't be sorted)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+sort -> list datatype's method.
+sorted -> python in built function.
+
+syntax - > 
+
+list.sort(key,reverse=True/False)  -> key = the condition upon which the sorting will be based
+sorted(list,key,reverse=True/False) -> key = the condition upon which the sorting will be based
+
+Functional difference between sort() and sorted() is -> sort() returns no values, sorted() returns an itterable list.
+which means, when we apply list.sort() -> the result is that list getting sorted. But when we apply sorted(list) the list member order remains intact, it returns the output in a new list.We can assign the newly created list in a new variable. 
+
+Example - using list.sort()
+----------------------------
+>>> l=[10,55,96,87,25]
+>>> l.sort()
+>>> l
+[10, 25, 55, 87, 96]   -> the list itself gets sorted.
+
+Example - using sorted(list)
+-----------------------------
+
+>>> l=[10,55,96,87,25]
+>>> sorted(l)
+[10, 25, 55, 87, 96]  -> sorted(l) returns a new list.
+>>> l
+[10, 55, 96, 87, 25]  -> original list (l) members retain their orders.
+
+key field in sort
+------------------
+key field is optional.If defined then the sorting takes place based on the function defined in key. It can be a python inbuilt function or an user defined function.
+
+Example - using len() function. List gets sorted based on the number of members in the list, i.e len(list)
+-----------------------------------------------------------------------------------------------------------
+
+random = [[1,22,33],[9,95,87,58],[22,56]]
+
+# sort list with length of list
+random.sort(key=len)
+
+# print list
+print('Sorted list:', random)
+
+o/p- Sorted list: [[22, 56], [1, 22, 33], [9, 95, 87, 58]]
+
+Example - using user defined function. List gets sorted based on the index number (1) among the members in the list
+--------------------------------------------------------------------------------------------------------------------
+# take second element for sort
+def takeSecond(elem):
+    return elem[1]
+
+# random list
+random = [[1,22,33],[9,95,87,58],[36,56]]
+
+# sort list with key
+random.sort(key=takeSecond)
+
+# print list
+print('Sorted list:', random)
+
+o/p - Sorted list: [[1, 22, 33], [36, 56], [9, 95, 87, 58]]
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2.id,is,isnot,in - operations
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+id - the memory id tagged to list object.
+	>>> l2=[10,20,30]
+	>>> id(l2)
+	56924520
+
+is,isnot - memory tagged to list obejct are same or not.memory wise comparison
+	
+	>>> l1=[10,20,30]
+	>>> id(l1)
+	56592664
+
+	>>> l2=[10,20,30]
+	>>> id(l2)
+	56924520
+
+	>>> l1 is l2   # the members are same,but defined in separate lists,thus they have differnt id. Had they been fundamental data types id would have been same.
+	False
+
+	# Note -
+	>>> l1="anindya" 
+	>>> l2="anindya"
+	>>> l1 is l2   # both l1 & l2 are strings of same value. They are fundamental datatypes, thus they have same ids as fundamental datatyes are immutable
+	True
+
+	
+	>>> l1=[10,20,30]
+	>>> l2=l1      # l2 is pointing to the l1. They are pointing to same object. Thus id will be same
+	>>> l1 is l2
+	True
+
+in - membership operator. check if a member is present or not in the list.
+
+	>>> l1=[10,20,30]
+	>>> l2=l1
+	>>> 10 in l1
+	True
+	>>> 30 in l2
+	True
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. list comparison -> "==",">","<"
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Example
+--------
+>>> l
+[10, 20, 30, 40]
+>>> k
+[10, 20, 30, 40]
+>>> l==k
+True
+
+Example (compares the first index value of both the list. If l[0] > k[0] then list l is greater than list k. It ignores the next index values even if they are bigger)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>> l=[10,90,30,40]
+>>> k=[30,20,30,40]
+>>> l>k
+False  --> as l[0]<k[0] returns false, and it doesnot check for the next index also.
+
+Example (compares the second index value of both the list as the first index values are same.If l[0]=k[0] then list l is greater than list k if l[1]>k[1])
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+>>> l=[10,20,90,40]
+>>> k=[10,80,30,40]
+>>> l>k
+False  -> as l[0]=k[0] so checking if l[1]>k[1] which is false. Similarly if l[0]=k[0] and l[1]=k[1] then it checks for l[2] and k[2] and trend continues.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.Nested List, where list members are also lists
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Example - Unpaking nested list
+------------------------------
+
+>>> l=[[1,2,3],[10.3,20.6,15.5]]
+>>> a,b=l   # a and b holds two lists
+>>> a
+[1, 2, 3]  
+>>> b
+[10.3, 20.6, 15.5]
+>>> x,y,z=a # x,y,z hold members if a
+>>> m,n,o=b # m,n,o hold members if b
+>>> print(x,y,z)
+1 2 3
+>>> print(m,n,o)
+10.3 20.6 15.5
+
+
+Example - Accessing members
+---------------------------
+
+l=[[10,20,30],[40,50,60],[70,80,90]]
+
+accessing members -
+>>> l[1][2] -> member number 2 of the list,which is at index number 1 of the parent list
+60
+
+Wap to print a nested list in matrix form
+------------------------------------------
+
+inp=eval(input("Enter a nested list : "))
+for i in range(len(inp)):
+    for j in range(len(inp[i])) :
+        print(inp[i][j],end=" ")
+    print()
+
+D:\Pycodes>py Test1.py
+Enter a nested list : [[10,20,40],[30,50,60],[70,80,90]]
+10 20 40
+30 50 60
+70 80 90
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list function usages and examples
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# list usages -
+
+#1. list concat . 
+lis1=[10,20,30,40]
+lis2=[50,60,70,80]
+print(lis1)
+print(lis2)
+print(type(lis1+lis2),(lis1+lis2)) # concats two different lists and output is a new list. original lists are not changed
+'''o/p - [10, 20, 30, 40, 50, 60, 70, 80]
+         [10, 20, 30, 40]
+         <class 'list'> [10, 20, 30, 40, 50, 60, 70, 80]'''
+
+#2. list replication
+lis1=[10,20,30,40]
+print(lis1*2)
+#o/p- [10, 20, 30, 40, 10, 20, 30, 40]
+
+#3. list copy
+l1=[10,20,30,40]
+l2=l1.copy()
+print(l2)
+#o/p- [10, 20, 30, 40]
+
+#4. changing member of a list
+lis1[1]=50
+print(lis1)
+#o/p- [10, 50, 30, 40]
+
+#5. changing number of elements of a list - staring from index 1 to index 3 change the values.
+lis1=[10,20,30,40]
+lis1[1:4]=200,300,400
+print(lis1)
+#o/p- [10, 200, 300, 400]
+
+#6. list extend - concating values to the end of a list. 
+lis1=[10,20,30,40]
+lis2=[50,60,70,80]
+lis1.extend(lis2) # concating the 1st list with values of 2nd list.
+print(lis1)
+#o/p-[10, 20, 30, 40, 50, 60, 70, 80]
+
+#7. append - addition of new members at the end of the list
+lis1=[10,20,30,40]
+lis1.append(17)
+print(lis1)
+#o/p- [10, 20, 30, 40, 17]
+
+#8. adding member in between a list - list.insert(position,value)
+lis1=[10,20,30,40]
+lis1.insert(1,15) # inserted at index 1, value = 15
+print(lis1)
+#o/p- [10, 15, 20, 30, 40]
+ 
+#9. adding number of members in between a list - slicing in a list. 
+lis1=[10,20,30,40]
+lis1[1:1] = 17,18,19  # in the position from 1 to 1 insert new members
+print(lis1)
+#o/p- [10, 17, 18, 19, 20, 30, 40]
+
+#10. removing member - list.remove(member)
+lis1=[10,20,30,40]
+lis1.remove(30)  # removes the member 30 from the list
+print(lis1)
+#o/p- [10, 20, 40] 
+
+#11. pop - generally removes elements from last unless index specified. - list.pop() | list.pop(index) 
+lis1=[10,20,30,40]
+lis1.pop()  # removes the last member by default.
+print(lis1)
+#o/p- [10, 20, 30]
+lis1.pop(1) # removes the member from index number 1
+print(lis1) 
+#o/p -[10, 30]
+
+#12. del - deletes the member from a specific position.
+lis1=[10,20,30,40]
+del lis1[2]
+print(lis1)
+#o/p- [10, 20, 40]
+
+#13. del number of members 
+lis1=[10,20,30,40]
+del lis1[1:3]  # starting from index 1 to index 2 all members are deleted.
+print(lis1)
+#o/p -[10, 40]
+
+#14 deleting members -
+lis1=[10,20,30,40]
+del lis1[1:]  # excluding first number all numbers are deleted.
+print(lis1)
+#o/p- [10]
+
+#15. emptying list.
+lis1=[10,20,30,40]
+lis1.clear()
+print(lis1)
+#o/p-[]
+
+#16. deleting list -
+lis1=[10,20,30,40]
+del lis1  # every thing is deleted
+
+#17. reversing a list. - list.reverse()
+lis1=[10,20,30,40]
+lis1.reverse()
+print(lis1)
+#o/p- [40, 30, 20, 10]
+
+#18. find the numer of times the member is present. list.count("member")
+lis1=[10,20,30,40,30,20,10]
+print(lis1.count(30))
+o/p-2
+
+#19. index - find the position of a member.
+lis1=[10,20,30,40,30,20,10]
+lis1.index(20)
+print(lis1.index(20),end=" ")
+print(lis1.index(20,2),end=" ")  # returns the index number of "20" starting search from index number 2
+print(lis1.index(20,2,6),end=" ")   # returns the index of "20" searching from index range 2 to 5
+#o/p-  1 5 5
+
+# len - list.len() - return the length of the list
+	
+
+# min & max values - list.max() & list.min() . Note - only done for homogeneous list. else error. list having string and int can't be sorted.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+List Comprehension:
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+List comprehension consists of an expression followed by for statement inside square brackets.
+
+Example-
+
+pow2 = [2 ** x for x in range(10)]
+# Output: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+print(pow2)
+
+Example -
+>>> pow2 = [2 ** x for x in range(10) if x > 5]
+>>> pow2
+[64, 128, 256, 512]
+>>> odd = [x for x in range(20) if x % 2 == 1]
+>>> odd
+[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+>>> [x+y for x in ['Python ','C '] for y in ['Language','Programming']]
+['Python Language', 'Python Programming', 'C Language', 'C Programming']
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+

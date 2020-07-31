@@ -1,0 +1,61 @@
+# os module
+# ---------
+
+import os
+
+print(os.getcwd())                		# prints the current working directory
+os.chdir("path")                  		# change path
+os.mkdir("directory name")        		# create folder
+os.mkdirs("/a/b/c")               		# creates folder recursively
+os.rmdir("directory name")        		# removes directory
+os.removedirs("a/b/c")            		# removes directory recursively
+os.remove("file path")		  		# deletes a file.
+os.rename("file1","file2")        		# renames file
+print(os.listdir())              		# lsit files and folders of the current working directory
+print(os.listdir("path"))         		# lists files and folders of the particular path
+os.path.abspath(__file__)			# absoulute path. __file__ returns the file name.
+os.path.dirname(os.path.abspath(__file__))	# directory name where the file is present.
+
+print(os.stat("D:\Python Notes\Pandas 1.txt"))
+
+o/p -os.stat_result(st_mode=33206, st_ino=844424930132159, st_dev=3626979030, st_nlink=1, st_uid=0, st_gid=0, st_size=14598, st_atime=1581262527, st_mtime=1581856865, st_ctime=1581262527)
+
+print(os.stat("D:\Python Notes\Pandas 1.txt").st_size=14598)         # prints the size of the file
+print(os.stat("D:\Python Notes\Pandas 1.txt").st_mtime=14598)        # prints the last modification time
+
+
+os.walk("D:\Python Notes")          # navigtes through each folder and file of the path and output is a tuple contining pathname,directory name,filename
+
+We are navigating through path D:\Python Notes\Modules & Packages and it list out all files & sub directory in the path. Then it lists out all files in the sub directories and so on..
+for path,directory,file in os.walk("D:\Python Notes\Modules & Packages") :
+    print("path : ",path)
+    print("directory : ",directory)
+    print("file : ",file)
+
+o/p-
+
+path :  D:\Python Notes\Modules & Packages
+directory :  ['OS Module']
+file :  ['Modules, Libraries.txt', 'Packages.txt']
+path :  D:\Python Notes\Modules & Packages\OS Module
+directory :  []
+file :  ['OS Module.txt']
+
+print(os.environ.get("HOME"))      				# prints the home directory
+
+print(os.path.join(os.environ.get("HOME"),"apple.txt"))     	# return a full path by joining path and file name
+print(file_path)
+with open(file_path,w) as ip:
+    ip.write()
+    
+8910667703
+983645669
+
+os.path.exists("file path")       # checks if the file exists.
+os.path.isfile("file path")       # checks if it is a file
+os.path.isdir("dir path")         # checks if it's a directory
+os.path.basename("file path")     # prints the file name only.
+os.path.dirname("file path")      # prints the directory where the file is present.
+os.path.splitext("file path")     # splits the extension from the file path.
+os.path.abspath(__file__)			# absoulute path. __file__ returns the file name.
+os.path.dirname(os.path.abspath(__file__))	# directory name where the file is present.

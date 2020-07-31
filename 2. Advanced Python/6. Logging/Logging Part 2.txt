@@ -1,0 +1,345 @@
+Python logging advanced     reference : https://www.youtube.com/watch?v=jxmzY9soFXg
+-----------------------
+The default format we get with the log file is  : LoggingLevel:logger:message 
+Ex : INFO:root:the sum is 15 ( INFO = level , root = logger, "the sum is 15" = message)
+We are well acquianted with logging level and message. What we don't have an idea is the logger.
+By default when we create a log,the logger is the root logger.
+We need to create a specific logger when we are using a module of code,else it creates problems.
+
+Example -  Not defining specific loggers. root logger is default 
+-------	   ------------------------------------------------------
+There are 2 modules of code.
+One module has the employee class.
+Other module has simple mathematical functions.
+Each of the 2 modules have the logging module, and the logger value is not specified thus default is accepted which is root.
+
+Code -
+-----
+Employee.py
+```````````
+import logging
+
+logging.basicConfig(filename="Employee_log.txt")            # log file name is defined, rest all are default.
+
+class Employee:
+    def __init__(self,name,age,job):
+        self.name = name
+        self.age = age
+        self.job = job
+        logging.warning(f"employee {self.name} is created")
+        
+    def display(self):
+        logging.warning(f"the name is {self.name} , age is {self.age}, job is {self.job} ")
+    
+emp1 = Employee("Anindya",25,"coding")
+emp2 = Employee("XYZ",28,"nothing")
+emp1.display()
+emp2.display()
+
+Math.py
+```````    
+import logging
+import Employee                                                 # importing Employee.
+
+logging.basicConfig(filename="Math_log.txt",level=logging.INFO,
+    format="%(asctime)s:%(levelname)s:%(message)s")         	# defining the Math_log file,logging level and formatting how the o/p will be displayed in log file.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        logging.error("Division by Zero")                     	# logging.error("msg") populates the log file with the msg and setting the LoggingLevel as ERROR
+    else:    
+        return a/b
+
+logging.info(f"the sum is {sum(10,5)}")                       	# logging.info("msg") populates the log file with the msg and setting the LoggingLevel as INFO
+logging.info(f"the sub is {sub(10,5)}")
+logging.info(f"the mul is {mul(10,5)}")
+logging.info(f"the div is {div(10,0)}")
+
+o/p -
+in Employee_log file
+
+WARNING:root:employee Anindya is created
+WARNING:root:employee XYZ is created
+WARNING:root:the name is Anindya , age is 25, job is coding 
+WARNING:root:the name is XYZ , age is 28, job is nothing 
+ERROR:root:Division by Zero
+
+no Math_log.txt file is created.
+    
+************
+Observation
+************
+Employee.py logs to Employee_log.txt file. It has some formatting structures and logging levels which are specified in basicConfig()
+Math.py logs to Math_log.txt file. It has a different formatting structure and logging levels compared to Employee_log file.
+Both the cases we have not specified any logger, therefore the default logger is root logger.
+
+When we are importing Employee on top in Math.py, thus during import Employee.py is executing first.
+As Employee.py is executing first, root logger is creating Employee_log.txt file and putting logs into it as per defined formatting and levels. 
+After the run of Employee.py is completed and rest of the code in Math.py starts executing, then the root logger doesnot create the new log file Math_log.txt and it ignores all the formatting and levels defined for Math_log.
+This is because root logger has already created the file Employee.py and this file will be used to log Math.py also.
+This is why we don't see the Math_log.txt file getting created.
+
+As root logger uses the already ceated Employee_log.txt to log Math.py, thus the formatting and levels defined for Math_log is not followed instead format and levels of Employee_log is followed.
+Basically Math.py basicConfig() is not executed.
+This is the reason why we are not getting msg of logging.info() functions defined in Math.py in the log file. As the level defined for Employee_log is WARNING and INFO is below warning in priority.
+But we are getting the msg of logging.error() of Math.py in the log file Employee_log as ERROR > WARNING
+We are also not getting the format defined for Math_log. We are getting the format defined for Employee_log.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+To solve the above problems we need to specify loggers for each modules.
+This will help us to create both the logfiles. The format and levels defined for each log file will remain intact.
+The issues faced above by using only root logger will be eliminited.
+-------------------------------------------------------------------------------------------------------------------
+Concept of Loggers,Handlers
+---------------------------
+
+
+Example 1- Defining specific loggers
+---------   --------------------------
+Steps to follow to define a logger -
+
+1. Define logger using logging.getLogger("LoggerName"). Recomended to use __name__ variable.
+2. define the level to the logger using logging.setLevel(logging.ERROR)
+3. define a variable to store the format defined using logging.Formatter("format specifier")
+4. create a handler, FileHandler or StreamHandler. FileHandler to redirect to file, StreamHandler to redirect to console.
+	logging.FileHandler("filename") or logging.StreamHandler()
+5. add the formats to FileHandler or StreamHandler. Use - (FileHandler reference variable).setFormatter(format variable)
+6. add the handler to the logger.
+7. when using the error(),warning() etc.. functions to print msg always use logger.error(), logger.warning() etc ..
+
+Code 
+----
+
+import logging
+
+logger = logging.getLogger(__name__)                        # seting a logger name. __name__ = "main" if the code run on it's own. __name__ = ".py filename" if moule is imported.
+logger.setLevel(logging.DEBUG)                              # setting levels using logger.setLevel()
+
+format = logging.Formatter("%(asctime)s:%(name)s:%(levelname)s:%(message)s")    # defining format using logging.Formatter
+file_handler = logging.FileHandler("Employee_log.txt")                          # creating a file handler using logging.FileHandler
+file_handler.setFormatter(format)                                               # adding the fomat to the file handler. file_handler.set Formatter()
+
+logger.addHandler(file_handler)                                                 # adding new handler to the logger. Here adding the file handler.
+
+class Employee:
+    def __init__(self,name,age,job):
+        self.name = name
+        self.age = age
+        self.job = job
+        logger.warning(f"employee {self.name} is created")                                      # make sure to use logger.warning() instead of logging.warning() as logger is defined.
+        
+    def display(self):
+        logger.warning(f"the name is {self.name} , age is {self.age}, job is {self.job} ")      # make sure to use logger.warning() instead of logging.warning().
+    
+emp1 = Employee("Anindya",25,"coding")
+emp2 = Employee("XYZ",28,"nothing")
+emp1.display()
+emp2.display()
+
+o/p- 
+in Employee_log file -
+
+2020-03-23 22:10:55,969:__main__:WARNING:employee Anindya is created
+2020-03-23 22:10:55,969:__main__:WARNING:employee XYZ is created
+2020-03-23 22:10:55,969:__main__:WARNING:the name is Anindya , age is 25, job is coding 
+2020-03-23 22:10:55,969:__main__:WARNING:the name is XYZ , age is 28, job is nothing 
+
+************
+Observation
+The root logger has no work to do. All work is done by the defined logger.
+the logger name changed to __main__.
+************
+    
+Example 2:
+---------
+
+import logging
+
+ab = logging.getLogger(__name__)
+ab.setLevel(logging.INFO)
+
+frmt = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s")
+handler1 = logging.FileHandler("Math_log.txt")
+handler1.setFormatter(frmt)                                     # handler1 will log the INFOand ERROR in files 
+
+handler2 = logging.StreamHandler()
+handler2.setFormatter(frmt)
+handler2.setLevel(logging.ERROR)                                # handler2 will log ERROR only to console. We have defined a level in handler level.
+
+ab.addHandler(handler1)
+ab.addHandler(handler2)
+
+
+logging.basicConfig(filename="log.txt",level=logging.INFO,
+    format="%(asctime)s:%(levelname)s:%(message)s")             # defining the log file,logging level and formatting how the o/p will be displayed in log file.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        ab.error("Division by Zero")                     # ab.error("msg") used as a logger eith refernece variable ab is defined
+    else:    
+        return a/b
+
+ab.info(f"the sum is {sum(10,5)}")                       # ab.info("msg") used as a logger eith refernece variable ab is defined
+
+ab.info(f"the sub is {sub(10,5)}")
+ab.info(f"the mul is {mul(10,5)}")
+ab.info(f"the div is {div(10,0)}")
+
+o/p- 
+in Math_log file :
+
+2020-03-23 22:47:02,775:INFO:the sum is 15
+2020-03-23 22:47:02,775:INFO:the sub is 5
+2020-03-23 22:47:02,775:INFO:the mul is 50
+2020-03-23 22:47:02,775:ERROR:Division by Zero
+2020-03-23 22:47:02,776:INFO:the div is None
+
+in console :
+
+D:\Pycodes>py Test3.py
+2020-03-23 22:47:02,775:ERROR:Division by Zero
+
+
+``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+Code to solve the problem we had faced above in logging , while we were importing one module to another module and only root logger was in play.
+------------------------------------------------------------------------------------------------------------------------------------------------
+Solution -
+--------
+
+Employee.py
+```````````
+
+import logging
+
+logger = logging.getLogger(__name__)                        # seting a logger name. __name__ = "main" if the code run on it's own. __name__ = ".py filename" if moule is imported.
+logger.setLevel(logging.DEBUG)                              # setting levels using logger.setLevel()
+
+format = logging.Formatter("%(name)s:%(levelname)s:%(message)s")    # defining format using logging.Formatter
+file_handler = logging.FileHandler("Employee_log.txt")                          # creating a file handler using logging.FileHandler
+file_handler.setFormatter(format)                                               # adding the fomat to the file handler. file_handler.set Formatter()
+
+logger.addHandler(file_handler)                                                 # adding new handler to the logger. Here adding the file handler.
+
+class Employee:
+    def __init__(self,name,age,job):
+        self.name = name
+        self.age = age
+        self.job = job
+        logger.warning(f"employee {self.name} is created")                                      # make sure to use logger.warning() instead of logging.warning() as logger is defined.
+        
+    def display(self):
+        logger.warning(f"the name is {self.name} , age is {self.age}, job is {self.job} ")      # make sure to use logger.warning() instead of logging.warning().
+    
+emp1 = Employee("Anindya",25,"coding")
+emp2 = Employee("XYZ",28,"nothing")
+emp1.display()
+emp2.display()
+
+
+
+Math.py
+```````
+
+import logging
+import Employee							# importing Employee.
+
+ab = logging.getLogger(__name__)
+ab.setLevel(logging.INFO)
+
+frmt = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:%(message)s")
+handler1 = logging.FileHandler("Math_log.txt")
+handler1.setFormatter(frmt)                                     # handler1 will log the INFOand ERROR in files 
+
+handler2 = logging.StreamHandler()
+handler2.setFormatter(frmt)
+handler2.setLevel(logging.ERROR)                                # handler2 will log ERROR only to console. We have defined a level in handler level.
+
+ab.addHandler(handler1)
+ab.addHandler(handler2)
+
+
+logging.basicConfig(filename="log.txt",level=logging.INFO,
+    format="%(asctime)s:%(levelname)s:%(message)s")             # defining the log file,logging level and formatting how the o/p will be displayed in log file.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        ab.error("Division by Zero")                     # ab.error("msg") used as a logger eith refernece variable ab is defined
+    else:    
+        return a/b
+
+ab.info(f"the sum is {sum(10,5)}")                       # ab.info("msg") used as a logger eith refernece variable ab is defined
+
+ab.info(f"the sub is {sub(10,5)}")
+ab.info(f"the mul is {mul(10,5)}")
+ab.info(f"the div is {div(10,0)}")
+
+
+o/p- 
+
+in Employee_log file :
+
+new1:WARNING:employee Anindya is created
+new1:WARNING:employee XYZ is created
+new1:WARNING:the name is Anindya , age is 25, job is coding 
+new1:WARNING:the name is XYZ , age is 28, job is nothing 
+
+in Math_log file :
+
+2020-03-23 22:54:24,857:INFO:__main__:the sum is 15
+2020-03-23 22:54:24,857:INFO:__main__:the sub is 5
+2020-03-23 22:54:24,858:INFO:__main__:the mul is 50
+2020-03-23 22:54:24,858:ERROR:__main__:Division by Zero
+2020-03-23 22:54:24,858:INFO:__main__:the div is None
+
+in console :
+
+D:\Pycodes>py Test3.py
+2020-03-23 22:54:24,858:ERROR:__main__:Division by Zero
+
+***********
+Observation
+Both Math_log and Employee_log files got generated.
+Both files were defined with different formats, and those differences in format are visible in the log files.
+The output is prnted in the consol aslo.
+*************************************************************************************************************
+The problems we faced before is solved by this approch of logging. By defining a logger.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+___________________________________________________________________________________________________________________________________________________________________________
+
+
+
+

@@ -1,0 +1,508 @@
+Local,Enclosing,Gobal, Buit-in variables
+----------------------------------------
+
+Local Variable -> scope within a function where it is declared
+Enclosing Varables (Nonlocal) -> if there are 2 nested functions,then varables in the outer function falls in the category of Enclosing\Nonlocal for the inner function
+Global Variable -> scope is through out the program.
+Built-in -> pre defined within Python,can be used anywhere.
+
+When a variable is used, then it is searched first in the Local Scope, if not found in Local Scope then searched in Enclosing Sope and next then in Global Scope and at last in Built-In scope. 
+If no-where the variable is found to be declared it throws error - Name Error
+
+Incase a variable is both present as a local variable and a global variable, then the local variable is searched first,and as the variable is present in the local scope thus it ignores the global scope. 
+
+Example-
+---------
+
+x="global var x"
+
+def f1():
+    y = "local var of function f1 is y"
+
+    print(x)  # [prints value of x. First x is searched in local scope of the function f1,it's not found. There is no outer functions as f1 is not nested, so no chance to check in enclosing scope.
+				Then x is searched in global scope and it has been found there thus it prints the value]
+
+    print(y)  # [prints value of y. First y is searched in local scope of the function f1 and it has been found there thus it prints the value]
+
+f1()
+print(x) # [prints value of x]
+
+o/p- 
+D:\Pycodes>py Test1.py
+global var x
+local var of function f1 is y
+global var x
+
+
+Example- (function f1 having local var same as that of the global variable, both are x)
+---------------------------------------------------------------------------------------
+
+x="global var x"
+
+def f1():
+    x = "first local var of function f1 is x"
+    y = "second local var of function f1 is y"
+    print(x)
+    print(y)
+
+f1()
+print(x)
+
+o/p- 
+D:\Pycodes>py Test1.py
+first local var of function f1 is x
+second local var of function f1 is y
+global var x
+
+
+Example- (modifying the gobal variable value from within the function f1)
+-------------------------------------------------------------------------
+
+x="global var x"
+
+def f1():
+    global x  # declaring global x 
+    x = "first local var of function f1 is x now acting as global var"
+    y = "second local var of function f1 is y"
+    print(x)
+    print(y)
+
+f1()
+print(x) # prints the modified value of x as it has become global within the function f1()
+
+o/p-
+first local var of function f1 is x now acting as global var
+second local var of function f1 is y
+first local var of function f1 is x now acting as global var
+
+
+Example -(trying to modify global variable from within of function f1() without declaring it as global in the function itself or assigning it as local)
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+x=50
+
+def f1():
+    x = x+10  #trying to modify x value without delaring it either as a local or global var in the function
+    y = "second local var of function f1 is y"
+    print(x)
+    print(y)
+
+f1()
+print(x)
+
+Error -
+  File "Test1.py", line 10, in <module>
+    f1()
+  File "Test1.py", line 5, in f1
+    x = x+10
+UnboundLocalError: local variable 'x' referenced before assignment
+
+Correct code 
+-------------
+
+Fisrt way - declaring it as global in function f1()
+---------
+x=50
+
+def f1():
+    global x #declaring as global
+    x = x+10
+    y = "second local var of function f1 is y"
+    print(x)
+    print(y)
+
+f1()
+print(x)
+
+o/p-
+60
+second local var of function f1 is y
+60
+
+
+Second Way - declaring it as local in the function
+----------
+x=50
+
+def f1():
+    x = 50 #declaring as local
+    x = x+10
+    y = "second local var of function f1 is y"
+    print(x)
+    print(y)
+
+f1()
+print(x)
+
+o/p-
+D:\Pycodes>py Test1.py
+60
+second local var of function f1 is y
+50
+
+
+Example -(trying to modify global variable from within a function f1() after it has been used inside the function.)
+-------------------------------------------------------------------------------------------------------------------
+As we have already used the variable global name inside the function f2() then we are trying to modify it we are getting error.
+Had we modified the variable "name" firstly and then used it, then there would have been no errors as it would have been treated as local variable of f2()
+
+Error Code -
+
+name="anindya"
+def f2() :
+    print("calling from f2().The global var name is ",name)		#using the name variable first
+    name = "bhattacharya"						#trying to modify the global name variable
+    print("calling from f2().In the function f2() var name is changed to ",name)
+f2()
+print("at the end .The name is ",name)
+
+o/p-
+D:\Pycodes>py Test1.py
+Traceback (most recent call last):
+  File "Test1.py", line 7, in <module>
+    f2()
+  File "Test1.py", line 4, in f2
+    print("calling from f2().The global var name is ",name) 
+UnboundLocalError: local variable 'name' referenced before assignment
+
+Correct Code  - Using global key word - declaring name as global
+----------------------------------------------------------------
+
+name="anindya"
+def f2() :
+    global name                                                 			#declaring name as global
+    print("calling from f2().The global var name is ",name)				#using the name variable declared in outer function
+    name = "bhattacharya"								#trying to modify the name variable declared in inner function
+    print("calling from f2().In the function f2() var name is changed to ",name)
+f2()
+print("at the end .The name is ",name)
+
+o/p-
+D:\Pycodes>py Test1.py
+calling from f2().The global var name is  anindya
+calling from f2().In the function f2() var name is changed to  bhattacharya
+at the end .The name is  bhattacharya
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Concept of Enclosing or Nonlocal Varables (applicable only for nested functions)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example - nested function
+-------------------------
+x="global var x"
+def f1():
+    y = "variable in the outer function f1() is y"
+    def f2():
+        z="variable in the inner function f2() is z"
+        print("printing from f2() - ",y)
+        print("printing from f2() - ",z)
+    f2()
+    print("printing from f1 - ",y)
+f1()
+print("not printing from any function - ",x)
+
+o/p-
+D:\Pycodes>py Test1.py
+printing from f2() -  variable in the outer function f1() is y
+printing from f2() -  variable in the inner function f2() is z
+printing from f1 -  variable in the outer function f1() is y
+not printing from any function -  global var x
+
+
+Example - nested function , with two same variables declared and used in outer and inner function
+-------------------------------------------------------------------------------------------------
+x="global var x"
+def f1():
+    y = "variable in the outer function f1() is y"
+    def f2():
+        y="first local var of function f2() is y"   #local variable of f2() getting priority
+        z="variable in the inner function f2() is z"
+		print("printing from f2() - ",x)
+        print("printing from f2() - ",y)
+        print("printing from f2() - ",z)
+    f2()
+    print("printing from f1() - ",y) # local var of f1() getting printed.
+f1()
+print("not printing from any function - ",x)
+
+o/p-
+printing from f2() -  global var x
+printing from f2() -  first local var of function f2() is y
+printing from f2() -  variable in the inner function f2() is z
+printing from f1() -  variable in the outer function f1() is y
+not printing from any function -  global var x
+
+
+Example - nested function , with two same variables. One declared only in outer and getting modified in inner function
+-----------------------------------------------------------------------------------------------------------------------
+Error Code -
+
+x="global var x"
+def f1():
+    y = 50
+    def f2():
+        y=y+10 											# is getting referenced even before assignment, causing the error.
+        z="variable in the inner function f2() is z"
+        print("printing from f2() - ",y)
+        print("printing from f2() - ",z)
+    f2()
+    print("printing from f1 - ",y)
+f1()
+print("not printing from any function - ",x)
+
+Error-
+D:\Pycodes>py Test1.py
+Traceback (most recent call last):
+  File "Test1.py", line 12, in <module>
+    f1()
+  File "Test1.py", line 10, in f1
+    f2()
+  File "Test1.py", line 6, in f2
+    y=y+10
+UnboundLocalError: local variable 'y' referenced before assignment
+
+------------------------------------------------------------------------------------------------
+Correct Code - [ USING Nonlocal keyword] to access variable declared outside of a given function
+------------------------------------------------------------------------------------------------
+
+x="global var x"
+def f1():
+    y = 50
+    def f2():
+        nonlocal y  									#declaring nonlocal. concept is same as used in global.
+        y=y+10
+        z="variable in the inner function f2() is z"
+        print("printing from f2() - ",y)
+        print("printing from f2() - ",z)
+    f2()
+    print("printing from f1 - ",y)
+f1()
+print("not printing from any function - ",x)
+
+o/p-
+D:\Pycodes>py Test1.py
+printing from f2() -  60
+printing from f2() -  variable in the inner function f2() is z
+printing from f1 -  60
+not printing from any function -  global var x
+
+Example - using the varible declared in the outer function first and then trying to change its value in inner function.
+----------------------------------------------------------------------------------------------------------------------
+Error Code -
+
+def f1() :
+    name="anindya"
+    def f2() :
+        print("calling from f2().The outer function f1() name is ",name)			#using the name variable declared in outer function
+        name = "bhattacharya"														#trying to modify the name variable in inner function
+        print("calling from f2().The inner function f2() name is changed to ",name)
+    f2()
+    print("at the enc calling from f1().The name is ,name)
+f1()
+
+Error -
+
+Traceback (most recent call last):
+  File "Test1.py", line 9, in <module>
+    f1()
+  File "Test1.py", line 7, in f1
+    f2()
+  File "Test1.py", line 4, in f2
+    print("in outer function f1() name is ",name)
+UnboundLocalError: local variable 'name' referenced before assignment
+
+------------------------------------------------------------------------------------------------
+Correct Code - [ USING Nonlocal] declaring name as nonlocal inside the inner function
+------------------------------------------------------------------------------------------------
+
+def f1() :
+    name="anindya"
+    def f2() :
+        nonlocal name																#declaring name as nonlocal.
+        print("calling from f2().The outer function f1() name is ",name)			#using the name variable declared in outer function
+        name = "bhattacharya"														#trying to modify the name variable declared in inner function
+        print("calling from f2().The inner function f2() name is changed to ",name)
+    f2()
+    print("at the end calling from f1().The name is ",name)
+f1()
+
+o/p-
+D:\Pycodes>py Test1.py
+calling from f2().The outer function f1() name is  anindya
+calling from f2().The inner function f2() name is changed to  bhattacharya
+at the end calling from f1().The name is  bhattacharya
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example -
+---------
+x="global var x"
+def f1():
+    y = 40
+    def f2():
+        k=50
+        def f3():
+            nonlocal y
+            y=y+20
+            z=70
+            print("printing from f3() - ",y)
+            print("printing from f3() - ",z)
+            print("printing from f3() - ",k)
+        f3()
+        print("printing from f2() - ",k)
+        print("printing from f2() - ",y)
+    f2()
+    print("printing from f1() - ",y)
+f1()
+print("not printing from any function - ",x)
+
+o/p-
+printing from f3() -  60
+printing from f3() -  70
+printing from f3() -  50
+printing from f2() -  50
+printing from f2() -  60
+printing from f1() -  60
+not printing from any function -  global var x
+
+Classic Example
+----------------
+x= 20
+def f1():
+    global x
+    x = 200
+    y = 40
+    def f2():
+        y=100											 # y is the local variable to f2() function only. We will be modifying this value of y in f3(), so we will need "nonlocal" in f3()
+        k=50
+        def f3():
+            nonlocal y 
+            y=y+20  									 # modifying the value of y which is declared in function f2() only. Ignoring the value of y declared in f1().
+            z=70
+            print("printing from f3() - ",y)
+            print("printing from f3() - ",z)
+            print("printing from f3() - ",k)
+            print("printing from f3() - ",x)
+            print("------------------------------")
+        f3()
+        print("printing from f2() - ",k)
+        print("printing from f2() - ",y) 				 # that value of y is printed which has been modified in function f3()
+        print("------------------------------")
+    f2()
+    print("printing from f1() - ",y)  					 # prints the value of y declared in f1() as it's local to f1() only. 
+    print("------------------------------")
+f1()
+print("not printing from any function - ",x)
+
+o/p-
+D:\Pycodes>py Test1.py
+printing from f3() -  120
+printing from f3() -  70
+printing from f3() -  50
+printing from f3() -  200
+------------------------------
+printing from f2() -  50
+printing from f2() -  120
+------------------------------
+printing from f1() -  40
+------------------------------
+not printing from any function -  200
+
+
+Classic example - 
+-----------------
+x= 20
+def f1():
+    global x
+    x=200
+    y=40
+    k=30
+    def f2():
+        k=50
+        def f3():
+            nonlocal y,k								# f2() has no y variable, thus this is pointing to the y variable of f1(). f2() has k variable and it's being pointed here.
+            y=y+20        								# modifying the value of y which is declared in function f1() only.
+            k=k+50										# modifying the value of k which is declared in function f2() only
+            z=70
+            print("printing from f3() - ",y)
+            print("printing from f3() - ",z)
+            print("printing from f3() - ",k)
+            print("printing from f3() - ",x)
+            print("------------------------------")
+        f3()
+        print("printing from f2() - ",k)
+        print("printing from f2() - ",y) 				# that value of y is printed which has been modified in function f3()
+        print("printing from f2() - ",x)
+        print("------------------------------")
+    f2()
+    print("printing from f1() - ",y)  					# prints the value of y getting modified in f3()
+    print("printing from f1() - ",k)
+    print("printing from f1() - ",x)
+    print("------------------------------")
+f1()
+print("not printing from any function - ",x)
+
+o/p- 
+D:\Pycodes>py new1.py
+printing from f3() -  60
+printing from f3() -  70
+printing from f3() -  100
+printing from f3() -  200
+------------------------------
+printing from f2() -  100
+printing from f2() -  60
+printing from f2() -  200
+------------------------------
+printing from f1() -  60
+printing from f1() -  30
+printing from f1() -  200
+------------------------------
+not printing from any function -  200
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Built-In -> Those that are predefined in python 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Builtin fuctions -> functions which are predefined in python. Like len() min() max() type() etc.
+
+Bulit-in functions can be overridden by any user defined functions.
+
+Example - [min() is an inbuilt function]
+----------------------------------------
+
+m=min(10,15,8,6,2)
+print(m)
+
+o/p-
+D:\Pycodes>py Test1.py
+2
+
+Example - [when min() is user defined, then it overrides the builtin function min() ] 
+-------------------------------------------------------------------------------------
+
+def min() :pass # user defined  
+m=min(10,15,8,6,2) # throws error as the defined min() doesnot take in any positional args. { min(10,15,8,6,2) - doesnot work to return the minimum value any more }
+print(m)
+
+o/p-
+Traceback (most recent call last):
+  File "Test1.py", line 4, in <module>
+    m=min(10,15,8,6,2)
+TypeError: min() takes 0 positional arguments but 5 were given
+
+
+To check the list of defined functions
+---------------------------------------------
+
+import builtins
+print(dir(builtins))
+
+o/p-
+
+['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BlockingIOError', 'BrokenPipeError', 'BufferError', 'BytesWarning', 'ChildProcessError', 'ConnectionAbortedError', 'ConnectionError', 'ConnectionRefusedError', 'ConnectionResetError', 'DeprecationWarning', 'EOFError', 'Ellipsis', 'EnvironmentError', 'Exception', 'False', 'FileExistsError', 'FileNotFoundError', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'InterruptedError', 'IsADirectoryError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'ModuleNotFoundError', 'NameError', 'None', 'NotADirectoryError', 'NotImplemented', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'PermissionError', 'ProcessLookupError', 'RecursionError', 'ReferenceError', 'ResourceWarning', 'RuntimeError', 'RuntimeWarning', 'StopAsyncIteration', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'TimeoutError', 'True', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'WindowsError', 'ZeroDivisionError', '__build_class__', '__debug__', '__doc__', '__import__', '__loader__', '__name__', '__package__', '__spec__', 'abs', 'all', 'any', 'ascii', 'bin', 'bool', 'breakpoint', 'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'compile', 'complex', 'copyright', 'credits', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'exit', 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'license', 'list', 'locals', 'map', 'max', 'memoryview', 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property', 'quit', 'range', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars', 'zip']
+
+
+=======================================================================================================================================================================
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+

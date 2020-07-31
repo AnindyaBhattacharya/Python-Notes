@@ -1,0 +1,104 @@
+Duck Typing style of coding and EAFP (Easy to ask Forgiveness than Permission) style of coding :
+-------------------------------------------------------------------------------------------------
+
+Duck Typing and EAFP style of coding is a Pythonic way to write codes, which makes codes clean short and readable.
+Both these style of coding use the concept of Exception Handling.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+EAFP - Easy to ask Forgiveness than Permission
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This style of coding first does the action if the action returns success then it proceeds else it raises an exception.
+
+Code without using EAFP ( using if check before action. action is list[index]. checking if index in range then executing else exiting)
+-----------------------
+
+index = int(input("enter index number "))
+list = [ 10,20,30,40 ]
+if (index <= len(list)) :
+    print(list[index])
+else :
+    print("index ot of range ")
+	
+o/p- 
+D:\Pycodes>py new1.py
+enter index number 2
+30
+
+o/p-
+D:\Pycodes>py new1.py
+enter index number 6
+index ot of range
+
+Code with EAFP ( using try except blocks. first action is taking place (list[index]) , if action fails then forgiveness in from of exception )
+--------------
+
+index = int(input("enter index number "))
+list = [ 10,20,30,40 ]
+try:
+    print (list[index])
+except IndexError :
+    print ("index out of range ")
+	
+o/p- 
+D:\Pycodes>py new1.py
+enter index number 2
+30
+
+o/p-
+D:\Pycodes>py new1.py
+enter index number 8
+index out of range
+
+
+Example 2 -
+-------
+
+Code without EAFP
+-----------------
+person = {"name" : "Anindya" , "surname" : "Bhattacharya" , "location" : "burdwan" , "job" : " searching new " }
+
+if "name" in person and "surname" in person and "location" in person and "job" in person :
+    print ("My name is {name}, surname is {surname}, location is {location}, job is {job} " .format(**person))
+else :
+    print ("key not found")
+
+o/p- 
+My name is Anindya, surname is Bhattacharya, location is burdwan, job is  searching new
+
+Code with EAFP
+
+person = {"name" : "Anindya" , "surname" : "Bhattacharya" , "location" : "burdwan" , "job" : " searching new " }
+
+try :
+    print ("My name is {name}, surname is {surname}, location is {location}, job is {job} " .format(**person))
+except KeyError :
+    print ("key not found")
+	
+Code with EAFP
+--------------
+person = {"name" : "Anindya" , "surname" : "Bhattacharya" , "location" : "burdwan" , "job" : " searching new " }
+
+try :
+    print ("My name is {name}, surname is {surname}, location is {location}, job is {job} " .format(**person))
+except KeyError :
+    print ("key not found")
+	
+o/p- 
+My name is Anindya, surname is Bhattacharya, location is burdwan, job is  searching new
+
+Code with EAFP
+--------------
+person = {"name" : "Anindya" , "surname" : "Bhattacharya" , "location" : "burdwan" }
+
+try :
+    print ("My name is {name}, surname is {surname}, location is {location}, job is {job} " .format(**person))
+except KeyError :
+    print ("key not found")
+
+o/p- 
+key not found
+
+
+
+
+ 

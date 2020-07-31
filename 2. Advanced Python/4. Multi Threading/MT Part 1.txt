@@ -1,0 +1,273 @@
+Python Multi Tasking..
+----------------------
+For parallel and faster execution of the job we can use the concept of multithreading. 
+We can split the job into fragments or parts, but most importantly the fragments should be independent to each other. They should be able to run on their own.
+These parts can be assigned to separate threads and then threads can run in parallel. By this way the job can finish fast.
+There is always a main thread which runs the job, this main thread can spwan several child threads. These child threads runs independent to the main thread.
+
+Defining a thread -
+
+3 ways of declaring multithreading.
+----------------------------------
+Declare everytime the threading module.
+
+1. Function way. Without using OOP 
+2. Using OOP. Creating class and extending class to parent class Thread of the threading module.
+3. Using OOP. Without extending Thread class.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Function way. Without using OOP .
+----------------------------------
+
+Declaring 3 fuctions which has some functionalities and can run independently. 
+Two functions(child_thread & second_child_thread) are running in different threads and main thread is executing the function (main_thread).
+3 threads are running in parallel, thus the process is faster.
+As because there are 3 threads, the output is not predictable. Nobody knows at what time which thread is executing. Thus the output is inconsistent.
+
+Example - 
+-------
+# main thread starting the job..
+
+from threading import *								# importing the threading module
+
+def child_thread():								# declaring functionality 1
+    for i in range(10): 
+        print("child thread")
+
+def main_thread():								# declaring functionality 2
+    for i in range(10): 
+        print("main thread")
+        
+def second_child_thread():							# declaring functionality 3
+    for i in range(10):
+        print("second_child_thread")
+
+t= Thread(target=child_thread)							# creating a thread object. Setting a target function 
+t.start()									# main thread starting the child thread. Child thread now handles the function(child_thread)
+
+t2 = Thread(target=second_child_thread)						# creating another thread object. Setting a target function
+t2.start()									# main thread starting another child thread. Child thread now handles the function(second_child_thread)
+
+main_thread()									# main theread excuting the function (main_thread)
+
+o/p- 1st run  (inconsistent output)
+------------
+child thread
+child thread
+child thread
+child thread
+second_child_thread
+child thread
+second_child_thread
+main thread
+second_child_thread
+main thread
+second_child_thread
+main thread
+second_child_thread
+main thread
+main thread
+
+o/p- 2nd run  (different sequence of output . Everytime the same job is run output is different)
+------------
+child thread
+child thread
+child thread
+child thread
+child thread
+second_child_thread
+main thread
+second_child_thread
+second_child_thread
+second_child_thread
+second_child_thread
+main thread
+main thread
+main thread
+main thread
+
+-----------
+Example -2
+------------
+
+# main thread starting the job..
+
+from threading import *				# importing the threading module
+from itertools import *                         # importing itertools for zip.
+
+def double(number):				# declaring functionality 1
+    for i in number: 
+        print("double is : ",2*i)
+
+def multiply(number,number2):			# declaring functionality 2
+    for (i,j) in zip(number,number2):           # zipping 2 lists to form a tuple and unpacking the new tuple and iterating through it.
+        print("multiply is : ",i*j)
+
+def cube(number):
+    for i in number:
+        print("cube is ",i*i*i)
+
+        
+number = [1,2,3]
+number2 = [4,5,6]
+t= Thread(target=double,args=(number,))	        # passing argument as a keyword args in form of tuple. double function needs an argument,passing the argument in this fashion.
+t.start()					# main thread starting the child thread. Child thread now handles the function(double)
+
+t2 = Thread(target=multiply,args=(number,number2))	# passing 2 arguments as a keyword args in form of tuple. multiply function needs 2 arguments, passing 2 arguments in this fashion.
+t2.start()					        # main thread starting another child thread. Child thread now handles the function(multiply)
+
+cube(number)					# main thread excuting the function (cube)
+
+
+---------------------------------------------------------------------
+Example - checking performance improvement through multithreading
+---------------------------------------------------------------------
+
+Code 1 :- code without multithreading, calculating total runtime
+------    ------------------------------------------------------
+# main thread starting the job..
+
+from threading import *				# importing the threading module
+from itertools import *                         # importing itertools for zip.
+import time
+
+def double(number):				# declaring functionality 1
+    double_result=[]
+    for i in number: 
+        time.sleep(1)
+        double_result.append(2*i)
+
+def multiply(number,number2):			# declaring functionality 2
+    multiply_result=[]
+    for (i,j) in zip(number,number2):           # zipping 2 lists to form a tuple and unpacking the new tuple and iterating through it
+        time.sleep(1)
+        multiply_result.append(i*j)
+
+def cube(number):
+    cube_result=[]
+    for i in number:
+        time.sleep(1)
+        cube_result.append(i*i*i)
+        
+number = [1,2,3]
+number2 = [4,5,6]
+					
+start_time = time.time()
+
+double(number)
+multiply(number,number2)
+cube(number)					    
+
+end_time = time.time()
+print("execution time is ", end_time-start_time)
+
+o/p- 
+execution time is  9.037276029586792
+
+code 2 - code with multithreading. concept of join() .calculating total run time
+------   -----------------------------------------------------------------------
+
+when code runs on multithreading then it is impossible to predict which thread is executing when.
+If we start 3 threads and in the main thread is we calculate the time elapsed, then we will get inconsistent results. This is because way before completion of the other 3 threads the main thread can execute and it will run the time elapse.
+What we need is , first to complete 3 threads, then run the time elapse code to calculate execution time. To achieve this we will need to halt or pause the main thread until all the thread execution completes.
+To pause the main thread we will use join() method on the thread. This will hold the main thread from execution until the thread completes.
+
+
+from threading import *				# importing the threading module
+from itertools import *                         # importing itertools for zip.
+import time
+
+def double(number):				# declaring functionality 1
+    double_result=[]
+    for i in number: 
+        time.sleep(1)
+        double_result.append(2*i)
+
+def multiply(number,number2):			# declaring functionality 2
+    multiply_result=[]
+    for (i,j) in zip(number,number2):           # zipping 2 lists to form a tuple and unpacking the new tuple and iterating through it
+        time.sleep(1)
+        multiply_result.append(i*j)
+
+def cube(number):
+    cube_result=[]
+    for i in number:
+        time.sleep(1)
+        cube_result.append(i*i*i)
+        
+number = [1,2,3]
+number2 = [4,5,6]
+
+t1 = Thread(target=double,args=(number,))	    # creating t1 thread
+t2 = Thread(target=multiply,args=(number,number2))  # creating t2 thread
+t3 = Thread(target=cube,args=(number,))
+
+start_time = time.time()                            # starting the counter . main thread executing till here
+
+t1.start()	                                    # thread t1 starts										
+t2.start()	                                    # thread t2 starts
+t3.start()                                          # thread t3 starts
+
+t1.join()                                           # this pauses the main thread till thread t1 is ompleted
+t2.join()									        # this pauses the main thread till thread t2 is ompleted
+t3.join()                                           # this pauses the main thread till thread t3 is ompleted
+                                                    
+end_time = time.time()                              # main thread resumes and ends the counter    
+print("execution time is ", end_time-start_time)    # calculating time elapse
+
+o/p- execution time is  3.020031690597534
+
+Observation - We see the elasple time is drastically reduced on multithreading approach and is recommended.
+
+---------------------------------------------------------------
+Example - Working with the thread names and thread executions
+----------------------------------------------------------------
+
+1. to get the name of current executing thread - current_thread().getName() 
+2. to get the name of any executing thread - t.getName()
+Example -
+t = Thread(target=function1)
+t.start()
+t.getName() -> shows the name of the executing thread : thread1
+
+general naming convention - main thread is called MainThread. child threads are named as thread1,thread2 etc ...
+
+3. to modify the name of the current executing thread -> current_thread().setName("Anindya")
+4. to modify name of any  executing thread -> t.setName("ChildThread1")
+5. name can be assigned during declaring of the thread.
+Example - 
+t = Thread(target=function,name="ThreadName",args=(arg1,)) # name = ThreadName , sets the thread name during declaration.
+
+6. every thread also has an unique id. apart from name threads also has unique id.
+	thread.ident -> shows the id of the thread
+	current_thread().ident -> shows the id of the current thread.
+	Note - > the id values changes from run to run.. 
+
+7. active_count() -> this method of threading module returns the total number of active threads. Returns number only . If there are 4 threads active , then it just returns 4.
+  ---------------
+
+8. enumerate() -> this method of threading module returns a list having thread related info of the active threads. Thread name, Thread id number etc etc. enumerate() return a list object.
+  ------------
+example -
+#suppose 4 threads are running...
+var = enumerate()  -> var become a list containing all thread related info.
+for i in var:      -> iterating through the list var for details.
+	print("thread name: {}, thread id: {}".format(i.getName(),i.ident))
+
+9. isAlive() -> this method of the threading module return boolean values, that represents if thread is executing or not.
+   ---------
+example-
+t1.isAlive() -> True .. Execution is In-progress.
+t2.isAlive() -> False .. Execution Stopped.
+
+10. join() -> this method of the threading module makes one thread pause till the execution of other thread is complete.
+   -------  
+
+*** NOTE *** 
+
+## All the methods are part of the module threading, to use these methods - getName(),setName() etc.. importing threading module is must.
+
+*** NOTE ***
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+

@@ -1,0 +1,206 @@
+Pandas -- creating DataFrame from files (csv /excel/text), handling rows and columns,handling index : Source - https://www.youtube.com/watch?v=ZyhVh-qRZPA&list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS
+```````````````````````````````````````````````````````````````````````````````````````````````````
+sample csv data used for the below codes - https://github.com/KeithGalli/pandas/blob/master/pokemon_data.csv
+
+================================== panda codes ==============================================================================================================================
+
+import pandas as pd
+
+#---------------------------------- creating a DataFrame from a [ Delimited text file / csv file / Excel file ] ------------------------------------------------------------
+
+df = pd.read_csv('MyData.txt',delimiter="|")             # simple text file with delimiter , delimiter needs to be specified
+#df_csv = pd.read_csv('MyData.csv')                      # simple csv file  
+#df_excel = pd.read_excel('MyData.excel')                # simple excel file
+
+# ================================ using DataFrame attributes ==============================================================================================================
+
+print(df)                                               # printing the DataFrame
+print(df.shape)                                         # printing the DataFrame rows and column numbers
+print(type(df.shape))                                   # o/p - <class 'tuple'>
+print(df.columns)                                       # listing the column names of the DataFrame
+print((type(df.columns)))                               # o/p - <class 'pandas.core.indexes.base.Index'>
+a = list(df.columns)                                    # typecasting the output to a list
+print(a)         
+print(df.index)                                         # prints the row index values. o/p - RangeIndex(start=0, stop=14, step=1)                                        
+
+#================================== filtering out rows and cloumns =========================================================================================================
+
+print(df.head())                                        # prints the first few rows of the DF
+print(df.tail())                                        # prints the last few rows of the DF
+print(df.head(6))                                       # prints the first 6 rows of the DF
+print(df.tail(5))                                       # prints the last 5 rows of the DF
+
+print(df['Name'])                                       # prints all the values of Name column, return a seres not a dataframe.
+print(type(df['Name']))                                 # o/p - <class 'pandas.core.series.Series'>
+print(df[['Type 1','Name','Attack']])                   # prints all values from 3 columns [Type 1, Name, Attack], returns the values as a DataFrame.
+print(type(df[['Type 1','Name','Attack']]))             # o/p - <class 'pandas.core.frame.DataFrame'>
+
+# Appling functions to a DataFrame and creating a filtered out new DataFrame and then using the newly created DataFrame.
+
+# ------ using iloc[] -> refer to rows and columns as indexes.-------------------------------------------------------------------------------------------------
+
+print("working wih rows")
+print(df.iloc[0])                       # showing records of only one row, here row number 0. returns a series.
+print(type(df.iloc[0]))                 # o/p - <class 'pandas.core.series.Series'>
+print(df.iloc[[0,1,5,8]])               # showing records of multiple rows. multiple rows are specified inside a list . use a list inside like iloc[[list]]
+print(type(df.iloc[[0,1,5,8]]))         # o/p - <class 'pandas.core.frame.DataFrame'>
+new_df = df.iloc[[0,1,5,8]]             # creating a new DataFrame filtering out the original DataFrame with iloc[] method. 
+print(new_df)                           # printing the newly created DataFrame
+print(df.iloc[0:10])                    # showing records of rows in a range , slicing , here rows 0 to 9 , iloc[0:10]
+print(df.iloc[2:10:2])                  # showing records of rows in a range , slicing, insteps of 2 , prints records of even rows.
+
+# ------ iloc[rows,columns] or iloc[[list of rows],[list of columns]] or iloc[slicing rows, slicing columns] --------------------------------------------------
+
+print(df.iloc[0,1])                         # printing the value of 0th row's 1st column values. Prints only one value
+print(type(df.iloc[0,1]))                   # o/p - <class 'str'>
+print(df.iloc[[0,3,7,11],[4,5,6]])          # printing the values of [4,5,6] columns for [0,3,7,11] rows.
+print(type(df.iloc[[0,3,7,11],[4,5,6]]))    # <class 'pandas.core.frame.DataFrame'>
+print(df.iloc[:14:2,6:12:2])                # printing rows from start to 14 in steps of 2 and columns from 6 to 12 in steps of 2
+
+# ------ using loc[] -> refers to rows and columns using column names and row names , can also refer using indexes.--------------------------------------------
+# df.loc[rowname/rowindex, columnname /columnindex]
+print(df.loc[0,'Type 1'])                                   # printing value where row = 1 and Column = Type 1
+print(df.loc[[1,5,9],['Type 1','Attack','Generation']])     # printing rows = [1,5,9] and column = [ Type 1, Attack, Generation ]
+print(df.loc[0:14,'Attack':'Speed'])                        # printing rows from [1 to 13] and column from [Attack to Speed]
+
+#============================= modifying default index values of a DataFrame =========================================================================================================================
+
+# DataFrames have default row index values as integers [ 0 to n , n = munber of rows -1] --
+# The index values of a DataFrame can be modified .
+
+# -- changing index from default numbers to a particular column of the DF.--
+# df.set_index(Column Name)
+
+print(df.index)                         # prints default index values of the DataFrame. o/p - RangeIndex(start=0, stop=14, step=1)
+print(df.set_index('Name'))             # prints the dataframe with modifed index, new indices are set with Name column . This doesnot permanently change the DF
+print(df)                               # prints the previous DF where indexes were set to numbers. Modification of index to Name is not reflected.
+df.set_index('Name',inplace =True)      # permanently modifies the DF. inplace = True modifies the DF, index changed to Name Column gets reflected
+print(df)                               # newly modified DF is printed where index is set to Name Column.
+
+# -- identifying particular rows and columns using index name and column name. --
+# df.loc[rowname,columnname]
+print(df.loc['Charizard','Type 1'])     # printing value where rowname / indexname = Charizard and columnname = Type 1
+print(df.loc[['Bulbasaur','Charizard','Blastoise'],['Type 1','Attack','Speed']]) 
+
+# -- still index values can be used with df.iloc --
+print(df.iloc[0:4,1:3])                # printing values from 0-13 rows with column range from 1 to 2. Names are always printed as it is the index.
+'''o/p-
+                      Type 1  Type 2
+Name
+Bulbasaur              Grass  Poison
+Ivysaur                Grass  Poison
+Venusaur               Grass  Poison
+VenusaurMega Venusaur  Grass  Poison
+'''
+
+# -- changing index while loading the csv/txt/excel file to a DF --
+# -- df = pd.read_csv('csv path',delimiter = 'delimiters',index_col = 'column name')
+
+# df = pd.read_csv('MyData.txt',delimiter="|",index_col='Name')         # loading a csv file delimited by "|" index set to Name column.
+
+# -- resetting a changed index of a dataframe
+
+df.reset_index(inplace = True)         # resets the index changes made to a DF. Previous index is back in place . inplace = True confirms the changes to DF.
+print(df)                              # prints the DF with previously set index.      
+
+# -- note --  always reset the index before changing the index , else the previous index will disappear.
+
+# -- error code -- index changed from one column to another without resetting will vanish the previous index column from DF. 
+
+import pandas as pd
+df = pd.read_csv('MyData.txt',delimiter="|") 
+df.set_index('#',inplace=True)                      # index changed to # column
+print(df)
+df.set_index('Name',inplace=True)                   # index again changed to Name column directly from # column without resetting.
+print(df)                                           # printing df will not have any # column, it will disaapear, as index is changed to Name from # without resetting. 
+f.reset_index(inplace = True)                       # index reset back to default integer numbers [0 to n, where n = number of rows]
+print(df.head())
+
+''' o/p- 
+                    Name Type 1  Type 2  HP  Attack  Defense  Sp. Atk  Sp. Def  Speed  Generation  Legendary
+#
+1              Bulbasaur  Grass  Poison  45      49       49       65       65     45           1      False
+2                Ivysaur  Grass  Poison  60      62       63       80       80     60           1      False
+3               Venusaur  Grass  Poison  80      82       83      100      100     80           1      False
+3  VenusaurMega Venusaur  Grass  Poison  80     100      123      122      120     80           1      False
+4             Charmander   Fire     NaN  39      52       43       60       50     65           1      False
+
+---------  "#" column is disappeared from the DF and new index is set to "Name" column without resetting the index --
+
+                      Type 1  Type 2  HP  Attack  Defense  Sp. Atk  Sp. Def  Speed  Generation  Legendary
+Name
+Bulbasaur              Grass  Poison  45      49       49       65       65     45           1      False
+Ivysaur                Grass  Poison  60      62       63       80       80     60           1      False
+Venusaur               Grass  Poison  80      82       83      100      100     80           1      False
+VenusaurMega Venusaur  Grass  Poison  80     100      123      122      120     80           1      False
+Charmander              Fire     NaN  39      52       43       60       50     65           1      False
+
+--------- "Name" index reset to default [ 0 to 4 ] but still "#" column is missing.-------------------------------------
+
+                    Name Type 1  Type 2  HP  Attack  Defense  Sp. Atk  Sp. Def  Speed  Generation  Legendary
+0              Bulbasaur  Grass  Poison  45      49       49       65       65     45           1      False
+1                Ivysaur  Grass  Poison  60      62       63       80       80     60           1      False
+2               Venusaur  Grass  Poison  80      82       83      100      100     80           1      False
+3  VenusaurMega Venusaur  Grass  Poison  80     100      123      122      120     80           1      False
+4             Charmander   Fire     NaN  39      52       43       60       50     65           1      False
+'''
+
+# -- correct code -- always reset the index before changing the index values.
+
+import pandas as pd
+df = pd.read_csv('MyData.txt',delimiter="|") 
+df.set_index('#',inplace=True)                      # index changed to # column
+print(df.head())
+df.reset_index(inplace = True)                      # index reset back to default integer numbers [ 0 to n , n = munber of rows -1]
+df.set_index('Name',inplace=True)                   # index again changed to Name column.
+print(df.head())                                    # printing df will show index changed to Name column. # column will be available.
+df.reset_index(inplace = True)                      # index reset back to default integer numbers [ 0 to n , n = munber of rows -1]
+print(df.head())
+
+''' o/p- 
+                    Name Type 1  Type 2  HP  Attack  Defense  Sp. Atk  Sp. Def  Speed  Generation  Legendary
+#
+1              Bulbasaur  Grass  Poison  45      49       49       65       65     45           1      False
+2                Ivysaur  Grass  Poison  60      62       63       80       80     60           1      False
+3               Venusaur  Grass  Poison  80      82       83      100      100     80           1      False
+3  VenusaurMega Venusaur  Grass  Poison  80     100      123      122      120     80           1      False
+4             Charmander   Fire     NaN  39      52       43       60       50     65           1      False
+
+-------------- index changed from # to Name after reset, thus # colum in intact in the DF ---------------------
+
+                       # Type 1  Type 2  HP  Attack  Defense  Sp. Atk  Sp. Def  Speed  Generation  Legendary
+Name
+Bulbasaur              1  Grass  Poison  45      49       49       65       65     45           1      False
+Ivysaur                2  Grass  Poison  60      62       63       80       80     60           1      False
+Venusaur               3  Grass  Poison  80      82       83      100      100     80           1      False
+VenusaurMega Venusaur  3  Grass  Poison  80     100      123      122      120     80           1      False
+Charmander             4   Fire     NaN  39      52       43       60       50     65           1      False
+
+------------- index resrt to defaults , index changed to numbers [ 0 to n , n = munber of rows -1]
+
+                    Name  # Type 1  Type 2  HP  Attack  Defense  Sp. Atk  Sp. Def  Speed  Generation  Legendary
+0              Bulbasaur  1  Grass  Poison  45      49       49       65       65     45           1      False
+1                Ivysaur  2  Grass  Poison  60      62       63       80       80     60           1      False
+2               Venusaur  3  Grass  Poison  80      82       83      100      100     80           1      False
+3  VenusaurMega Venusaur  3  Grass  Poison  80     100      123      122      120     80           1      False
+4             Charmander  4   Fire     NaN  39      52       43       60       50     65           1      False
+'''
+
+# -- sorting index --
+# df.sort_index(ascending = True, inplace =True)
+
+import pandas as pd
+df = pd.read_csv('MyData.txt',delimiter="|")        
+df.set_index('Name',inplace = True)                        # index changed to Name column. inplace is must to reflect the change in index. else next line will not work.
+df.sort_index(ascending = True, inplace =True )            # sorting DF in ascending order and reflecting the changes in DF using inplace =True
+print(df)
+
+ 
+
+
+
+
+
+
+
+

@@ -1,0 +1,209 @@
+Input and output Statement
+--------------------------
+
+Two functions used 
+
+1.raw_input -> outdated , used in Python 2, not used in Python 3
+2.input -> currently in use for Python 3
+
+--------------------------------------------------------
+raw_input (not used just for sake of knowing) Python 2. 
+-------------------------------------------------------
+### OBSOLATE 
+### JUST FOR KNOWING
+
+x= raw_input("Enter First arg")
+
+This function used to take the input in the string form. 
+type(x) would have been a string.
+
+x= input("Enter first arg")
+
+This function used to take the input as an integer.
+type(x) would have been an integer.
+
+---------------------------------------------------------
+
+How to take inputs in Python ?
+----------------------------
+
+#CURRENT IN USE WAY
+#PYTHON 3
+
+x = input("Enter the first arg")
+
+This input function takes the input in string type.  Remember input functions used to take inputs as integer type in Python 2(which is now obsolate)
+
+type(x) = string
+
+To convert to other datatypes the input string needs to be typecasted as required.
+
+Example
+-------
+ x= int(input("Enter first number")
+ y= int(input("Enter second number")
+ z= float(input("Enter floating number")
+ print(x+y+z)
+
+Like wise typecasting is required.
+ 
+ 
+Example
+--------
+
+print("The sum is",int(input("Enter first number"))+int(input("Enter second number"))+float(input("Enter floating number")))
+
+Example
+--------
+
+Taking multiple values at one time.
+Using of split functions and delimeters
+
+>>> a,b = [int(x) for x in input("Enter two numbers").split()]
+Enter two numbers10 20
+>>> a
+10
+>>> b
+20
+
+>>> a,b = [int(x) for x in input("Enter two numbers").split(",")]
+Enter two numbers30,40
+>>> a
+30
+>>> b
+40
+>>> 
+
+
+>>> a= input("Enter two numbers").split(",")
+Enter two numbers45,55
+>>> a
+['45', '55']
+>>> type(a)
+
+
+>>> a= int(input("Enter two numbers").split(","))
+Enter two numbers90,100
+Traceback (most recent call last):
+  File "<pyshell#31>", line 1, in <module>
+    a= int(input("Enter two numbers").split(","))
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'list'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+eval()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+evalutes a expression. expression must be in string
+
+ex
+--
+>>> eval(10+20+30)
+Traceback (most recent call last):
+  File "<pyshell#0>", line 1, in <module>
+    eval(10+20+30)
+TypeError: eval() arg 1 must be a string, bytes or code object
+
+ex
+--
+>>> eval("10+20+30")
+60
+
+
+
+## Note
+--------
+
+>>> type(eval("10+20+30"))  -> string as input, int as output type
+<class 'int'>
+>>> type(eval("10+20.5+1")) -> string as input, float as output type.
+<class 'float'>
+
+
+the eval function takes the argument as "string", performs the evaluation and then returns the (output type) as the (output value type).
+Check above examples
+
+---------------------------------------------------------------------------------------------------------------------------------------
+eval function used with input functions ,eliminates the need of type casting
+----------------------------------------------------------------------------------------------------------------------------------------
+
+x=input("Enter any arg") 
+type(x) -> string always
+
+to convert in to any other datatypes, we need typecasting.
+
+Example (taking a list as argument)
+-----------------------------------
+
+>>> x=input("Enter any list")
+Enter any list[10,20,30]
+>>> type(x)
+<class 'str'>   ---> The output is still in the string type.
+
+
+Example (taking a tuple as argument)
+------------------------------------
+
+>>> x=input("Enter any tuple")
+Enter any tuple(10,20,30)
+>>> x
+'(10,20,30)'
+>>> type(x)
+<class 'str'>   -->  The output is still in the string type
+
+
+###  To overcome the above problems, to dynamically assign the datatype of the output considering the input, we use the eval statements.
+
+
+Example (taking a tuple as argument)
+------------------------------------
+>>> x=eval(input("Enter any tuple"))
+Enter any tuple(10,20,30)
+>>> x
+(10, 20, 30)
+>>> type(x)
+<class 'tuple'>
+
+Ex (Taking arg as float)
+------------------------
+
+>>> x=eval(input("Enter a float"))
+Enter a float10.5
+>>> x
+10.5
+>>> type(x)
+<class 'float'>
+
+There is no need to use typecasting to convert the user inputs (which is usually a string) to necessary datatypes.
+eval functions dynamically performs the same.
+
+
+Ex (Taking arg of different datatypes)
+---------------------------------------
+
+>>> a,b,c = [eval(x) for x in input("Enter mixed datatype args").split(",")]
+Enter mixed datatype args10,50.2,True
+<class 'int'>
+>>> type(b)
+<class 'float'>
+>>> type(c)
+<class 'bool'>
+>>> 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+

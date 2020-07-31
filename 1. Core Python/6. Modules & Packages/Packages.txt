@@ -1,0 +1,50 @@
+Packages
+---------
+
+Packages are folders , which contains python scripts or modules.
+Packages can contain subpackages and those sub packages can contain modules which we can import.
+For a folder to qualify as a package it should have a __init__.py file inside it. Python will look for the __init__.py file and treat it as a package.
+
+Suppose we append "D:\" to the sys.path, and it has several packages ( containing __init__.py). Then we can access the modules inside that package and can also
+access the modules stored in its subpackages.
+
+Folder structure - D:\Py_Package\SubPackage_1 
+		   D:\ this is updated in sys.path . It has a package Py_Package . Py_Package has subpackage SubPackage_1 . SubPackage_1 has a module Palindrome_Module.
+	       	   Py_Package and SubPackage_1 are simple folders containing modules and also having a special file __init__.py
+			
+Example -
+-------
+
+import sys
+print(sys.path)
+sys.path.append("D:\\")						# adding D:\ to sys.path
+import Py_Package.SubPackage_1.Palindrome_Module as pm		# importing a module from a subpackage of a package.
+pm.palindrome(141)
+
+o/p- 
+Imported Palindrome Module
+141  is a palindrome number
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+__init__.py
+
+This file can be empty or may have some implementations . When we just import the package and import no modules from it, then this __init__.py file runs.
+What it means is. 
+A package contatins some modules and an init file with some implementation on it. We we don't import any module but just import the package inif file run.
+
+Ex - 
+
+import Py_Package.SubPackage_1        # importing only package but no module. Thus init of SubPackage_1 executes.
+
+o/p- 
+I am init			      # __init__ of SubPackage_1 contians print("I am init") statement.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q.42. Can I dynamically load a module in Python?
+
+Dynamic loading is where we do not load a module till we need it. This is slow, but lets us utilize the memory more efficiently. In Python, you can use the importlib module for this:
+
+import importlib
+module = importlib.import_module('my_package.my_module')

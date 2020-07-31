@@ -1,0 +1,33 @@
+Objective : Good experience of software development in Python and IDEs - sublime text, PyCharm. Experience in Python, Robot Framework. Technical experience in supporting applications which use an object-oriented programming language (Java). Experience in using Pandas python libraries during development lifecycle. Excellent experience with Python development under Linux OS (Ubuntu). Experienced in writing SQL Queries, Stored procedures, functions, packages, tables, views, triggers.
+
+Skills : DJANGO, HTML, JQuery, MYSQL, PYTHON
+
+Worked on design and development of Unix shell scripting as a part of the ETL process to automate the process of loading.
+
+Rewrite existing Python/DJango modules to deliver certain format of data.
+Rewrite existing Python/DJango modules to deliver certain format of data.
+
+Installation, configuration, integration, tuning, backup, crash recovery, upgrades, patching, monitoring system performance, system and network security and troubleshooting of Linux/Unix servers.
+
+Extensively used DJANGO technologies, which includes forms, templates and orm for communication with database in different forms.
+Developed views and templates with django view controller and template language to create a user-friendly website interface
+
+
+
+Creating unit test/regression test framework for working/new code
+Debugging and testing of the applications  & fine tuning performance
+Used MySQL as backend database and MySQL dB of python as database connector to interact with MySQL server.
+Created unit and functional test cases through use of testing tools in Python 
+Experience in reviewing python code for running the troubleshooting test-cases and bug issues.
+
+Used test driven approach for developing the application and implemented the unit tests using Python unit test framework.
+Unit test python library was used for testing many programs on python and other codes
+
+
+Experience on usage of DJANGO technologies, which includes forms, templates and orm for communication with database in different forms.
+
+
+Experience in debugging & testing of Python applications.
+Experience in implementing unit tests on Python applications using Python unit test frameworks.
+Experience in unsing Unit test Python library for testing programs on Python.
+Experience on usage of DJANGO technologies, which includes forms, templates and orm for communication with database in different forms.

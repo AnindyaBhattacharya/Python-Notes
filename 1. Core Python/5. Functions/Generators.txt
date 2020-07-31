@@ -1,0 +1,11 @@
+Generators -
+----------
+
+Generators are nothing but special functions which creates iterators. Previously we have seen iterators as list,set,tuples and it holds members in memory and we iterate
+through them.
+Generators are used to create iterators, they are simple functions which return an iterable set of items, one at a time.
+
+
+What is the nend of Generators - 
+
+iterator is an object state , which remembers it's current state.

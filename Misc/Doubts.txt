@@ -1,0 +1,2 @@
+1.how to know the functionality of each method in a module. if module is called then how to use the modules
+2.

@@ -1,0 +1,45 @@
+Data Types and Variables
+Numbers
+Comments in Python
+Strings
+List
+List and String
+Tuple
+List and Tuple
+Problem Discussion and Interview Questions Discussion on the topics Numbers, String, List and Tuple
+Set
+Comparison of List, Tuple and Set
+Dictionary
+Comparison of List, Tuple and Set
+Problem Discussion and Interview Questions Discussion on the topics List, Tuple, Set and Dictionary
+Assignment 1 Based on Real time Problem
+Quiz based on Interview Question discussed.
+Control Structure
+Looping
+Basic Functions
+Advance Functions continued
+Problem Discussion and Interview Questions Discussion on the topics Conditional Statement, Function
+Assignment 2 Based on Real time Problem
+Basic I/O
+File handling
+Problem Discussion and Interview Questions Discussion on the topics I/O, File Handling
+Assignment 3 Based on Real time Problem
+OOPS Concept
+OOPS Implementation
+Modules
+Problem Discussion and Interview Questions Discussion on the topics Modules, Exception Handling, Classes
+Assignment 4 Based on Real time Problem
+Advance Concept on Data Structures
+Lamda Function
+Regular expression
+Logging in Python
+Multithreading in Python
+Unit testing in Python
+Numpy
+Pandas
+Command Line Argument
+Standard Modules
+Mini Project Discussion Based on Real Time Problem
+-----------------------------------------------------------------------------------------------------------------
+learn usage of Built-in Functions
+-----------------------------------------------------------------------------------------------------------------

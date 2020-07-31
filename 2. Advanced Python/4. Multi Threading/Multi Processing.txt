@@ -1,0 +1,44 @@
+Python MultiPrcoessing
+----------------------
+
+MultiProcessing is quite similar to MultiThreading syntax wise. In multi-processing we use Process class and in multi-threading we use the Thread class.
+
+
+
+
+
+Example -
+-------
+
+import os
+import time
+
+from multiprocessing import Process, current_process
+
+
+def cube(numbers):
+    for number in numbers:
+        time.sleep(0.5)
+        print(f"The number {number} cubes to {number*number*number}.")
+
+
+def square(numbers):
+    for number in numbers:
+        time.sleep(0.5)
+        print(f"The number {number} squares to {number*number}.")
+
+
+if __name__ == '__main__':
+
+    processes = []
+    numbers = range(100)
+
+    for i in range(100):
+        process = Process(target=square, args=(numbers,))
+        processes.append(process)
+        process.start()
+
+    for process in processes:
+        process.join()
+
+    print("Multiprocessing process complete")

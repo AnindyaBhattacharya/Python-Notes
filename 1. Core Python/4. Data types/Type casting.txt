@@ -1,0 +1,306 @@
+Data Types - Continued
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Type Casting
+------------
+
+Functions  -
+
+int()
+float()
+complex()
+bool()
+str()
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. int()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ex -1
+------
+string to int -> only possible when the argument is int and is base of 10
+
+>>> a="10"
+>>> type(a)
+<class 'str'>
+>>> int(a)
+10
+>>> type(a)
+<class 'str'>
+>>> 
+
+string to int -> not possible when the argument is not of base 10
+
+>>> a="10.5"
+>>> int(a)
+Traceback (most recent call last):
+  File "<pyshell#5>", line 1, in <module>
+    int(a)
+ValueError: invalid literal for int() with base 10: '10.5'
+
+
+Ex -2
+------
+complex to int -> invalid
+
+>>> a=10+2j
+>>> type(a)
+<class 'complex'>
+>>> int(a)
+Traceback (most recent call last):
+  File "<pyshell#14>", line 1, in <module>
+    int(a)
+TypeError: can't convert complex to int
+>>> 
+
+
+Ex -3
+-----
+string to int -> only with base 10, no binary or octal
+
+>>> a =0b111
+>>> a
+7
+>>> int("ob111")
+Traceback (most recent call last):
+  File "<pyshell#25>", line 1, in <module>
+    int("ob111")
+ValueError: invalid literal for int() with base 10: 'ob111'
+
+Ex -4
+------
+
+>>> int("ten")
+Traceback (most recent call last):
+  File "<pyshell#27>", line 1, in <module>
+    int("ten")
+ValueError: invalid literal for int() with base 10: 'ten'
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. float()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ex -1
+-----
+String to float -> possible only for base 10 values like in case of int()
+
+>>> float("01.23")
+1.23
+
+ex -2
+-----
+
+>>> float("0o111")
+Traceback (most recent call last):
+  File "<pyshell#41>", line 1, in <module>
+    float("0o111")
+ValueError: could not convert string to float: '0o111'
+
+
+ex -3
+-----
+complex to float -> not possible
+
+>>> float(10+2j)
+Traceback (most recent call last):
+  File "<pyshell#42>", line 1, in <module>
+    float(10+2j)
+TypeError: can't convert complex to float
+
+ex - 4 
+------
+boolean to float -> posible
+
+>>> float(True)
+1.0
+
+Ex-5
+-----
+
+>>> float ("8.5+1.5")
+Traceback (most recent call last):
+  File "<pyshell#56>", line 1, in <module>
+    float ("8.5+1.5")
+ValueError: could not convert string to float: '8.5+1.5'
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.str()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>>> str(10)
+'10'
+
+>>> str(10+2j)
+'(10+2j)'
+
+>>> str(True)
+'True'
+
+>>> str(0b111) -> convets the binary to decimal and converts the result to string
+'7'
+
+>>> str(10+20) -> performs the mathematical calaulation and converts the result to string
+'30'
+
+>>> str(10.36)
+'10.36'
+>>> 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4. complex()
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Examples
+--------
+two ways to call the complex functions.
+
+1. one argumaent call -> complex(x)  -> x goes to the real part = x+0j
+----------------------------------------------------------------------
+
+>>> complex(10)
+(10+0j)
+
+>>> complex(10.5)
+(10.5+0j)
+
+>>> complex(j)
+Traceback (most recent call last):
+  File "<pyshell#53>", line 1, in <module>
+    complex(j)
+NameError: name 'j' is not defined
+
+>>> complex("10")
+(10+0j)
+
+>>> complex("8.5 +2")
+Traceback (most recent call last):
+  File "<pyshell#55>", line 1, in <module>
+    complex("8.5 +2")
+
+>>> complex(True)
+(1+0j)
+
+>>> complex(False)
+0j
+
+>>> complex("ten")
+Traceback (most recent call last):
+  File "<pyshell#59>", line 1, in <module>
+    complex("ten")
+ValueError: complex() arg is a malformed string
+
+>>> complex(0b111)
+(7+0j)
+
+>>> complex("0b1111")
+Traceback (most recent call last):
+  File "<pyshell#61>", line 1, in <module>
+    complex("0b1111")
+ValueError: complex() arg is a malformed string
+
+>>> complex("2j")
+2j
+>>> complex(2j)
+2j
+
+
+>>> complex(2j)+(10+2j)
+(10+4j)
+>>> 
+
+>>> complex(10.5+2.6)
+(13.1+0j)
+
+2. two argument call -> complex(x,y) -> x (real), y( imaginary) = x+yj
+----------------------------------------------------------------------
+
+>>> complex(10,20)
+(10+20j)
+
+>>> complex(0b111,0b11)
+(7+3j)
+
+>>> complex(True,False)
+(1+0j)
+
+>>> complex(10,2.50)
+(10+2.5j)
+
+## can't take sring as argument in this form of call of the function ##
+
+>>> complex("10.5","5.6")
+Traceback (most recent call last):
+  File "<pyshell#88>", line 1, in <module>
+    complex("10.5","5.6")
+TypeError: complex() can't take second arg if first is a string
+
+>>> complex("10.5",5)
+
+Traceback (most recent call last):
+  File "<pyshell#90>", line 1, in <module>
+    complex("10.5",5)
+TypeError: complex() can't take second arg if first is a string
+
+>>> complex(10.5,"5")
+Traceback (most recent call last):
+  File "<pyshell#91>", line 1, in <module>
+    complex(10.5,"5")
+TypeError: complex() second arg can't be a string
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5. bool()
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+non zero -> true
+zero -> false 
+
+>>> bool(1)
+True
+
+>>> bool(0)
+False
+
+>>> bool(2)
+True
+
+>>> bool(2.5)
+True
+
+>>> bool(-1.5)
+True
+
+>>> bool(8888)
+True
+
+>>> bool(0j)
+False
+
+>>> bool("1")
+True
+
+>>> bool("0")
+True
+
+>>> bool("zero")
+True
+
+>>> bool(10+2j)
+True
+
+>>> bool(0+0j)
+False
+
+>>> bool("") -> Empty character is always false in bool
+False
+
+>>> bool("anindya")
+True
+
+>>> bool("  ")
+True
+
+bool() -> this function will nevr give error any time.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

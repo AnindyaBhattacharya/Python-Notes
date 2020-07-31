@@ -1,0 +1,132 @@
+Loops
+--------------------------------------------------------------------------------
+for loops
+while loops
+
+## no dowhile loops in Python..
+
+---------------------------------------------------------------------------------
+
+for loops used only in purpose when the number of iteration is known.
+
+while loops used when we are not sure how many iterations are going to be there.
+
+---------------------------------------------------------------------------------
+
+Syntax -
+
+no curly braces used.
+indentation is important
+use ":" after the condition.
+
+for loop
+---------
+
+for each elements in a sequence :
+	so some thing
+
+
+sequence can be - anything, string , list, tuple, range etc.
+
+
+Example -
+----------
+Ex -1
+-----
+a="anindya bhattacharya"
+for x in a :
+    print(x)
+
+Ex -2
+------
+list=eval(input("Enter list of values"))
+sum = 0
+for x in list :
+    sum = sum + x
+print(sum)
+
+Enter list of values[10,20,30,40]
+100
+
+Example - use of range function.
+--------------------------------
+
+Ex 1 -
+------
+
+for x in range(10) :
+    print(x)
+
+Prints values from 0 to 9(range -1)
+
+Ex -2
+-----
+
+for x in range(10,20) :
+    print(x)
+
+Prints values from 10 to 19.
+
+Ex -3
+-----
+
+for x in range(0,50,5) :
+    print(x)
+
+prints values from 0 to 45 in difference of 5.
+
+Ex- 4
+-----
+
+for x in range(50,10,-5) :
+    print(x)
+
+Prints values from 50 to 15 reverse in difference of 5.
+
+Ex - 5
+------
+
+
+for i in range(n+1,1,-1) :
+    for j in range(1,i) :
+        print("*",end="")
+    for k in range(2*(n-i+1)) :
+        print(" ",end="")
+    for j in range(1,i) :
+        print("*",end="")
+    print()
+
+
+enter number : 10
+********************
+*********  *********
+********    ********
+*******      *******
+******        ******
+*****          *****
+****            ****
+***              ***
+**                **
+*                  *
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+While Loops 
+
+Syntax
+-------
+
+no curly braces
+indentation is important
+use ":" after the condition
+
+while condition :
+	action
+
+=======================================================================================================================================================================XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+
+
+
+

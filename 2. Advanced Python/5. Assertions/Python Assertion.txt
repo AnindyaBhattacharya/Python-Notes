@@ -1,0 +1,111 @@
+Python Assertion-
+----------------
+For debugging purpose , we use the Python assert statements.
+If the assert statements returns True,then the next lines of code is executed. If the assert statements return False, there is an exception raised Assertion Error.
+
+2 types of assertions-
+---------------------
+1. simple assertion - 
+	syntax : assert conditionalstatements
+				if conditon is True, next line of code is executed.
+				if conditon is False, execution terminates with an AssertionError, .
+
+2.  augmented assertion - 
+	syntax : assert conditionalstatements,message
+				if conditon is True, next line of code is executed.
+				if conditon is False, execution terminates with an AssertionError, and a message is also printed.
+
+
+Example - simple assertion
+-------
+
+Code1 - where AssertionError is raised
+--------------------------------------
+def square(a):
+    return a**a                         # a**a return a to the power a. 
+
+assert square(2) == 4
+assert square(3) == 9
+assert square(4) == 16
+
+print(f"square of 2 is {square(2)}")
+print(f"square of 3 is {square(3)}")
+print(f"square of 4 is {square(4)}")
+
+o/p- 
+Traceback (most recent call last):
+  File "new1.py", line 5, in <module>
+    assert square(3) == 9
+AssertionError
+
+
+AssertionError is raise as square(3) is returning 27 and the assert statement is expecting it to be 9. assert statement returns False.
+
+
+Code2 - AssertionError is not hit.
+----------------------------------
+def square(a):
+    return a*a                         # a*a returns square of a
+
+assert square(2) == 4
+assert square(3) == 9
+assert square(4) == 16
+
+print(f"square of 2 is {square(2)}")
+print(f"square of 3 is {square(3)}")
+print(f"square of 4 is {square(4)}")
+
+o/p- 
+square of 2 is 4
+square of 3 is 9
+square of 4 is 16
+
+No AssertionError is hit, as the assert statement returns True.
+
+
+
+Example -  Augmented assertion. additional message will be printed.
+-------------------------------------------------------------------
+def square(a):
+    return a**a                         # a**a returns a to the power of a
+
+assert square(2) == 4, "square value of 2 should be 4"
+assert square(3) == 9, "square value of 3 should be 9"
+assert square(4) == 16, "square value of 4 should be 16"
+
+print(f"square of 2 is {square(2)}")
+print(f"square of 3 is {square(3)}")
+print(f"square of 4 is {square(4)}")
+
+o/p - 
+AssertionError: square value of 3 should be 9. 
+
+assert statement returns False , AssertionError is raised and additionally a message is also printed for easy understanding.
+
+Example - Ignoring assertion and executing the code.
+----------------------------------------------------
+while running the code from cmd, if we use the option -O then it ignores assertion. Switches off the assert mode.
+ex: py -O test.py  [ -O (capital O) option ignores the assertion ]
+
+def square(a):
+    return a**a                         # a**a returns a to the power of a
+
+assert square(2) == 4, "square value of 2 should be 4"
+assert square(3) == 9, "square value of 3 should be 9"
+assert square(4) == 16, "square value of 4 should be 16"
+
+print(f"square of 2 is {square(2)}")
+print(f"square of 3 is {square(3)}")
+print(f"square of 4 is {square(4)}")
+
+
+o/p- 
+D:\Pycodes>py -O new1.py	       # -O switches off assertion.
+square of 2 is 4
+square of 3 is 27
+square of 4 is 256
+
+assert statements are bypassed by using the option -O. Had the assert statements not been bypassed, it would have raised and AssertionError.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,283 @@
+Python Abstraction
+------------------
+Abstract classes in Python are special type of classes which have one or more Abstract methods declared in them.
+Abstract methods are those methods which generally don't have any implementations in them. It is left for the subclasses to complete the implementations.
+In Python we can have implementations in Abstract classes, but the subclasses of the Abstract class is still forced to override the methods.
+It is important to note, Abstract class is solely for declaration purposes. We can't instanciate an Abstract class. We can't create an object of an Abstract class.
+
+What is the need for Abstract classes ?
+----------------------------------------
+If we know the requirement and we don't yet know the design then we define the Abstract classes.
+We know What to implement but we don't know How to implement , in that case we define a Abstract class, with all the functionality names as Abstract methods. 
+Later we implement the code of those functionalities in subclasses and override the Abstract methods.
+
+In simple words we can define the functionality names as Abstract methods in a Abstract class firstly, then slowly we can override them through subclasses with implementations.
+
+It is important to note, Abstract class is solely for declaration purposes. We can't instanciate an Abstract class. We can't create an object of an Abstract class.
+To access the Abstract methods we need to create a subclass,override the method in the subclass and instanciate the subclass.
+
+How to declare Abstract class in Python
+---------------------------------------		
+from abc import ABC,abstractmethod										# Importing abc class.
+
+class AbstractClass(ABC):											# Abstract class should extend ABC class of abc module to represent it as a AbstractClass 
+
+    @abstractmethod												# @abstractmethod is a decorator to represent the method as Abstract method.
+    def abstract_method1(self):											# defining abstract method							
+        pass													# abstract method without implementation
+		
+    @abstractmethod												# @abstractmethod is a decorator to represent the method as Abstract method.
+    def abstract_method2(self):
+        print("abstract method with implementations")								# abstract method with implementations
+
+class Subclass(AbstractClass):  										# subclass defined to the Abstract class
+
+    def abstract_method1(self):											# overriding method1
+        print("overriding abstract method form subclass")
+		
+    def abstract_method2(self):											# overriding method2
+        pass
+		
+subclass_object = Subclass()											# Instanciating subclass
+subclass_object.abstract_method1()										# calling subclass method1
+subclass_object.abstract_method2()										# calling subclass method1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example 1 - Trying to instanciate the Abstract class (Cant't instanciate)
+---------   ----------------------------------------
+from abc import *
+
+class AbstractClass(ABC):
+    @abstractmethod
+    def abstract_method1(self):
+        #abstract method without implementation
+        pass
+    @abstractmethod
+    def abstract_method2(self):
+        print("abstract method with implementations")
+
+class Subclass(AbstractClass):  
+    def abstract_method1(self):
+        print("overriding abstract method form subclass")
+    def abstract_method2(self):
+        pass
+
+abstractclass_object = AbstractClass()                          # Error !! 
+
+o/p- 
+TypeError: Can't instantiate Abstract class AbstractClass with abstract methods abstract_method1, abstract_method2
+
+Example 2 -   Correct way to use Abstraction
+---------     ------------------------------
+
+from abc import ABC,abstractmethod										# Importing abc class.
+
+class AbstractClass(ABC):												# Abstract class should extend ABC class of abc module to represent it as a AbstractClass 
+
+    @abstractmethod														# @abstractmethod is a decorator to represent the method as Abstract method.
+    def abstract_method1(self):											# defining abstract method							
+        pass															# abstract method without implementation
+		
+    @abstractmethod														# @abstractmethod is a decorator to represent the method as Abstract method.
+    def abstract_method2(self):
+        print("abstract method with implementations")					# abstract method with implementations
+
+class Subclass(AbstractClass):  										# subclass defined to the Abstract class
+
+    def abstract_method1(self):											# overriding method1
+        print("overriding abstract method form subclass")
+		
+    def abstract_method2(self):											# overriding method2
+        pass
+		
+subclass_object = Subclass()											# Instanciating subclass
+subclass_object.abstract_method1()										# calling subclass method1
+subclass_object.abstract_method2()										# calling subclass method1
+
+Example 3 -   Need to implement all methods declared in Abstract classes
+---------     ----------------------------------------------------------
+
+Error Code - 2 methods declared in Abstrat class, only one method overridden in child class. While creating child class object, throws error. All methods need to be overridden.
+``````````
+from abc import ABC,abstractmethod
+
+class AbstractClass(ABC):
+    @abstractmethod
+    def abstract_method1(self):                                                                
+        pass                                                    # abstract method without implementation
+    @abstractmethod 
+    def abstract_method2(self):
+        print("abstract method with implementations")
+
+class Subclass(AbstractClass):                                  # overriding only one method of the Abstract Class in this subclass.        
+    def abstract_method1(self):                             
+        print("overriding abstract method form subclass")
+
+Subclass_object = Subclass()                                    # Error !! Both methods need to be overridden.
+Subclass_object.abstract_method1()
+
+Error - TypeError: Can't instantiate abstract class Subclass with abstract methods abstract_method2
+
+Correct code -
+````````````
+2 ways it can be corrected.
+	a. Override all the abstract methods in subclass.
+	b. Create a child class of the subclass which is inheriting the Abstract Class, and override the remaining methods there.
+	
+Correct Code 1
+``````````````
+from abc import ABC,abstractmethod
+
+class AbstractClass(ABC):
+    @abstractmethod
+    def abstract_method1(self):                                                                
+        pass                                                    # abstract method without implementation
+    @abstractmethod 
+    def abstract_method2(self):
+        print("abstract method with implementations")
+
+class Subclass(AbstractClass):                                  # overriding only one method of the Abstract Class in this subclass.        
+    def abstract_method1(self):                             
+        print("overriding abstract method 1 form subclass")
+    
+    def abstract_method2(self):
+        print("overriding abstract method 2 form subclass")
+
+Subclass_object = Subclass()                                    # Success !! Both methods are overridden.
+Subclass_object.abstract_method1()
+Subclass_object.abstract_method2()
+
+o/p -
+overriding abstract method 1 form subclass
+overriding abstract method 2 form subclass
+
+Correct Code 2
+``````````````
+from abc import ABC,abstractmethod
+
+class AbstractClass(ABC):
+    @abstractmethod
+    def abstract_method1(self):                                                                
+        pass                                                    # abstract method without implementation
+    @abstractmethod 
+    def abstract_method2(self):
+        print("abstract method with implementations")
+
+class Subclass(AbstractClass):                                  # overriding only one method of the Abstract Class in this subclass. We can't instanciate this class.    
+    def abstract_method1(self):                             
+        print("overriding abstract method 1 form subclass")
+ 
+class Childclass_of_Subclass(Subclass):                         # all methods of the Abstract class is overridden in this class. We can instanciate this class.
+    def abstract_method2(self):
+        print("overriding abstract method 2 form subclass")
+
+Subclass_object = Childclass_of_Subclass()                      # Success !! Both methods are overridden.
+Subclass_object.abstract_method1()
+Subclass_object.abstract_method2()
+
+o/p- 
+overriding abstract method 1 form subclass
+overriding abstract method 2 form subclass
+
+Example 4 - Abstract class having constructors
+---------   -----------------------------------
+
+Code 1
+``````
+from abc import ABC,abstractmethod
+
+class AbstractClass(ABC):
+    def __init__(self,number):
+        self.number = number
+        
+    @abstractmethod
+    def add(self):                                                                
+        pass                                                    # abstract method without implementation
+    @abstractmethod 
+    def multiply(self):
+        pass
+
+class Subclass(AbstractClass):                                  # overriding only one method of the Abstract Class in this subclass. We can't instanciate this class.    
+    def add(self):                             
+        print("sum is ",self.number+100)
+ 
+class Childclass_of_Subclass(Subclass):                         # all methods of the Abstract class is overridden in this class. We can instanciate this class.
+    def multiply(self):
+        print("prod is ",self.number*10)
+
+Subclass_object = Childclass_of_Subclass(50)                    # Success !! Abstract class constructor is overridden.
+Subclass_object.add()
+Subclass_object.multiply()
+
+o/p-
+sum is  150
+prod is  500
+
+Code 2
+``````
+
+from abc import ABC,abstractmethod
+
+class AbstractClass(ABC):
+    def __init__(self,number):
+        self.number = number
+        
+    @abstractmethod
+    def add(self):                                                                
+        pass                                                    # abstract method without implementation
+    @abstractmethod 
+    def multiply(self):
+        pass
+
+class Subclass(AbstractClass):                                  # overriding only one method of the Abstract Class in this subclass. We can't instanciate this class.    
+    def add(self):                             
+        print("sum is ",self.number+100)
+ 
+class Childclass_of_Subclass(Subclass):                         # all methods of the Abstract class is overridden in this class. We can instanciate this class.
+    def __init__(self,number):										
+		self.number = 10+number
+		
+	def multiply(self):
+        print("prod is ",self.number*10)
+
+Subclass_object = Childclass_of_Subclass(50)                    # Success !! Runs it own class constructor, then run the Abstract class constructor.
+Subclass_object.add()
+Subclass_object.multiply()
+
+o/p-
+sum is  160
+prod is  600
+
+Example 4 - Abstract class can have methods other than Abstract methods
+---------   ------------------------------------------------------------
+
+Instance methods declared inside the AbstractClass doesnot behave like Abstract methods. They behave like other normal Instance methods. 
+It is not necessary to override these methods. Using super() we can access them.
+
+from abc import ABC,abstractmethod
+
+class AbstractClass(ABC):
+    def __init__(self,number):
+        self.number = number
+        
+    @abstractmethod
+    def add(self):                                                                
+        pass                                                    # abstract method without implementation
+        
+    def multiply(self):                                         # Instance methods .They don't behave like Abstract methods even though they are declared in Abstract class.
+        print("prod is ",self.number*10)
+
+class Subclass(AbstractClass):                                  # Overriding only the Abstract method . We can't instanciate this class.    
+    def add(self):                             
+        print("sum is ",self.number+100)
+        super().multiply()                                      # using super() to call the instance method
+
+Subclass_object = Subclass(50)                   				# Success !! There is only one Abstract method and that is getting overridden in subclass. No worries !!
+Subclass_object.add()
+
+o/p -
+sum is  150
+prod is  500
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,26 @@
+class - https://www.youtube.com/playlist?list=PL8JLvOaoO7fPXHRNTM8LOC7IvT9jq5feq
+exception handling - https://www.youtube.com/watch?v=B-K_j8KP_nY&list=PL8JLvOaoO7fOXm-LU2Ox7gw0TU3k-3cgS
+python- https://www.youtube.com/playlist?list=PL8JLvOaoO7fMCtDWonpk8rv2AjX9QFZkc
+DurgaPython - https://www.youtube.com/playlist?list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF
+AdvPython -https://www.youtube.com/watch?v=es457q7n3P8&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD
+
+
+
+o/p- Student name is Anindya Bhattacharya, roll no is 127, department is Mechanical Engineering
+
+
+This is a way we can declare a class in Python and create an object form it.
+
+class is the logical entity, which consists of the business logic. It represents a species(type) of business logic. 
+object is the physical entity built out of the class. 
+class is having the logics and the caracteristics. Object is the real physical entity having all the all the attributes defined in a class.
+When there is a need to create some thing of similar nature, we create a class describing all the required characteristics. Then we can create multiple
+object of same type, using the class.
+
+For example to create humans god have created a class and have defined characteristics like, they will have 2 legs 2 hands they will talk walk jump etc etc.
+And using these characteristics God creates real humans which are real objects (rokto mango er sorir). He created objects and gave reference variable name
+like anindya, ila, anutosh etc etc.
+
+
+
+

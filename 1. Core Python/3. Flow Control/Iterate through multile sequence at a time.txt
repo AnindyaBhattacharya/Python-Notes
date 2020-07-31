@@ -1,0 +1,73 @@
+We can iterate over lists simultaneously in ways:
+zip()and izip() : 
+----------------
+
+In Python, zip returns a list of tuples. This is fine when lists are not massive. 
+If they are massive then forming zip(list1, list2, ….) is an unnecessarily massive temporary variable, and should be replaced by itertools.izip or itertools.izip_longest, which returns an iterator instead of a list. 
+zip() function stops when anyone of the list of all the lists gets exhausted. In simple words, it runs till the smallest of all the lists.
+
+Below is an implementation of the zip function and itertools.izip which iterates over 3 lists:
+
+# Python progam to iterate 
+# over 3 lists using zip and izip function 
+  
+Example -
+---------------
+
+import itertools  
+  
+num = [1, 2, 3] 
+color = ['red', 'while', 'black'] 
+value = [255, 256] 
+  
+# iterates over 3 lists and excutes  
+  
+for (a, b, c) in zip(num, color, value): 
+     print a, b, c 
+  
+print "\niterating using izip"
+for (a, b, c) in itertools.izip(num, color, value): 
+    print a, b, c 
+
+Output:
+
+# returns only 2 results as the "value" list has only 2 elements. Even if other two lists have 3 elements we get results for only two. 
+# As zip() function stops when anyone of the list of all the lists gets exhausted. In simple words, it runs till the smallest of all the lists.
+
+1 red 255			
+2 while 256
+
+iterating using izip
+1 red 255
+2 while 256
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+itertools.izip_longest() : izip_longest stops when all lists are exhausted. When the shorter iterator(s) are exhausted, izip_longest yields a tuple with None value.
+Below is an implementation of the itertools.izip_longest which iterates over 3 lists:
+
+# Python progam to iterate 
+# over 3 lists using zip and izip function 
+ 
+Example -2
+--------------------
+import itertools  
+  
+num = [1, 2, 3] 
+color = ['red', 'while', 'black'] 
+value = [255, 256] 
+
+for (a, b, c) in itertools.izip_longest(num, color, value): 
+    print a, b, c 
+
+
+Output:
+
+# returns 3 results, even if one list has 2 members and others have 3 members, then also o/p is 3 results. 
+# As izip_longest stops when all lists are exhausted. When the shorter iterator(s) are exhausted, izip_longest yields a tuple with None value.
+
+1 red 255
+2 while 256
+3 black None
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

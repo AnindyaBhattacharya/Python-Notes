@@ -1,0 +1,130 @@
+MultiThreading Locks.
+--------------------
+Why locks are required ?
+
+In Multi threading process, once the threads start, no one can predict the run of the threads, at what time which thread is running.
+So there is a possibility that two threads can access the same resource at the same time. This will lead to incorrect results.
+Suppose multiple threads are trying to access one global variable at the same time. Then there is a certainty that the result will be incorrect.
+To achieve the state where only one thread can access the common resource at one time, the LOCK concept is used.
+When a thread is trying to access the variable, then that thread is locking the variable for it's own use only, thus preventing other threads to access it.
+
+----------------------------
+Example - Code without Locks
+----------------------------
+
+# In the below code we are adding 2 and 3 100000 time and subtracting 1 and 4 100000 from it . So the net result is expected to be 0
+# On running the code for several times, in few cases we are getting incorrect results. 
+# This is because two or more threads are trying to access the variable at the same time, the thread which finishes first that result is only accepted.
+
+from threading import *
+
+SumTotal = 0
+
+def adding_2_nolock():
+    global SumTotal
+    for i in range(100000):
+        SumTotal += 2
+def adding_3_nolock():
+    global SumTotal
+    for i in range(100000):
+        SumTotal += 3
+def sub_4_nolock():
+    global SumTotal
+    for i in range(100000):
+        SumTotal -= 4
+def sub_1_nolock():
+    global SumTotal
+    for i in range(100000):
+        SumTotal -= 1
+
+if __name__ == "__main__":
+    
+    t1=Thread(target=adding_2_nolock)
+    t2=Thread(target=adding_3_nolock)
+    t3=Thread(target=sub_4_nolock)
+    t4=Thread(target=sub_1_nolock)
+    
+    t1.start()
+    t2.start()
+    t3.start()
+    t4.start()
+    
+	t1.join()
+    t2.join()
+    t3.join()
+    t4.join()
+	
+    print(SumTotal)
+
+o/p - Inconsistent result every time. Expecting 0. 
+
+D:\Pycodes>py new1.py
+-9346
+
+D:\Pycodes>py new1.py
+-87606
+
+D:\Pycodes>py new1.py
+-72890
+
+-------------------------
+Example - Code with Locks
+-------------------------
+
+# using the Lock class of the threading module we can lock the functionality for sole access of a particular thread.
+# Lock.acquire() - initiates the locking of the functionality
+# Lock.release() - releases the lock from the functionality.
+
+from threading import *
+
+SumTotal = 0
+
+def adding_2_noLock():
+    global SumTotal
+    for i in range(100000):
+        Lock.acquire()                          # Lock.acquire , locks the SumTotal var from other threads.
+        SumTotal += 2                           # this fuction now has the only access to the variable and updates it.
+        Lock.release()                          # Lock.release(), releases the lock . Once the update is complete, releases lock for other threads to be access
+        
+def adding_3_noLock():
+    global SumTotal
+    for i in range(100000):
+        Lock.acquire()
+        SumTotal += 3
+        Lock.release()
+        
+def sub_4_noLock():
+    global SumTotal
+    for i in range(100000):
+        Lock.acquire()
+        SumTotal -= 4
+        Lock.release
+        
+def sub_1_noLock():
+    global SumTotal
+    for i in range(100000):
+        Lock.acquire()
+        SumTotal -= 1
+        Lock.release()
+
+if __name__ == "__main__":
+    
+    Lock = Lock()
+    t1=Thread(target=adding_2_noLock)
+    t2=Thread(target=adding_3_noLock)
+    t3=Thread(target=sub_4_noLock)
+    t4=Thread(target=sub_1_noLock)
+    
+    t1.start()
+    t2.start()
+    t3.start()
+    t4.start()
+    
+    t1.join()
+    t2.join()
+    t3.join()
+    t4.join()
+    
+    print(SumTotal)
+	
+o/p -> always 0

@@ -1,0 +1,565 @@
+Modules & Packages 
+------------------------------
+
+Modules are collections of functions, variables, classes. They are nothing but Python codes only, which can be referenced for reuse.
+
+Packages are like folders having modules.
+
+Python has predefined number of modules. To use the functions and the classes of the modules, modules have to be imported.
+
+math -> is a module containing all mathematical functionalities. math is a stabdard library function.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ways to import a modlue
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ex 
+---
+
+import math
+
+print(math.sqrt(36))
+print(math.pi)
+print(math.factorial(5))
+print(math.pow(4,2))
+
+Note - we are using "math" every time we are using a method like math.pow(),math.pi. To overcome this we have other ways to import modules
+
+Ex-
+---
+assigning varables to the imported module.
+
+import math as m
+print(m.sqrt(36))
+print(m.pi)
+print(m.factorial(5))
+print(m.pow(4,2))
+
+Ex-
+----
+importing all functions
+
+from math import *
+print(sqrt(49))
+
+Ex-
+----
+importing a particular function , say sqrt.
+
+from math import sqrt
+print(sqrt(36))
+
+Ex-
+----
+assigning varables to the imported functions
+
+from math import sqrt as m
+print(m(49))
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Importing User Defined modules
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ ## When user defined modules are peresent in the same directory where the code is written, it can simply be imported by following any of the above mentioned way.
+
+Example -
+----------
+
+#palindrome module.
+#checks if reverse of a number/string is same as the original number/string
+print("Imported Palindrome Module")
+
+def palindrome(a) :
+    if str(type(a))=="<class 'int'>":
+        number=str(a)
+        reversenumber=int(number[len(number)::-1])
+        if(reversenumber==a):
+            print(a," is a palindrome number")
+        else:
+            print(a," is not a palindrome number")
+    elif str(type(a))=="<class 'str'>":
+        reverse_str=a[len(a)::-1]
+        if(reverse_str.casefold()==a.casefold()):
+            print(a," is a palindrome string")
+        else:
+            print(a," is not a palindrome string")
+
+
+# both the code and the module which is imported, are present in same directory.
+
+#code
+
+import Palindrome_Module as p  --> simply importing the module
+p.palindrome("abcd")  ----> palindrome function of the imported module is getting called.
+
+o/p-
+D:\Pycodes>py Test1.py
+Imported Palindrome Module
+abcd  is not a palindrome string
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Concept of sys.path
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+When we import a module, then where does it search for the module to be in? There is a list of paths where the module is searched.
+By importing the "sys" module first and then checking:- sys.path , we can get the list of paths where the modules are searched for.
+
+#code to get the list of paths
+
+import sys
+print(sys.path)
+
+o/p-
+D:\Pycodes>py Test1.py
+['D:\\Pycodes', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\python37.zip', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\DLLs', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\lib', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\lib\\site-packages']444
+
+Firstly it searches the module in the directory from where the code is running.
+In this case code is running from "D:\Pycodes>py Test1.py" and first path itself is 'D:\\Pycodes'.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Importing a module where the module is not present in the same path where the code is written. Concept of packages.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+When the modules are present in a different folders we call those folder as Packages. Package is the folder where modules(which are nothing but python scripts) are stored.
+
+We have to either include the package(path of the package) where the module is present in the [list - sys.path]
+or
+We can declare the path as an environment variable of Python, it will then pick it up from there.
+
+
+Example - (including the package where the module is present to the list - sys.path)
+-------------------------------------------------------------------------------
+
+import sys
+sys.path.append("D:\Python Pkg")  --->  the path where the module is present is appended at the end of sys.path
+print(sys.path)
+
+import Palindrome_Module as p
+p.palindrome(434)
+
+
+o/p-
+['D:\\Pycodes', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\python37.zip', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\DLLs', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\lib', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32', 'C:\\Users\\Anindya Bhattacharya\\AppData\\Local\\Programs\\Python\\Python37-32\\lib\\site-packages', 'D:\\Python Pkg']
+Imported Palindrome Module
+434  is a palindrome number
+
+
+## When Subpackages are present,then we have to explicitly include the full path of the subpackage in sys.path.
+
+Example - if module M1.py is present in "D:\Python Pkg\More Pkg" (More Pkg is a subfolder inside Python Pkg), then to import M1 module we will have to add the path 	  where M1 module is present i.e "D:\Python Pkg\More Pkg" in the sys.path. Only adding "D:\Python Pkg\" will not work
+
+Disavantage - everytime we will have to append the path before calling the module. If we can add the path as an evironment variable to Python, this problem is solved.
+
+
+Example - (including the path as an environment variable of Python)
+--------------------------------------------------------------------
+
+check how to set the path as an env variable from link - https://www.youtube.com/watch?v=CqvZ3vGoGs0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Reloading a module
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Python interpreter imports a module only once during a session.
+
+Suppose we have the following code in a module named my_module.
+
+# This module shows the effect of
+#  multiple imports and reload
+print("This code got executed")
+
+>>> import my_module
+This code got executed
+>>> import my_module
+>>> import my_module
+
+We can see that our code got executed only once. This goes to say that our module was imported only once.
+
+Now if our module is changed during the course of the program, we would have to reload it.
+We can use the reload() function inside the imp module to reload a module. This is how its done.
+
+>>> import imp
+>>> import my_module
+This code got executed
+>>> import my_module
+>>> imp.reload(my_module)
+This code got executed
+<module 'my_module' from '.\\my_module.py'>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+dir()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+We can use the dir() function to find out the functions classes or variables that are defined inside a module.
+We can find out the methods that are defined in the module.
+
+>>> import math
+>>> dir(math)
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'pi', 'pow', 'radians', 'remainder', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']
+>>> math.factorial(5)
+120
+>>> math.log10(1000)
+3.0
+
+>>> import os
+>>> dir(os)
+['DirEntry', 'F_OK', 'MutableMapping', 'O_APPEND', 'O_BINARY', 'O_CREAT', 'O_EXCL', 'O_NOINHERIT', 'O_RANDOM', 'O_RDONLY', 'O_RDWR', 'O_SEQUENTIAL', 'O_SHORT_LIVED', 'O_TEMPORARY', 'O_TEXT', 'O_TRUNC', 'O_WRONLY', 'P_DETACH', 'P_NOWAIT', 'P_NOWAITO', 'P_OVERLAY', 'P_WAIT', 'PathLike', 'R_OK', 'SEEK_CUR', 'SEEK_END', 'SEEK_SET', 'TMP_MAX', 'W_OK', 'X_OK', '_Environ', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', '_execvpe', '_exists', '_exit', '_fspath', '_get_exports_list', '_putenv', '_unsetenv', '_wrap_close', 'abc', 'abort', 'access', 'altsep', 'chdir', 'chmod', 'close', 'closerange', 'cpu_count', 'curdir', 'defpath', 'device_encoding', 'devnull', 'dup', 'dup2', 'environ', 'error', 'execl', 'execle', 'execlp', 'execlpe', 'execv', 'execve', 'execvp', 'execvpe', 'extsep', 'fdopen', 'fsdecode', 'fsencode', 'fspath', 'fstat', 'fsync', 'ftruncate', 'get_exec_path', 'get_handle_inheritable', 'get_inheritable', 'get_terminal_size', 'getcwd', 'getcwdb', 'getenv', 'getlogin', 'getpid', 'getppid', 'isatty', 'kill', 'linesep', 'link', 'listdir', 'lseek', 'lstat', 'makedirs', 'mkdir', 'name', 'open', 'pardir', 'path', 'pathsep', 'pipe', 'popen', 'putenv', 'read', 'readlink', 'remove', 'removedirs', 'rename', 'renames', 'replace', 'rmdir', 'scandir', 'sep', 'set_handle_inheritable', 'set_inheritable', 'spawnl', 'spawnle', 'spawnv', 'spawnve', 'st', 'startfile', 'stat', 'stat_result', 'statvfs_result', 'strerror', 'supports_bytes_environ', 'supports_dir_fd', 'supports_effective_ids', 'supports_fd', 'supports_follow_symlinks', 'symlink', 'sys', 'system', 'terminal_size', 'times', 'times_result', 'truncate', 'umask', 'uname_result', 'unlink', 'urandom', 'utime', 'waitpid', 'walk', 'write']
+
+>>> dir(os.path)
+['__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', '_abspath_fallback', '_get_bothseps', '_getfinalpathname', '_getfullpathname', '_getvolumepathname', 'abspath', 'altsep', 'basename', 'commonpath', 'commonprefix', 'curdir', 'defpath', 'devnull', 'dirname', 'exists', 'expanduser', 'expandvars', 'extsep', 'genericpath', 'getatime', 'getctime', 'getmtime', 'getsize', 'isabs', 'isdir', 'isfile', 'islink', 'ismount', 'join', 'lexists', 'normcase', 'normpath', 'os', 'pardir', 'pathsep', 'realpath', 'relpath', 'samefile', 'sameopenfile', 'samestat', 'sep', 'split', 'splitdrive', 'splitext', 'stat', 'supports_unicode_filenames', 'sys']
+
+>>> dir(os.path.exists)
+['__annotations__', '__call__', '__class__', '__closure__', '__code__', '__defaults__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__get__', '__getattribute__', '__globals__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__kwdefaults__', '__le__', '__lt__', '__module__', '__name__', '__ne__', '__new__', '__qualname__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__']
+
+
+to find where the module is present use - 
+
+>>> os.__file__
+C:\Users\Anindya Bhattacharya\AppData\Local\Programs\Python\Python37-32\lib\os.py
+
+Example -
+
+>>> import Palindrome_Module
+Imported Palindrome Module
+>>> dir(Palindrome_Module)
+['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'sum']
+>>> Palindrome_Module.__file__
+'D:\\Pycodes\\Palindrome_Module.py'
+
+#######################################################################################################################################################################
+observation - If any classes are declared in the module then they are generally found before the members which have two underscores in begining and end like "__all__" ------------  The function names which are defined in the modules are generally found after the members which have two underscores in begining and end.
+
+For example - 'PathLike' and '_Environ' are classes which are declared in os module.They are found before the double underscore members start in dir(os). 
+	      This is the list of such members. __all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__'
+	      and 'PathLike' and '_Environ' are found before this list.
+	      Whereas 'remove' is function defined in os module is found after the double underscore members.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+help(modulename) -> returns a document about the usage of the module.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------lists down how to use the module, what are the specified class , functions ,variables used in the module and how to use them.
+
+exmample - 
+import math
+help(math)
+
+NAME
+    math
+
+DESCRIPTION
+    This module is always available.  It provides access to the
+    mathematical functions defined by the C standard.
+
+FUNCTIONS
+    acos(x, /)
+        Return the arc cosine (measured in radians) of x.
+    
+    acosh(x, /)
+        Return the inverse hyperbolic cosine of x.
+    
+    asin(x, /)
+        Return the arc sine (measured in radians) of x.
+    
+    asinh(x, /)
+        Return the inverse hyperbolic sine of x.
+    
+    atan(x, /)
+        Return the arc tangent (measured in radians) of x.
+    
+    atan2(y, x, /)
+        Return the arc tangent (measured in radians) of y/x.
+        
+        Unlike atan(y/x), the signs of both x and y are considered.
+    
+    atanh(x, /)
+        Return the inverse hyperbolic tangent of x.
+    
+    ceil(x, /)
+        Return the ceiling of x as an Integral.
+        
+        This is the smallest integer >= x.
+    
+    copysign(x, y, /)
+        Return a float with the magnitude (absolute value) of x but the sign of y.
+        
+        On platforms that support signed zeros, copysign(1.0, -0.0)
+        returns -1.0.
+    
+    cos(x, /)
+        Return the cosine of x (measured in radians).
+    
+    cosh(x, /)
+        Return the hyperbolic cosine of x.
+    
+    degrees(x, /)
+        Convert angle x from radians to degrees.
+    
+    erf(x, /)
+        Error function at x.
+    
+    erfc(x, /)
+        Complementary error function at x.
+    
+    exp(x, /)
+        Return e raised to the power of x.
+    
+    expm1(x, /)
+        Return exp(x)-1.
+        
+        This function avoids the loss of precision involved in the direct evaluation of exp(x)-1 for small x.
+    
+    fabs(x, /)
+        Return the absolute value of the float x.
+    
+    factorial(x, /)
+        Find x!.
+        
+        Raise a ValueError if x is negative or non-integral.
+    
+    floor(x, /)
+        Return the floor of x as an Integral.
+        
+        This is the largest integer <= x.
+    
+    fmod(x, y, /)
+        Return fmod(x, y), according to platform C.
+        
+        x % y may differ.
+    
+    frexp(x, /)
+        Return the mantissa and exponent of x, as pair (m, e).
+        
+        m is a float and e is an int, such that x = m * 2.**e.
+        If x is 0, m and e are both 0.  Else 0.5 <= abs(m) < 1.0.
+    
+    fsum(seq, /)
+        Return an accurate floating point sum of values in the iterable seq.
+        
+        Assumes IEEE-754 floating point arithmetic.
+    
+    gamma(x, /)
+        Gamma function at x.
+    
+    gcd(x, y, /)
+        greatest common divisor of x and y
+    
+    hypot(x, y, /)
+        Return the Euclidean distance, sqrt(x*x + y*y).
+    
+    isclose(a, b, *, rel_tol=1e-09, abs_tol=0.0)
+        Determine whether two floating point numbers are close in value.
+        
+          rel_tol
+            maximum difference for being considered "close", relative to the
+            magnitude of the input values
+          abs_tol
+            maximum difference for being considered "close", regardless of the
+            magnitude of the input values
+        
+        Return True if a is close in value to b, and False otherwise.
+        
+        For the values to be considered close, the difference between them
+        must be smaller than at least one of the tolerances.
+        
+        -inf, inf and NaN behave similarly to the IEEE 754 Standard.  That
+        is, NaN is not close to anything, even itself.  inf and -inf are
+        only close to themselves.
+    
+    isfinite(x, /)
+        Return True if x is neither an infinity nor a NaN, and False otherwise.
+    
+    isinf(x, /)
+        Return True if x is a positive or negative infinity, and False otherwise.
+    
+    isnan(x, /)
+        Return True if x is a NaN (not a number), and False otherwise.
+    
+    ldexp(x, i, /)
+        Return x * (2**i).
+        
+        This is essentially the inverse of frexp().
+    
+    lgamma(x, /)
+        Natural logarithm of absolute value of Gamma function at x.
+    
+    log(...)
+        log(x, [base=math.e])
+        Return the logarithm of x to the given base.
+        
+        If the base not specified, returns the natural logarithm (base e) of x.
+    
+    log10(x, /)
+        Return the base 10 logarithm of x.
+    
+    log1p(x, /)
+        Return the natural logarithm of 1+x (base e).
+        
+        The result is computed in a way which is accurate for x near zero.
+    
+    log2(x, /)
+        Return the base 2 logarithm of x.
+    
+    modf(x, /)
+        Return the fractional and integer parts of x.
+        
+        Both results carry the sign of x and are floats.
+    
+    pow(x, y, /)
+        Return x**y (x to the power of y).
+    
+    radians(x, /)
+        Convert angle x from degrees to radians.
+    
+    remainder(x, y, /)
+        Difference between x and the closest integer multiple of y.
+        
+        Return x - n*y where n*y is the closest integer multiple of y.
+        In the case where x is exactly halfway between two multiples of
+        y, the nearest even value of n is used. The result is always exact.
+    
+    sin(x, /)
+        Return the sine of x (measured in radians).
+    
+    sinh(x, /)
+        Return the hyperbolic sine of x.
+    
+    sqrt(x, /)
+        Return the square root of x.
+    
+    tan(x, /)
+        Return the tangent of x (measured in radians).
+    
+    tanh(x, /)
+        Return the hyperbolic tangent of x.
+    
+    trunc(x, /)
+        Truncates the Real x to the nearest Integral toward 0.
+        
+        Uses the __trunc__ magic method.
+
+DATA
+    e = 2.718281828459045
+    inf = inf
+    nan = nan
+    pi = 3.141592653589793
+    tau = 6.283185307179586
+
+FILE
+    (built-in)
+
+
+
+Check how to use the "os" modlue - https://www.youtube.com/watch?v=tJxcKyFMTGo
+Check how to use the "random" module - https://www.youtube.com/watch?v=NyqBDlfQfww&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=38&t=0s
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Concept of  __name__ == "__main__"
+
+What does if __name__ == "__main__": do?
+-----------------------------------------
+
+___name__   is a global variable and is the entry point to the program. When python program starts executing then it assigns values to special variables like __name__.
+
+Suppose there is a python script "test.py". On execution of this script ("test.py") python starts assigning some values to special variables.
+The value assigned to one such variable __name__  is "__main__"
+So whenever a script gets executed , a default value of "__main__" is assigned to the variable __name__.
+
+# python script - test1.py
+--------------------------
+#code block
+print("starting the execution of test1.py")
+print("printing the value of __name__ is ", __name__)
+#
+o/p- 
+starting the execution of test1.py
+printing the value of __name__ is  __main__
+
+
+# python script - script1.py
+---------------------------
+#code block
+print("starting the execution of script1.py")
+print("printing the value of __name__ in script1.py is ", __name__)
+#
+o/p-
+starting the execution of script1.py
+printing the value of __name__ in script1.py is  __main__
+
+Now considering a scenario where the python script named "script1.py" is getting imported as a module to another python script "test.py".
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+print(" importing script1.py to test.py")
+import script1						        # script1.py also prints the value of __name__					
+print("*"*100)
+print("the value of __name__ in test.py is -> ", __name__)
+
+o/p -
+importing script1.py to test.py
+starting the execution of script1.py
+printing the value of __name__ in script1.py is  script1	# value printed from imported script1.py
+*********************************************************
+the value of __name__ in test.py is ->  __main__	        # value printed from the test.py , which is the parent(as module script1.py is getting imported here)
+
+
+observation -
+------------
+So the value of __name__ is "__main__" for the parent program always.
+When a script is getting imported as a module in some other program(parent program) then the value of __name__ for the imported script is same as the scriptname
+
+Taking the above example -
+test.py is the parent program and script1.py is imported in test.py
+so for test.py the value of [ __name__ ] is "__main__" and value of [ __name__ ] for script1.py is "script1", which is the script name itself.
+
+
+Use of [ if __name__ == "__main__": ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+parent script - test.py
+script we want to import - script1.py
+
+script1.py is also a python code which can have numerous functionalities. Now among all these we only want few of them to get imported and others not.
+So the thing we want is, when script1.py is running as a parent then all it functionalities must run, when it is getting imported we want only few functionalities to get imported not all.
+To acheive this we will be using the concept of __name__.
+
+Example
+-------
+Suppose there are 3 functions in script1.py. We want only one among these 3 to get imported and others not.
+
+# python script - script1.py
+............................
+print("starting execution of script1")
+def function1():
+    print("I want to get imported")
+def function2():
+    print("I will not get imported, I am not free")
+def function3():
+    print("I don't want to help others, I will not get imported")
+
+if __name__ == "__main__":                                       # only when the script runs as parent function2 and function3 executes , thus not imported. 
+    function2()
+    function3()
+function1()
+
+# python script - test.py
+.........................
+print("importing script1 to test")
+print("*"*100)
+import script1							 #importing script1, only function1 executes.
+print("*"*100)
+print("test execution completed")
+
+o/p-
+D:\Pycodes>py test.py
+importing script1 to test
+******************************
+starting execution of script1
+I want to get imported
+******************************
+test execution completed
+
+
+=======================================================================================================================================================================
+.......................................................................................................................................................................
+=======================================================================================================================================================================
+
+
+
+
+

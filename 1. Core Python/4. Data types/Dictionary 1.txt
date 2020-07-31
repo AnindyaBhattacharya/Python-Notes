@@ -1,0 +1,216 @@
+Dictionary Datatype
+--------------------
+
+Characeristics -
+--------------
+1. Dictionary has a key: value pairs. The key value pair is together called an item.
+2. Key should be unique, values can be duplicates . Keys should be immutable data type like int,str,float,tuple with immutable elements
+3. Dictionary is unordered, no insertion order preserved.
+4. Dictionary is mutuable datatype, modifications are allowerd
+5. No indexing or slicing applicable as it is an unordered collection.
+6. Values are referenced by the keys.Values can be duplicate
+
+
+Declaration - 
+-----------
+dict1 = {100:"anindya",200:"bhattacharya",300:"anutosh"}
+print(dict1)
+print(type(dict1))
+o/p - 
+{100: 'anindya', 200: 'bhattacharya', 300: 'anutosh'}
+<class 'dict'>
+
+dict2 = {"name":"anindya","roll":127,"address":"bwn"}     #dict with keys of different datatype.
+print(dict2)
+print(type(dict2))
+o/p - 
+{'name': 'anindya', 'roll': 127, 'address': 'bwn'}
+<class 'dict'>
+
+dict3 = {}                                            # declaring empty dictionary
+print(dict3)
+print(type(dict3))
+dict3["name"] = "anindya"                             # inserting keys and corresponding values  
+dict3["office"] = "cts"                               # inserting keys and corresponding values 
+dict3["id"] = 591931                                  # inserting keys and corresponding values 
+print(dict3)
+o/p- 
+<class 'dict'>
+{'name': 'anindya', 'office': 'cts', 'id': 591931}
+
+dict4 = {(1,"anindya"):"name",(2,"ila"):"mom"}        # dict can  have tuple as keys
+print(dict4)
+print(dict4[(1,"anindya")])
+o/p -
+{(1, 'anindya'): 'name', (2, 'ila'): 'mom'}
+name
+
+dict5 = dict({1:'apple', 2:'ball'})                   # declaring using dict()
+print(dict5)
+# o/p- {1: 'apple', 2: 'ball'}
+
+dict6 = dict([(1,'apple'), (2,'ball')])               # declaration using pairs. list have pairs of items.
+print(dict6)
+# o/p- {1: 'apple', 2: 'ball'}
+
+dict6 = dict([{1,'apple'}, {2,'ball'}])               # declaring a dict, from a list, where list contains sets.
+print(dict6)
+# o/p- {'apple': 1, 2: 'ball'}                        # not particular order some times apple is the key sometimes 1 is the key. set is unordered
+ 
+# dict6 = dict([{1,["anindya"]},{2,["bhattacharya"]}])
+
+
+# Examples 
+
+# Ex - 1 . Working with dictonary
+# ----------------------------------
+dict = {}                           # declaring empty dict
+dict = { "name" : "anindya", "home" : "anindya", "phn" : 9046212037 }
+print(dict)                         # printing dict
+print(dict["name"])                 # printing value of key
+print(dict["phn"])                  
+dict["home"] = "burdwan"            # changing value of key
+print(dict)                         
+dict["job"] = " switch "            # adding additional key and value
+print(dict)
+#print(dict["salary"])               # error  KeyError: 'salary'
+
+
+'''
+o/p- 
+
+{'name': 'anindya', 'home': 'anindya', 'phn': 9046212037}
+anindya
+9046212037
+{'name': 'anindya', 'home': 'burdwan', 'phn': 9046212037}
+{'name': 'anindya', 'home': 'burdwan', 'phn': 9046212037, 'job': ' switch '}
+KeyError: 'salary'
+'''
+
+# Example - 2 . Woking with dict function
+# -----------------------------------------
+
+dict = { "name" : "anindya", "home" : "anindya", "phn" : 9046212037 }
+print(dict.keys())              # print keys
+print(dict.values())            # print values
+print(dict.items())             # print key value pairs
+
+# using get() to fetch values for corresponding keys
+    # if key present then returns value
+    # if key not present returns NONE . It doesnot terminate the code with "KeyError" . It passes the code and return value NONE for missing key.
+    # if key not present then can return a default value which is defined at the second argument in the get function.
+    
+print(dict.get("name"))         # prints value for name key
+print(dict.get("salary"))       # prints None as key is not Even if the key salary is not present we are not getting a key error, as we are using get()
+print(dict.get("salary","no key found"))        # prints no key found . salary key is not found, prints a the default value, which is the second argument.
+'''
+o/p- 
+
+dict_keys(['name', 'home', 'phn'])
+dict_values(['anindya', 'anindya', 9046212037])
+dict_items([('name', 'anindya'), ('home', 'anindya'), ('phn', 9046212037)])
+None
+no key found
+'''
+
+# Typecast the above o/p to list and tuple for usage.
+# ---------------------------------------------------
+
+dict = { "name" : "anindya", "home" : "anindya", "phn" : 9046212037 }
+print(tuple(dict.keys()))             # print keys
+print(list(dict.values()))            # print values
+print(list(dict.items()))             # print key value pairs
+
+
+'''
+o/p- 
+
+('name', 'home', 'phn')
+['anindya', 'anindya', 9046212037]
+[('name', 'anindya'), ('home', 'anindya'), ('phn', 9046212037)]
+'''
+
+# Example 3 - Iterating through dict
+# ----------------------------------
+
+dict = { "name" : "anindya", "home" : "anindya", "phn" : 9046212037 }
+
+for x in dict:
+    print(x)                        # only key is printed
+
+'''
+o/p -
+
+name
+home
+phn
+'''
+
+for x in dict:
+    print(x,dict[x])               # printing key and value
+
+'''
+o/p- 
+name anindya
+home anindya
+phn 9046212037
+'''
+
+for key,value in dict.items():      
+    print(key,value)                # printing key and values
+
+'''
+o/p- 
+name anindya
+home anindya
+phn 9046212037
+'''
+
+# Example - (is , is not) , (in , not in) , (==, != ) for dictionaries
+# ---------------------------------------------------------------------
+
+# (is , is not) -> memory comparison.
+# (==, != )     -> equal and not equal compares both key and value wise.
+# (in , not in) -> checks if key is present in dictionary or not. 
+
+dict_1 = { "name" : "anindya", "home" : "anindya", "phn" : 9046212037 } 
+dict_2 = { "name" : "hari", "home" : "bwn", "phn" : 7899292912 }
+dict_3 = dict_1
+dict_4 = { "name" : "anindya", "home" : "anindya", "phn" : 9046212037 }
+dict_5 = { "name" : "anindya", "house" : "anindya", "contact" : 9046212037 }
+
+print(dict_1 is dict_2)     # Flase
+print(dict_1 is dict_4)     # False , even if the value of dict_1 and dict_4 are same but they are having different memory
+print(dict_1 is dict_3)     # True , dict_1 is dict_3
+
+print(dict_1 == dict_2)     # Flase
+print(dict_1 == dict_4)     # True , value wise and key wise dict_1 and dict_4 are same
+print(dict_1 == dict_3)     # True , dict_1 is dict_3
+print(dict_1 == dict_5)     # False , key wise dict_1 is not same as dict_5
+
+print("name" in dict_1)       # True , Key "name" is present in dict_1
+print("hari" in dict_2)       # False, "hari" is not a key it's a value and in operator checks value only.
+print("salary" not in dict_5) # True, "salary" key is present in dict_5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

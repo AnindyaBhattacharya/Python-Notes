@@ -1,0 +1,529 @@
+Exception Handling 2
+--------------------
+ 
+Finally Block - When declared with try block,the finally block always get executed. Whether there is exception raised or not raised or even if there is 
+		termination of the code due to exceptions occuring either in try, except or else block, then also finally block runs is mandatory everytime.
+		Simply if try block executes, finally block will be definitely executed.
+
+syntax
+------
+Type -1 . finally block declared with try,except & else
+--------------------------------------------------------
+try :
+	statements/codes (which may or may not raise errors/exception)
+except exception_name1 :
+	if error raised in try block is "exception_name1", then this except block runs.
+else :
+	if no errors raised in try block, then this else block runs.
+finally:
+	irrespective of whether error raised or not raised in try block this finally block mandatorily runs.
+
+
+Type -2 . finally block declared only with try
+----------------------------------------------
+try :
+	statements/codes (which may or may not raise errors/exception)
+finally:
+	irrespective of whether error raised or not raised in try block this finally block mandatorily runs.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##Note -
+
+Invalid Syntax - try else and finally not allowed. If else is there there must be a except block
+
+Correct Syntax - try except else finally. There should be atleast aone except block for a else block
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+** Practical example - Suppose a database or a file is opened in try block. Whether there is any error encountered or not, the database connections must be closed.
+			Thus the connection closing code must be written in the finally block as the finally block will definitely run irrespective of errors.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Example -1  Exception raised in try, finally block getting executed
+-------------------------------------------------------------------
+from math import *
+
+print("starting of code")
+
+try:
+    x,y = map(int,input("enter two numbers ").split(","))       # taking multiple int inputs
+    print(x/y)                                                  # division                      
+    print(sqrt(x),sqrt(y))                                      # sq root, exception raised to perform sq root of negative integers                        
+except ArithmeticError :
+    print("number entered is 0")				# not executed
+except BaseException as a :
+    print("error encountered is - ",a)				# executed
+else :
+    print("no error encountered")				# not executed
+finally:
+    print("finally block executed")				# executed
+    
+print("end of code")
+
+o/p- 
+starting of code
+enter two numbers 25,-9
+-2.7777777777777777
+error encountered is -  math domain error
+finally block executed
+end of code
+
+ 
+Example -2  Exception not raised in try, still finally block getting executed
+-----------------------------------------------------------------------------
+from math import *
+
+print("starting of code")
+
+try:
+    x,y = map(int,input("enter two numbers ").split(","))       # taking multiple int inputs
+    print(x/y)                                                  # division                      
+    print(sqrt(x),sqrt(y))                                      # sq root                        
+except ArithmeticError :
+    print("number entered is 0")				# not executed
+except BaseException as a :
+    print("error encountered is - ",a)				# not executed
+else :
+    print("no error encountered")				# executed
+finally:
+    print("finally block executed")				# executed
+    
+print("end of code")
+
+o/p-
+starting of code
+enter two numbers 25,5
+5.0
+5.0 2.23606797749979
+no error encountered
+finally block executed
+end of code
+
+Example -3 finally block declared only with try
+-----------------------------------------------
+from math import *
+
+print("starting of code")
+
+try:
+    x,y = map(int,input("enter two numbers ").split(","))       # taking multiple int inputs
+    print(x/y)                                                  # division                      
+    print(sqrt(x),sqrt(y))                                      # sq root, exception raised to perform sq root of negative integers                        
+finally:
+    print("finally block executed")
+    
+print("end of code")
+
+o/p-
+starting of code
+enter two numbers 9,3
+3.0
+3.0 1.7320508075688772
+finally block executed
+end of code
+
+Example -4 code getting terminated still finally block getting executed
+-----------------------------------------------------------------------
+from math import *
+
+print("starting of code")
+
+try:
+    x,y = map(int,input("enter two numbers ").split(","))       # taking multiple int inputs
+    print(x/y)                                                  # division                      
+    print(sqrt(x),sqrt(y))                                      # sq root, exception raised to perform sq root of negative integers. but not handled in except.fails
+except ArithmeticError :
+    print("number entered is 0")
+else :
+    print("no error encountered")    
+finally:
+    print("finally block executed")				# executed
+    
+print("end of code")
+
+o/p- 
+starting of code
+enter two numbers 9,-4
+-2.25
+finally block executed				
+Traceback (most recent call last):
+  File "Test1.py", line 8, in <module>
+    print(sqrt(x),sqrt(y))                                      # sq root, exception raised to perform sq root of negative integers
+ValueError: math domain error
+			
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ## NOTE - Finally block is executed at last. If exception is raied at the except blocks, and also at the finally block altogether, then compiler 
+	   shows only the error faced in the finally block. This is because the compiler only can show the latest error encountered. 
+           Among all the blocks finally block is executed at the end, thus compiler prints that error only. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Example - Exception raised at try block, except block and finally block. Compiler only shows the error encountered in finally block.
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+#exception faced in try block.
+#exception faced in except block
+#exception faced in finally block.
+#the error shown by compiler is that faced in the finally block, as it is executed at last , and complier shows latest error only
+
+print("starting of code")
+
+try:
+    x,y = map(int,input("enter two numbers ").split(","))       # taking multiple int inputs
+    print(x/y)                                                  # division (here exception raised due to dicision by 0)                     
+except ArithmeticError :
+    print("you are trying to divide by" + y)                    # type error , string and int concatination   
+finally:
+    print("finally block executed")
+    print("re-input the number")
+    y = int(input("enter the number"))                          # taking string instead of number, int typecasting fails.
+    
+print("end of code")
+
+o/p-
+Traceback (most recent call last):
+  File "Test1.py", line 16, in <module>
+    y = int(input("enter the number"))                          # taking string instead of number, int typecasting fails.
+ValueError: invalid literal for int() with base 10: 'anindya'
+
+Example -
+----------
+
+#try block returns values
+#exception block returns values
+#exception block returns values
+#only value considered is 40 as it is the last one to execute.
+
+print("starting of code")
+
+def f1() :
+    try:
+        return 10
+    except :
+        return 20
+    else :
+        return 30
+    finally :
+        return 40
+        
+print(f1())
+print("end of code")
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Cases where the finally block doesnot run even if declared with try.
+
+	When the control does not enter the try block, finally block will not run. If try block runs finally block definitely runs.
+	---------------------------------------------------------------------------------------------------------------------------
+	
+	print("starting of code")
+
+	print(10/0)                 #code terminates here, control doesnot move to try. so finally not executed
+
+	try:
+    		print("try block")
+	finally :
+    		print("finally block")
+    
+	print("end of code")
+
+
+	When the compiler is shutdown before control reaches finally block . using os._exit()
+ 	-------------------------------------------------------------------------------------
+	Python gets shutdown, so no chance of running any thing.
+
+
+	## Note - Using sys.exit() will not work. The finally block will then also run but rest of the code will not run. 
+	-----------------------------------------------------------------------------------------------------------------
+	import sys
+	print("starting of code")
+
+	try:
+    		print("try block")
+    		sys.exit()
+	finally :
+    		print("finally block")
+    
+	print("rest of code") 			# not printed
+
+	o/p-
+	starting of code
+	try block
+	finally block
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Flow control of try , except, finally.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#case study..
+
+statement 1
+statement 2
+try :
+    #outer try block
+
+    statement 3
+    statement 4
+
+    try :
+        #inner try block
+
+        statement 5
+        statement 6
+
+    except exception_name1_@tryblock:
+        #inner except block
+
+        statement 7
+        statement 8
+
+    except :
+        # inner default except block
+
+        statement 9
+        statement 10
+
+    else :
+        #inner else
+
+        statement 11
+        statement 12  
+
+    finally :
+        #inner finally
+
+        statement 13
+        statement 14
+
+except exception_name1_outerblock :
+    #outer except block_
+
+    statement 15
+    statement 16
+
+    try:
+        # try block inside outer except block
+
+        statement 17
+        statement 18
+
+    except exception_name1_@outerexceptblock :
+        # except block inside outer except block
+
+        statement 19
+        statement 20
+
+    except :
+        # default except block
+
+        statement 21
+        statement 22
+
+    else :
+        # else block inside outer except block
+
+        statement 23
+        statement 24
+
+    finally:
+        # finally block inside outer except block
+
+        statement 25
+        statement 26
+
+except :
+    # outer default except block
+
+    statement 27
+    statement 28
+
+else :
+    # outer else block
+
+    statement 29
+    statement 30
+
+finally:
+    # outer finally block
+
+    statement 31
+    statement 32
+
+statement 33
+statement 34
+
+case 1 - no exception rasies
+    executed statement :
+    statement 1     # Statements before the try block starts
+    statement 2
+    
+    statement 3     # In the outer try
+    statement 4
+    
+    statement 5     # In the inner try
+    statement 6
+    statement 11    # In the else block of inner try
+    statement 12
+    statement 13    # In the finally block of inner try
+    statement 14
+    
+    statement 29    # In the outer else
+    statement 30
+   
+    statement 31    # In the ouer finally
+    statement 32
+    
+    statement 33    # Rest of the statements after try block ends
+    statement 34
+
+case 2 - exception rased at statement 3 and exception name is "exception_name1_@tryblock"
+    executed statement :
+    statement 1     # Statements before the try block starts
+    statement 2
+    
+    statement 15    # In the outer except block, as exception raised at statement 3 is "exception_name1_@outerexceptblock"
+    statement 16
+    statement 17    # In the try block of outer except block
+    statement 18
+    statement 23    # In the else block of outer except block
+    statement 24
+    statement 25    # In the finally block of outer except block
+    statement 26 
+    
+    statement 31    # In the ouer finally
+    statement 32
+    
+    statement 33    # Rest of the statements after try block ends
+    statement 34
+    
+case 3 - exception rasied at statement 5 and default exception block runs
+    executed statement :
+    statement 1     # Statements before the try block starts
+    statement 2
+    
+    statement 3     # In outer try block
+    statement 4
+    
+    statement 9     # In the except block of inner try . default except block
+    statement 10
+    statement 13    # In the finally block of inner try block
+    statement 14
+    
+    statement 29    # In the outer else
+    statement 30 
+  
+    statement 31    # In the outer finally
+    statement 32
+    
+    statement 33    # Rest of the statements after try block ends
+    statement 34
+        
+
+https://www.youtube.com/watch?v=MtTj9wNevZc&list=PL8JLvOaoO7fOXm-LU2Ox7gw0TU3k-3cgS&index=8
+
+
+Example of try block - flow control
+---------------------------------
+
+print("starting of code")
+
+try :
+    print("outer try block")                                                
+    print("declaring inner try")
+    
+    try:
+        print("raising an exception in inner try")
+        print(10/0)                                                             # exception raised at inner try
+    except ZeroDivisionError :
+        print("exception rased because of zero division at inner try")          # executed as the inner try block has exception
+    else :
+        print("no exception in inner try")                                      # not executed as the inner try block has exception.
+    finally:
+        print("finally in inner try")                                           # finally block runs mandatorily
+        
+except :
+    print("outer block except")                                                 # not executed as the outer try block has no exception.
+
+else :
+    print("outer else")                                                         # executed as the outer try block has no exception.
+    
+finally:
+    print("outer finally")                                                      # finally block runs mandatorily
+    
+
+print("rest of the code")
+    
+
+O/P- 
+starting of code
+outer try block
+declaring inner try
+raising an exception in inner try
+exception rased because of zero division at inner try
+finally in inner try
+outer else
+outer finally
+rest of the code
+
+Example  - exception at inner try and outer try together
+---------------------------------------------------------
+
+print("starting of code")
+
+try :
+    print("outer try block")                                                
+    print("declaring inner try")
+    
+    # ------------------------  raising an exception at inner try and handling it --------------------------------------------------
+    
+    try:
+        print("raising an exception in inner try")                              # exception raised at inner try
+        print(10/0)                                                             
+    except ZeroDivisionError :
+        print("exception rased because of zero division at inner try")          # executed as the inner try block has exception
+    else :
+        print("no exception in inner try")                                      # not executed as the inner try block has exception.
+    finally:
+        print("finally in inner try")                                           # finally block runs mandatorily
+    
+    # -------------------------------------------------------------------------------------------------------------------------------
+    
+    print(10/0)                                                                 # exception raised at outer try
+        
+except :
+    print("outer block except")                                                 # executed as the outer try block has an exception.
+
+else :
+    print("outer else")                                                         # not executed as the outer try block has an exception.
+    
+finally:
+    print("outer finally")                                                      # finally block runs mandatorily
+    
+
+print("rest of the code")
+    
+o/p-
+
+starting of code
+outer try block
+declaring inner try
+raising an exception in inner try
+exception rased because of zero division at inner try
+finally in inner try
+outer block except
+outer finally
+rest of the code 
+
+
+	
+
+
+
+
+
+
+
+

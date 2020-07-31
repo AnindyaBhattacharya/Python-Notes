@@ -1,0 +1,106 @@
+Command Line Arguments
+-----------------------
+
+Command line arguments are the arguments that are passed from the command line to the programs.
+
+py test1.py 10 20 30 
+
+The arguments passed are 10 20 30. These are called the command line arguments.
+
+##  The arguments are stored in a variable -> argv
+
+argv is of "list" datatype.
+
+Exmples 1
+-----------
+
+Code - 
+
+Test1.py(filename)
+--------
+print(type(argv))
+
+Error-
+D:\Pycodes>py Test1.py 10 20 30  -> passing the cmd line args
+Traceback (most recent call last):
+  File "Test1.py", line 1, in <module>
+    print(type(argv))
+NameError: name 'argv' is not defined
+
+# argv is not defined.
+# argv is defined in the sys module.
+# import argv of sys module, to access the commandline arg.
+
+
+Code -
+
+Test1.py(filename)
+--------
+from sys import argv
+print(type(argv))
+
+O/P - 
+D:\Pycodes>py Test1.py 10 20 30
+<class 'list'>
+
+
+Example 2 (printing the values of argv)
+-----------------------------------------
+
+code -
+
+from sys import argv
+print((argv))
+
+O/P -
+
+D:\Pycodes>py Test1.py 10 20 30
+['Test1.py', '10', '20', '30']
+
+
+## Note -> argv also considers the file name as the argument apart from the passed arguments.
+['Test1.py', -> the file name is also considered as a argument.
+
+
+Example 3 (accessing only the passed argumments)
+------------------------------------------------
+
+code -
+
+from sys import argv
+print((argv[1:])) --> slicing argv
+print(type(argv[1])) --> content as string
+
+O/P -
+
+D:\Pycodes>py Test1.py 10 20 30
+['10', '20', '30']
+<class 'str'>
+
+
+Example 4 
+---------
+code -
+
+from sys import argv
+print(argv[1])
+
+o/p -
+
+D:\Pycodes>py Test1.py "Anindya Bhattacharya"
+Anindya Bhattacharya
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+
+
+
+
+
+
+

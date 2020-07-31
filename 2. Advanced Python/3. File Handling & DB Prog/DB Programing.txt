@@ -1,0 +1,267 @@
+Python Database Programming
+---------------------------
+For Python to connect to any database, be it Oracle, MySql, we need to have a connector installed.
+Connectors are nothing but modules, we need to install them with pip install and import them to the program.
+Once imported, we can connect to the Databases from Python.
+
+modules that can be used to connect different databases are -
+cs_Oracle -> for Oracle datable
+pymssql -> for MSSQL
+pymysql -> MySQL
+
+We will be using cs_Oracle module hereafter.
+
+Steps in DB programming.
+------------------------
+1. import the database specific module -> cs_Oracle, pymysql etc ..
+	import cs_Oracle 
+
+2. Establish a connection betweeen Python and the Database.
+	connection = cs_Oracle.connect("database information")
+	ex: conn = cs_Oracle.connect('username/password@localhost')  # if not localhost, then need to specify the database server.
+
+3. create a cursor object for the established connection.
+	cursor = connection.cursor()
+
+4. execute SQL query through the cursor.
+	cursor.execute("query")										 # executes single query.
+	cursor.executescript("query1;query2;query3")				 # executes a string of query separated by ";"
+	cursor.executemany("parameterised query")					 # executes parameterised query.
+
+5. fetch resultof the query.
+	cursor.fetchone()											 # fetched only one row
+	cursor.fetchall()											 # fetched all records
+	cursor.fetchmany(n)											 # fetches n number of rows.
+
+6 commit the changes made or rollback the changes.
+	commit()													 # DML statement should be followed with commit(). Insert,Delete,Update these are DML st.
+	rollback()													 # rollback() resets the changes.	
+
+7 close the cursor and the connections which were opened. Close in order, cursor first then connection.
+	cursor.close()
+	connection.close()
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Example 1 - creating a table.
+---------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")            # connection is set
+    set_cursor = set_connection.cursor()                                         # cursor is define
+    query = "create table employees(ID number,name varchar2(10),salary number(10,2),address varchar)" 
+    set_cursor.execute(query)                                                    # query executed.
+    print("Table is created")
+    
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                           # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                                # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                                  # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                       # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+
+
+    
+    
+    
+Example   - Inserting data in Table
+-------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")            # connection is set
+    set_cursor = set_connection.cursor()                                         # cursor is define
+    query = "insert into employees values(100,"anindya",10000,"Burdwan")" 		 # query defined	
+    set_cursor.execute(query)                                                    # query executed.
+    commit()                                                                     # the insert is commited. DML statement should be followed with commit(). Insert,Delete,Update these are DML st.
+    print("Table is created")
+    
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                           # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                                # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                                  # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                       # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+
+
+Example   - Parameterised query . executemany()
+-------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")            # connection is set
+    set_cursor = set_connection.cursor()                                         # cursor is define
+    query = "insert into employees values(:ID,:name,:salary,:address)"           # query defined with parameters
+    records = [(200,"ab",10000,"Bwn"),(200,"cd",20000,"Kol"),(300,"ef",30000,"Bom")] # values in this list will be put in the parmaeters
+    set_cursor.executemany(query,records)                                        # query executed. executedmany() function is used.
+    commit()                                                                     # the insert is commited. DML statement should be followed with commit(). Insert,Delete,Update these are DML st.
+    print("Table is created")
+    
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                           # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                                # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                                  # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                       # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+			
+Example - Dynamic entry from keyboard.
+-------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")            # connection is set
+    set_cursor = set_connection.cursor()                                         # cursor is define
+    while True:
+        ID = int(input("Enter ID"))
+        Name = input("Enter Name")
+        Salary = int(input("Enter salary")
+        Address = input("Enter address")
+        query = f"insert into employees values({ID},{Name},{Salary},{Address})"  # query defined with parameters
+        set_cursor.execute(query)                                                # query executed. executedmany() function is used.
+        commit()                                                                 # the insert is commited. DML statement should be followed with commit(). Insert,Delete,Update these are DML st.
+        print("Record is inserted")
+        
+        option = input("Do u want to add another records [Yes/No]")
+        if option == "No":
+            break
+    
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                           # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                                # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                                  # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                       # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+		
+
+Example - fteching recods. fetchone()
+-------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")        # connection is set
+    set_cursor = set_connection.cursor()                                     # cursor is define
+
+    query = "select * from employee"
+    set_cursor.execute(query)                                                # query executed. executedmany() function is used.
+        
+    rows = set_cursor.fetchone()                                             # fetched only one record
+    while rows != None :                                                     # this loop iterate through each rows and prints the value.
+        print(rows)
+        rows = set_cursor.fetchone()
+
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                       # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                            # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                               # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                    # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+
+
+Example - fetchall() , fetching all records of the table. fetched records and stored in a list. Where all rows are stored as a tuple in the list.
+------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")        # connection is set
+    set_cursor = set_connection.cursor()                                     # cursor is define
+
+    query = "select * from employee"
+    set_cursor.execute(query)                                                # query executed.
+        
+    fetched_data = set_cursor.fetchall()                                     # fetches all records
+    print(type(fetched_data))                                                # list, were each row is stored in a tuple.
+    
+    for i in fetched_data:                                                 # this loops through fetched_data , which is list. Each "i" variable stores a tuple. This tuple represent one row,and each member of the tuple is the value of one column.
+        print("ID is ",i[0])
+        print("Name is ",i[1])
+        print("Salary is ",i[2])
+        print("Address is ",i[3])
+
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                       # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                            # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                               # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                    # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+
+o/p-
+fetched_data = [(200,"ab",10000,"Bwn"),(200,"cd",20000,"Kol"),(300,"ef",30000,"Bom")]. fetched_data is a list and each row is stored as tuples which are members of the list
+ 
+    
+Example - Storing fetched data in a file.
+-------
+
+import cx_Oracle
+try:
+    
+    set_connection = cx_Oracle.connect("username/password@localhost")        # connection is set
+    set_cursor = set_connection.cursor()                                     # cursor is define
+
+    query = "select * from employee"
+    set_cursor.execute(query)                                                # query executed. executedmany() function is used.
+        
+    fetched_data = set_cursor.fetchall()                                     # fetches all records
+    file = open("filename","w")                                              # opening a file in "w" mode.    
+    file.writelines(fetched_data)                                            # writes fetched_data in the file
+
+
+except cs_Oracle.DatabaseError as e:
+    if set_connection:                                                       # this is style of clode which is same as : if set_connection != None     
+        set_connection.rollback()                                            # on encountering exceptionrollback is performed.
+        print("Error occured is ",e)
+    
+finally:
+    if cursor :                                                               # this is style of clode which is same as : if set_cursor != None                                
+        set_cursor.close()                                                    # In finally block closing all opened connections.
+    if set_connection :                                             
+        set_connection.close()
+
+
+    
+    
+    
+
+		
+    
+    
+
+    
+    
+    
+
+
+    
+    
+    
+

@@ -1,0 +1,302 @@
+Defining Class and Objects
+--------------------------
+
+Class declaration.
+------------------
+
+# Declaring Python Class
+# Declaring Objects
+
+class Student :                                                        # class is declared with keyword "class" followed by name of the class
+    def __init__(self,var1,var2,var3):                                 # delaring a constructor
+        self.name= var1                                                # declaring instance variables inside constructor, for use through out class
+        self.roll= var2
+        self.department= var3
+    
+    def student_info(self):                                            # declaring a method 
+        print("Student name is {}, roll no is {}, department is {}".format(self.name,self.roll,self.department))
+    
+student1=Student("Anindya Bhattacharya",127,"Mechanical Engineering")  # creating a Student object and assigning a reference variable to it -> student1
+student1.student_info()                                                # calling the decalared method for the created object student1.
+
+o/p- Student name is Anindya Bhattacharya, roll no is 127, department is Mechanical Engineering
+
+
+ 3 ways of class declaration
+-----------------------------------
+
+class MyClass :					# widely followed.				
+	pass
+
+class MyClass():
+	pass
+
+class MyClass(object):
+	pass
+
+#Note - > Python 2.7 the class declared is not a child class of object. Onwards from Python 3.X declared class is by default child class of object class. 
+
+Calling a class, creating an object from the class.
+---------------------------------------------------
+
+If the class contains any constructor and any instance methods then it is mandatory to create an object of the class in this manner- 
+	object=Classname() -> if there is no requirement to pass any argumnets to the constructor.
+	object=Classname(arg1,arg2,arg3) -> if there is requirement to pass any argumnets to the constructor.
+
+If the class contains only (static methods or class methods or class variables) but no (constructors and instance methods) then we can create an object of the call in any of the below manners -
+	object=Classname  -> no need to specify the brackets
+	object=Classname()  -> we can specify brackets as well.
+
+
+# important things used in a class.
+-----------------------------------
+
+1.class keyword and the class name
+2.constructors
+3.self variable
+4.variables
+5.methods.
+
+
+1. class keyword -> 
+----------------
+
+This is used to define a class. syntax is class keyword followed by the class name. ex :- class Students
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. constructors -> 
+------------------
+
+Constructors are special type of methods in Python with a mandatory name "__init__" followed by agruments. 
+There should be one mandatory first argument for a constructor i.e "self". This should be the first argument declared for a constructor.
+Constructor runs only during object creation and they are specially used to declare instance variable(variables related to objects).
+Everytime an object is created the constructor run is manadatory at the begining.
+When no constructors are declared by user, then Python runs a default contructor , which is nothing but an empty __init__ block with no implementations.
+
+
+Example -
+-------
+class Student :                                                        
+    def __init__(self,var1,var2,var3):                                 # delaring a constructor. mandatory argument is present (self)
+        self.name= var1                                                # declaring instance variables inside constructor, for use through out class
+        self.roll= var2
+        self.department= var3
+    
+    def student_info(self):                                            
+        print("Student name is {}, roll no is {}, department is {}".format(self.name,self.roll,self.department))
+    
+student1=Student("Anindya Bhattacharya",127,"Mechanical Engineering")  # creating a Student object and assigning a reference variable to it -> student1
+student1.student_info()
+
+student2=Student("Apple",128,"ECE")				       # creating a Student object and assigning a reference variable to it -> student2
+student2.student_info()
+
+Points :-
+-------
+
+When a Student object is created, student1 , then the constructor runs . Here in the above example we pass (name,roll,dept) of a student during object creation. 
+These arguments are taken up by the constructor and is assigns to an instance variable inside the constructor
+
+Everytime an obect is created the constructor runs at the begining. When another object is created , student2 , then also the constructor runs at first.
+
+So the main objective to run a constructor is to assign the instance variables(variables related to objects), or if there is some fuctionality which is requred to run immediately when an object is created then we can implement those logics in constructors also. 
+Simply to say, constructor contains block of codes which runs during object creation.
+
+Suppose there are cases when two or multiple constructors are declared in a class. Then only the last constructor block gets executed. Other constructor blocks are not executed. There is no concept of constructor overloading.
+
+proof (no concept of constructor overloading)
+---------------------------------------------
+
+class Student :                                                        # class is declared with keyword "class" followed by name of the class
+    def __init__(self,var1,var2,var3):                                 # delaring a constructor
+        print("constructor number 1")
+    
+    def __init__(self,var1) :
+        print("constructor number 2")
+        
+    def __init__(self,var1,var2) :
+        print("constructor number 3")
+    
+    def student_info(self):                                            # declaring a method 
+        print("Student name is {}, roll no is {}, department is {}".format(self.name,self.roll,self.department))
+    
+student1=Student("Anindya Bhattacharya")                               # creating a Student object and passing only 1 arg.
+student1.student_info()                                                # calling the decalared method for the created object student1.
+
+
+
+o/p- 
+Traceback (most recent call last):
+  File "Test1.py", line 17, in <module>
+    student1=Student("Anindya Bhattacharya")                            
+TypeError: __init__() missing 1 required positional argument: 'var2'
+
+
+Conclusion :- 
+----------
+
+In the above example we have declared 3 constructors with 3 args, 1 arg, 2 args (considering "self" as an mandatory arguments). The constructor with 2args is delacred at last. 
+During object creation we have created an object student1 passing only 1 arg.
+Had there been an concept of constructor overloading then the constructor with 1 arg would have run and the o/p would have been - "constructor number 2" 
+But ...
+On exectution of the above code , we get an error [missing 1 required positional argument: 'var2'].
+We are passing one 1 arg during object creation and Python is expecting one more arg.
+Thus it shows that Python is considering only the 2 arg constructor as the executable one, as the 2 arg constructor is declared at the end.
+Python neglects the other two constructors declared above.
+
+Thus it proves that there is no concept of constructor overloading in Python. 
+When multiple constructors are declared only the last declared constructor is considered by Python , others are ignored.
+Therefore Python class will have only one executable constructor, which is the last declared constructor.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. self variable : - 
+----------------
+
+self variable is a reference variable which is always pointing to the currently created object, or to the object currenly in use. 
+self varible is used as a reference variable inside a Python class for the current object. For an object which is created ,to refer to it's varaible values inside the class we need to use "self". 
+
+Example -
+-------
+class Student :                                                        
+    def __init__(self,var1,var2,var3):                                 # self is the first argument to the constructor
+        self.name= var1                                                # current object name is var1. self is pointing to the current object.
+        self.roll= var2                                                # current object roll is var2. self is pointing to the current object.
+        self.department= var3                                          # current object department is var3. self is pointing to the current object
+        print(id(self))                                                # print the object it is pointing.
+    
+    def student_info(self):                                            # declaring a method. self should be the first argument.
+        print("Student name is " , self.name)                          # accessing the current object name using self
+        print("Student roll is " , self.roll)                          # accessing the current object roll using self
+        print("Student department is " , self.department)              # accessing the current object department using self
+
+student1=Student("Anindya Bhattacharya",127,"Mechanical Engineering")  # creating a Student object and assigning a reference variable to it -> student1
+print(id(student1))                                                    # print the object it is pointing.
+
+student2=Student("Apple",128,"ECE")
+print(id(student2))
+
+o/p- 
+54057968
+54057968
+
+54111632
+54111632
+
+The above pair of id are same, which means when student1 is created, then both self and the reference variable (student1) are pointing to the same object. Similarly 
+when student2 is created , then both self and the reference variable (student2) are pointing to the same object.
+
+self is nothing but a reference variable pointing to the crurrently used object. 
+Scope of "self" is within the class. Within the class when we want to access or assign any current object variable we use "self".
+Outside the class when we want to refer to an object we use the reference variable assigned during object creation. (ex - student1 ,student2)
+
+In the above example - we are assigning the object [name,roll,department] in the constructor using "self" thus making them instance variables(which are related to objects).
+Again in the method student_info() we are accessing the object information i.e [ name,roll,dept] using the self variable. 
+
+Thus to use anything related to the object(object attributes) inside the class,we should use self.
+
+
+Example -2
+-----------
+
+class Student :                                                        
+    def __init__(self,var1,var2,var3):                                 # self is the first argument to the constructor
+        self.name= var1                                                
+        self.roll= var2                                                
+        self.department= var3                                          
+
+    def student_info1(self):                                            # declaring a method. self should be the first argument.
+        print("Student name is " , self.name)                          
+        print("Student roll is " , self.roll)                          
+
+        
+    def student_info2(ab,address):										# ab acting as self. In the below part we will get to see that
+        print("Student department is " , ab.department)
+        print("Address is ",address)
+
+student1=Student("Anindya Bhattacharya",127,"Mechanical Engineering")   # creating a Student object and assigning a reference variable to it -> student1
+
+student1.student_info1()                                                # we need not pass any instance variable as arguments to this method.Python provides all object variable values 									         through self
+student1.student_info2("bwn")                                           # But yes, if we want to provide additional arg as local varaible to this method we can do that.                                                # we need not pass any arguments to this method.Python provides all object variable values 									         through self
+
+When we are calling the student_info() method for an object then we are not passing any arguments to it. Python itself is reponsible to pass all the
+object variable values to the method throught the self varable. We need not explicitly pass arguments when we are calling the methods for an object.
+
+
+Summary
+-------
+1. self variable is a reference variable which is always pointing to the currently created object, or to the object currently in use.
+2. scope of self varaible is always within the class.
+3. self is used to assign and refer to instance variables.
+4. we need not to pass arguments to instance methods, Python provides the variable values through self.
+5. self should be the first argument to be declared in a constructor or method.
+6. self is not a keyword, any variable name will behave as a self if declared as a first argument to a constructor or method. 
+
+Example 3- 
+---------
+
+class Student :                                                        
+    def __init__(ab,var1,var2,var3):                                 # ab is the first argument to the constructor, behaving as self
+        ab.name= var1                                                
+        ab.roll= var2                                               
+        ab.department= var3                                        
+
+    def student_info(ab):                                            # declaring a method. ab is the first argument, behaving as self
+        print("Student name is " , ab.name)                          
+        print("Student roll is " , ab.roll)                         
+        print("Student department is " , ab.department)              
+
+student1=Student("Anindya Bhattacharya",127,"Mechanical Engineering")  
+student1.student_info()  
+
+Note - It is not necessary to always use self as a keyword. We can use any variable name. 
+	   Even if there are 2 methods in same class, then if in one method we use self, then in the next method we can use anything else.
+	   But it is good to use self, coding standard.
+
+Ex - 
+
+class Student :                                                        
+    def __init__(self,var1,var2,var3):                                  # self is the first argument to the constructor
+        self.name= var1                                                
+        self.roll= var2                                                
+        self.department= var3                                          
+
+    def student_info1(self):                                            # declaring a method. "self" should be the first argument.
+        print("Student name is " , self.name)                          
+        print("Student roll is " , self.roll)                          
+
+        
+    def student_info2(ab,address):					# declaring another method using "ab" as first argument.
+        print("Student department is " , ab.department)
+        print("Address is ",address)
+
+student1=Student("Anindya Bhattacharya",127,"Mechanical Engineering")   # creating a Student object and assigning a reference variable to it -> student1
+
+student1.student_info1()                                                
+student1.student_info2("bwn")                                          
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+

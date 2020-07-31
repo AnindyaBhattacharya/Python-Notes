@@ -1,0 +1,7 @@
+Immutability of Fundamental Data types
+---------------------------------------
+
+# Fundamental Data types in Python - int, float, str, complex, bool.
+
+https://www.youtube.com/watch?v=QNRl_ZrhcOA&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=8
+

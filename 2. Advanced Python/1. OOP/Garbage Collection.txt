@@ -1,0 +1,171 @@
+Garbage Collection.
+-------------------
+
+Garbage collector is a demon thread, which runs in the background and deletes unwanted objects or redundant objects which are no longer in use, there by freeing up
+unused memory held by those unwanted objects.
+
+Whenever an object has a reference variable linked to it, then until and unless the program ends the object is not availabe for garbage collection.
+If we want to make the object available for garbage collection , then either we have to delete the reference variable linked to it, or we will have to make the 
+reference variable point to a different object, or nothing. By this the current object will have no reference and garbage collector will act on it.
+
+Example -
+-------
+class Test:
+    def __init__(self):
+        print("object getting created")
+    
+    def __del__(self):
+        print("object died")
+    
+
+t1 = Test()
+del t1          				# deleting the reference variable and GC acts on it.
+print("eof") 
+
+o/p-
+object getting created
+object died
+eof
+
+
+Example -
+-------
+class Test:
+    def __init__(self):
+        print("object getting created")
+    
+    def __del__(self):
+        print("object died")
+    
+
+t1 = Test()
+t1 = None       				# t1 is now pointing to None. Test class object has no reference and GC acts on it.
+print("eof") 
+
+o/p-
+object getting created
+object died
+eof
+
+------------------------------
+Concept of Destructor Method
+------------------------------
+
+Destructor method is defined using __del__(self).
+Destructor method runs when GC acts on it. Whenever an object dies or is getting cleaned up, before that the Destructor method is run by the GC.
+Therefore before deletion of the object the Destructor method is run and then the object is deleted.
+Destructor method must be self declared before in the class.
+If destructor method is not declared , Python creates an empty destructor.
+Destructor is opposite to Constructor. Constructor runs when object is getting greated, Destructor runs just before the object is getting deleted.
+Practical application destructor is used to close DB connections, file links etc etc before the object is getting deleted.
+
+Example 
+-------
+
+import time
+class test1 :
+    def __init__ (self) :
+        print("constructor working, object created for class test1")
+    
+    def __del__(self):
+        print("deleting links before garbage collector acts on test1 ")
+    
+class test2:
+    def __init__(self):
+        print("object created for class test2")
+    
+    def __del__ (self):
+        print("deleting links before garbage collector acts on test2")
+    
+t1 = test1()
+time.sleep(10)
+t1 = test2()
+print("eof")
+
+o/p- 
+
+constructor working, object created for class test1
+object created for class test2
+deleting links before garbage collector acts on test1
+eof
+deleting links before garbage collector acts on test2
+
+Example 2 - Object defined without any reference variable. GC acts immediately after object creation is completed
+-----------------------------------------------------------------------------------------------------------------
+import time
+class test1 :
+    def __init__ (self) :
+        print("constructor working, object created for class test1")
+    
+    def __del__(self):
+        print("deleting links before garbage collector acts on test1 ")
+	
+	
+    
+class test2:
+    def __init__(self):
+        print("object created for class test2")
+    
+    def __del__ (self):
+        print("deleting links before garbage collector acts on test2")
+    
+test1()
+time.sleep(10)
+test2()
+print("eof")
+    
+o/p- 
+constructor working, object created for class test1
+deleting links before garbage collector acts on test1
+object created for class test2
+deleting links before garbage collector acts on test2
+eof    
+
+Example -3
+-----------
+import time
+class test1 :
+    def __init__ (self) :
+        print("constructor working, object created for class test1")
+    
+    def __del__(self):
+        print("deleting links before garbage collector acts on test1 ")
+    
+    def m1(self):
+        print("sum is 100")
+    
+class test2:
+    def __init__(self):
+        print("object created for class test2")
+    
+    def __del__ (self):
+        print("deleting links before garbage collector acts on test2")
+    
+    def m2(self):
+        print("sum is 200")
+    
+    
+test1()
+time.sleep(2)
+test1().m1()
+time.sleep(2)
+test2()
+time.sleep(2)
+test2().m2()
+print("eof")
+    
+o/p- 
+constructor working, object created for class test1
+deleting links before garbage collector acts on test1
+constructor working, object created for class test1
+sum is 100
+deleting links before garbage collector acts on test1
+object created for class test2
+deleting links before garbage collector acts on test2
+object created for class test2
+sum is 200
+deleting links before garbage collector acts on test2
+eof
+
+
+

@@ -1,0 +1,48 @@
+
+
+Python
+Simpliest programming language
+Example -1
+to print hello world - 
+print("hello world")
+Example -2
+perform addition-
+a=10 (no neeed to assign any data type)
+b=20
+print(a+b)
+print(a-b)
+--------------------
+Python is Dynamically type programming language - there is no need to assign any data type. python variables automatically adjusts itself to the data assigned.
+Where as C & Java are Statically typed programming languages
+>>> a=10
+>>> type(a) --> this cmd is used to see the data type of a varible
+<class 'int'>
+
+>>> a=True
+>>> type(a)
+<class 'bool'>
+The above examples prove so. One is adjusted to "int" another "boolean"
+-----------------------
+Names in Python is called Identifier. 
+It can be any name be a variable name, class name , method name.
+x=10, x is an identifier
+Rule to declare a identifier
+1.  can be alpha numeric, but not starting with numbers
+2. case sensetive,  x=10, X=10 are two different variables
+3. can have underscore ( _ ) character in variable name
+4.should have any key words like - if , for, def etc.
+5. should not have any special character like $,# etc.
+Properties of 
+---------------------------------
+Reserved Words / Key Words
+ There are 33 key words in python
+True,False,None
+and,or,not,is
+if,else,elif
+while,for ,break,continue,return,in,yield
+try,except,finally,raise,assert
+import,from,as,class,def,pass,global,nonlocal,lambda,del,with
+continue -https://www.youtube.com/watch?v=VqSNhdCyZUc&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=5 @35:00 min
+-----------------------------------
+Data Types
+

@@ -1,0 +1,93 @@
+Set Datatype - details @ https://www.programiz.com/python-programming/set
+------------
+
+Characteristics 
+---------------
+1. holds sequence of data
+2. represents group of objects, both homogeneous or heterogeneous
+3. duplication not allowed, duplicate values are excluded
+4. insertion order not preserved. input member order is not same as output member order. set is an unordered collection, we don't know in which order it stores data
+5. there is no concept of indexing. 
+6. mutuable, can be modified.
+7. declared inside {}
+
+Declaration
+-----------
+set1 = {10,20,30,40}	    # normal declaration
+print(set1)
+print(type(set1))
+o/p-
+{40, 10, 20, 30}            # insertion order not preserved
+<class 'set'>
+
+set1 = {10,20,"anindya",10.5}
+print(set1)
+print(type(set1))
+o/p- 
+{10, 10.5, 20, 'anindya'}   # set with heterogeneous objects
+<class 'set'>
+
+set1 ={}                    # empty set can't be declared this way. dict is declared this way
+print(set1)
+print(type(set1))           # dict
+o/p- 
+{}
+<class 'dict'>
+
+set1 = set()                # correct way to declare empty set
+print(set1)
+print(type(set1))
+o/p-
+set()
+<class 'set'>
+
+
+Note - set can only hold immutable data like - int,string,float,tuple etc.
+--------------------------------------------------------------------------
+set1 = {10,20,"anindya",10.5}   
+ 
+set1 = {10,[10,20,30],{"anindya","bhattacharya"}}      # throws error on declaration as it contails mutable data list and set
+Err -  TypeError: unhashable type: 'list'
+
+
+Usage Examples - 
+--------------
+
+1. add, update, remove data in set  -> ste.add() , set.update()
+-------------------------------------
+set1 = { 10,20,30}
+set1.add(40) # only one object inserted at a time
+
+set1.update([40,50,60]) 	# update multiple objects inserted. it expects an iterable collection, like list/tuple etc.
+print(set1)
+o/p - {40, 10, 50, 20, 60, 30}
+set1.update((70,80,90))
+print(set1)
+o/p- {70, 40, 10, 80, 50, 20, 90, 60, 30}
+set1.update([4,5], {1,6,8})
+o/p- {70, 40, 10, 80, 50, 20, 90, 60, 30, 4, 5, 1, 6, 8}
+set1.update(100)  		# throws error -> 'int' object is not iterable
+
+
+2. remove data in set  -> set.remove(value) , set.pop(), set.discard(value),set.clear()
+-------------------------
+set1 = {70, 40, 10, 80, 50, 20, 90, 60, 30}
+set1.remove(40)         # only one object removed at a time
+print(set1)
+
+set1.pop()              # removes any random object.
+print(set1)
+
+set1.discard([20,30])
+print(set1)             # removes one element at a time    
+
+set1.clear()            # empties the set
+
+o/p -
+{70, 10, 80, 50, 20, 90, 60, 30}
+{10, 80, 50, 20, 90, 60, 30}
+{10, 80, 50, 90, 60, 30}
+set()
+
+3.
+ 

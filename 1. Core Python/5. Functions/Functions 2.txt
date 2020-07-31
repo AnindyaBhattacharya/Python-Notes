@@ -1,0 +1,233 @@
+Anonymous Function
+-------------------
+If functions are used only once and there is no need to call the function multiple times in the program, for that reason we need not to define a function with a function name and functionalities. We can simply create a temporary function without any name for one time use only. Those type nameless temporary functions are called anonymous functions.
+
+Lambda Keyword - normal functions are defined using the def keyword, in Python anonymous functions are defined using the lambda keyword. 
+Hence, anonymous functions are  also called lambda functions. We use lambda functions when we require a nameless function for a short period of time
+
+Syntax of Lambda Function  --> lambda arguments: expression
+-------------------------
+
+# Lambda functions can have any number of arguments but only one expression. Complex expressions can be written using ternary operator concept.
+# The expression is evaluated and returned
+
+
+Example 1 -
+----------
+x=lambda a,b: a+b  #  Arguments passed - a,b. Expression evaluated- a+b . Returned values stored in x.
+print(x(5,6))	   # lambda function is called by x(arg1,arg2)
+
+o/p-
+11
+
+Example 2
+----------
+checkeven=lambda a:a%2==0  	   # Arg passed- a.Expression evaluated- a%2==0. Returned Value = True/False
+print(checkeven(6))	   	   # lambda function is called by checkeven(arg1)
+
+o/p-
+True
+
+Example 3(using of ternary operator for complex expression)
+-----------------------------------------------------------
+
+returned_value=lambda a,b,c:a if (b+c)<a else b if (a+c)<b else c if (a+b)<c else -1   # Arg- a,b,c. Ternary expression ecaluated. Return value is stored.
+print(returned_value(6,2,9))
+
+
+Advantage of lambda function - Can be declared easily and can be used simply. No need to declare a function with name and then calling it. Length of code reduced.
+
+Disadvantage - The expression should be a single expression. Multiple expressions are not allowed thus limiting the use of lambda functions for complex expressions.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical uses of lambda functions - They are used in filter(),map(),reduce()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Lambda functions are generally used as an argument to a higher-order function (a function that takes in other functions as arguments). 
+Lambda functions are used along with built-in functions like filter(), map() etc.
+
+------------------------------------------------------------
+filter() - filter function which takes function as argument
+------------------------------------------------------------
+
+filter() function takes in a function and a list/tuple/set(sequences) as arguments.
+
+syntax- filter(function,sequences) 
+------
+
+The function is called with all the items in the sequence and a new sequence is returned which contains items for which the function evaluates to True.
+
+Example - filter() function to filter out only even numbers from a list.
+------------------------------------------------------------------------
+
+code without lambda function -
+````````````````````````````
+def iseven(x) :
+    if x%2 == 0 :
+        return True
+    else : 
+        return False
+list1=[0,5,10,15,20,25,30,35,40,45,50]
+print(list(filter(iseven,list1)))
+
+o/p-
+[0, 10, 20, 30, 40, 50]
+
+
+code with lambda function -
+````````````````````````````
+list1=[0,5,10,15,20,25,30,35,40,45,50]
+print(list(filter(lambda x:x%2==0,list1)))
+
+o/p-
+[0, 10, 20, 30, 40, 50]
+
+
+Example -2 filter() function to filter out only odd numbers from a set
+-----------------------------------------------------------------------
+
+set1={0,5,10,15,20,25,30,35,40,45,50}
+print(set(filter(lambda x:x%2!=0,set1))) 
+
+o/p-
+{35, 5, 45, 15, 25}
+
+
+Example -3 filter() only returns values only when the function which is taken as the argument returns only True/False 
+----------------------------------------------------------------------------------------------------------------------
+
+code
+````
+def iseven(x) :
+    if x%2 == 0 :
+        return "Even"
+    else : 
+        return "Odd"
+list1=[0,5,10,15,20,25,30,35,40,45,50]
+print(list(filter(iseven,list1)))	  			#filter returns no values as the function iseven(x) doesnot return True/False
+
+o/p-
+[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]      #no filtered value is returned.full list is returned.
+
+correct code 
+````````````
+def iseven(x) :
+    if x%2 == 0 :
+        return "Even"
+    else : 
+        return "Odd"
+list1=[0,5,10,15,20,25,30,35,40,45,50]
+print(list(filter(lambda x:iseven(x)=="Even",list1)))  # filter returns values, as the lambda function return either True/False
+
+o/p-
+[0, 10, 20, 30, 40, 50]				       # filtered value is returned.Only even numbers are printed.
+
+
+
+-------------------------------------------------------------
+map() - map function which takes functions as argument
+-------------------------------------------------------------
+
+map() function takes in a function and a list/tuple/set(sequences) as arguments.
+
+syntax- map(function,sequences) 
+-------
+
+The function is called with all the items in the sequenceand a new sequence is returned which contains items returned by that function for each item.
+
+Difference between filter() and map() is - 
+
+# filter - when applied to a sequence returns values only when the function which is taken as the argument is True. Thus the output can be less than the number of inputs. Above examples of filter() returns only those values where number is even i.e the conditon (x%2==0) is True.
+
+#map - when some business logics needs be applied to all members of the sequence we use map().
+       Suppose all the members of a list should be doubled,then we use map. Map takes a function(which performs the double) as one argument and a sequence(whose               members need to get doubled) as another argument.
+       The operation is applied on each and every element and returns the doubled value of each and every elements unlike filter which returns selected elements based 	on conditions. Thus the number of outputs for map() is always equal to number of inputs.
+
+Example -
+---------
+my_list = [1, 5, 4, 6, 8, 11, 3, 12]
+print(list(map(lambda x: x * 2 , my_list)))
+
+o/p -
+[2, 10, 8, 12, 16, 22, 6, 24]
+
+
+Example - increase everyones salary by 20%
+------------------------------------------
+
+Salary = [1000, 5000, 4000, 6000, 8000, 1100, 3000, 1200]
+print(list(map(lambda x: x*1.2 , Salary)))
+
+o/p-
+[1200.0, 6000.0, 4800.0, 7200.0, 9600.0, 1320.0, 3600.0, 1440.0]
+
+Example - performing operations to multiple lists with same number of members
+-----------------------------------------------------------------------------
+l1=[1,2,3,4]
+l2=[9,8,7,6]
+print(list(map(lambda x,y:x*y,l1,l2)))
+
+
+o/p-
+[9, 16, 21, 24]
+
+Example - performing operations to multiple lists with different number of members
+----------------------------------------------------------------------------------
+l1=[1,2,3,4]
+l2=[9,8,7,6,5,4]
+print(list(map(lambda x,y:x*y,l1,l2)))   #extra members of l2 are ignored
+
+o/p-
+[9, 16, 21, 24]
+
+
+Example- length of each word in a sentence
+-------------------------------------------
+
+s = "my name is anindya"
+print(list(map(lambda x:len(x),s.split(" "))))   #split function returns the values as memebers of a list.
+
+o/p-
+[2, 4, 2, 7]
+
+----------------------------------------------------------------------------------------------------------
+reduce() - when computation needs to done for all elements of sequence.
+----------------------------------------------------------------------------------------------------------
+
+reduce is a function of the module - functools. we need to import the module before usinf functools
+
+example - to find the sum of all memebers of a sequence
+--------------------------------------------------------
+from functools import reduce
+list1 = [10,20,30,40]
+print(type(reduce(lambda x,y:x+y,list1)))   # type is int type
+print((reduce(lambda x,y:x+y,list1)))       # lambda of reduce takes 2 args x&y. x is one member of the list and y is another member of the same list.
+
+o/p- 
+100
+
+
+example - to find the sum of 1-100
+-----------------------------------
+from functools import reduce
+print((reduce(lambda x,y:x+y,range(1,100))))       # lambda of reduce takes 2 args x&y. x is one member of the list and y is another member of the same list.
+
+o/p-
+4950
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+

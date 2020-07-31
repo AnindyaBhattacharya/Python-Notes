@@ -1,0 +1,200 @@
+OOP Varaibles 
+-------------
+
+Instance Variable:
+``````````````````
+Object level variables are called Instance Variable. Instance variable are directly related to objects, there variables differ from object to object.
+For every object declaration, we will have different values for instance varables.
+
+Declaring Instance Variables
+----------------------------
+
+Instance Variables declared at :-
+
+1.constructors with self
+2.instance methods with self
+3.from outside the class with object references.
+
+Example - Instance Variable declared inside constructor
+-------------------------------------------------------
+# declaring instance variables inside the constructors
+
+class Student:
+    def __init__(self,var1,var2,var3):						# constructor declaration
+        self.name = var1									# instance variable
+        self.roll = var2									# instance variable
+        self.dept = var3									# instance variable
+    
+    def info(self):
+        print("name is {} ,roll is {}, department is {}".format(self.name,self.roll,self.dept))	# using instance variable
+    
+student1 = Student("anindya",127,"ME")					# object declared
+student1.info()											# student info printed corresponding to student1 object
+
+student2 = Student("apple",128,"EE")					# object declared
+student2.info()											# student info printed corresponding to student2 object.
+
+o/p -
+name is anindya ,roll is 127, department is ME
+name is apple ,roll is 128, department is EE
+
+
+Example - Instance variable declared inside instance methods
+------------------------------------------------------------
+# declaring instance variable inside the instance methods
+
+class Student:
+    def __init__(self,var1,var2,var3):
+        self.name = var1
+        self.roll = var2
+        self.dept = var3
+    
+    def info(self):
+        self.marks = 200
+    
+student1 = Student("anindya",127,"ME")						
+print(student1.__dict__) 								# prints the instance varables linked to the object.
+
+o/p- 
+{'name': 'anindya', 'roll': 127, 'dept': 'ME'} 			# 3 variables, as the instance method is not called thus the variable inside it is not considered.
+
+
+class Student:
+    def __init__(self,var1,var2,var3):
+        self.name = var1
+        self.roll = var2
+        self.dept = var3
+    
+    def info(self):
+        self.marks = 200
+    
+student1 = Student("anindya",127,"ME")
+student1.info()											# calling the instance method, thus the variable declared inside comes into consideration.
+print(student1.__dict__)                    			# prints the instance varables linked to the object.
+
+o/p-
+{'name': 'anindya', 'roll': 127, 'dept': 'ME', 'marks': 200}    # 3 instace variables were declared in the constructor; 1 variable inside instance method.
+
+
+Example - Instance variable declared from outside of class
+------------------------------------------------------------
+# declaring instance variables from outside of the class
+class Student:
+    def __init__(self,var1,var2,var3):
+        self.name = var1
+        self.roll = var2
+        self.dept = var3
+    
+    
+student1 = Student("anindya",127,"ME")
+student1.home = "bwn"                               	      	# declaring instance variables from outside class
+print(student1.__dict__)                    		      	# prints the instance varables linked to the object.
+
+o/p- 
+{'name': 'anindya', 'roll': 127, 'dept': 'ME', 'home': 'bwn'} 	# 3 instace variables were declared in the constructor; 1 variable from outside of class.
+
+** note : If the instance variable declared is already predeclared, then it overrides the predeclared value. Had student1.home been predeclared, then again on declaration the previous value would have been overridden.
+
+Accessing Instance Variables
+-----------------------------
+
+Instance Variables accessed :-
+1. inside class using self 
+2. from outside the class with object references.
+
+Example - inside class using self 
+---------------------------------
+class Student:
+    def __init__(self,var1,var2,var3):								
+        self.name = var1									
+        self.roll = var2									
+        self.dept = var3									
+    
+    def info(self):
+        print("name is {} ,roll is {}, department is {}".format(self.name,self.roll,self.dept))	# accessing instance variable
+    
+student1 = Student("anindya",127,"ME")								# object declared
+student1.info()											# student info printed corresponding to student1 object
+
+student2 = Student("apple",128,"EE")								# object declared
+student2.info()											# student info printed corresponding to student2 object.
+
+o/p -
+name is anindya ,roll is 127, department is ME
+name is apple ,roll is 128, department is EE
+
+
+
+Example - from outside the class with object references.
+--------------------------------------------------------
+class Student:
+    def __init__(self,var1,var2,var3):								
+        self.name = var1									
+        self.roll = var2									
+        self.dept = var3									
+    
+student1 = Student("anindya",127,"ME")
+print("name is {}, roll is {} , department is {}".format(student1.name,student1.roll,student1.dept)) # using object reference
+
+o/p - 
+name is anindya, roll is 127 , department is ME
+
+
+Deleting Instance Variables
+-----------------------------
+
+Instance Variables deleted:-
+1. inside class using self , del self.variablename
+2. from outside the class with object references , del objectreference.variablename
+
+Example - inside class using self
+----------------------------------
+class Student:
+    def __init__(self,var1,var2,var3):
+        self.name = var1
+        self.roll = var2
+        self.dept = var3
+    
+    def delete(self):
+        del self.dept									     # deleting instance variable
+    
+student1 = Student("anindya",127,"ME")
+print("instance variables before delete is called -> ",student1.__dict__)                    # instance variables before delete is called
+student1.delete()							
+print("instance variables after delete method is called -> ",student1.__dict__)              # instance variables after delete method is called
+
+o/p- 
+instance variables before delete is called ->  {'name': 'anindya', 'roll': 127, 'dept': 'ME'}
+instance variables after delete method is called ->  {'name': 'anindya', 'roll': 127}
+
+Example - from outside the class with object references
+--------------------------------------------------------
+
+class Student:
+    def __init__(self,var1,var2,var3):
+        self.name = var1
+        self.roll = var2
+        self.dept = var3
+    
+student1 = Student("anindya",127,"ME")
+print("instance variables before delete -> ",student1.__dict__)                  
+del student1.dept							                       # deleting the instance variable from outside class
+print("instance variables after delete -> ",student1.__dict__)    
+
+o/p- 
+instance variables before delete ->  {'name': 'anindya', 'roll': 127, 'dept': 'ME'}
+instance variables after delete ->  {'name': 'anindya', 'roll': 127}
+
+=======================================================================================================================================================================
+.......................................................................................................................................................................
+=======================================================================================================================================================================
+
+
+
+
+
+
+
+
+
+

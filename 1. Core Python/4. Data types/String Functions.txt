@@ -1,0 +1,276 @@
+String methods
+-----------------
+
+All string methods returns new values. They do not change the original string
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. length of string -> len()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+len() is a inbuilt function for python, not specific to string.
+
+correct usage ->
+----------------
+s="string1"
+len(s) -> length of string
+
+wrong usage ->
+--------------
+s="string1"
+s.len()
+
+Error -
+Traceback (most recent call last):
+  File "<pyshell#4>", line 1, in <module>
+    print(s.len())
+AttributeError: 'str' object has no attribute 'len'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. trimming of string -> strip();lstrip();rstrip()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+strip is a built in method for a string object that removes spaces from begining or from end. 
+
+syntax-
+
+s= "   string1"
+s.strip()  -> strips spaces.
+
+lstrip() -> left side trim.
+rstrip() -> right side trim.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. Slicing of strings -> [:]
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+syntax-
+
+[beginindex:endindex:step] -> starting from begin index value, moving to (endindex value -1) in steps (only if steps are forward i.e +ve and beginindex < endindex)
+[beginindex:endindex:step] -> starting from begin index value, moving to (endindex value +1) in steps (only if steps are backwards i.e -ve and beginindex > endindex)
+
+
+s[0:10:2] -> stating from 0 moving upto (10-1 =9) with steps 2. i.e 0,2,4,6,8 index values are taken.
+
+s[:] -> starting from 0 moving to the last index with 1 steps. i.e total length of the string.
+
+s[10:0:-1] -> starting from startingindex(10) index moving to (endindex+1) 1 with a decrement of 1. i.e moving in the reverse direction.
+
+Exmples
+--------
+
+>>> s="anindya bhattacharya"
+>>> s[:100]
+'anindya bhattacharya'
+
+>>> s[-10:]
+'attacharya'
+
+>>> s[-1:-100:-1]
+'ayrahcattahb aydnina'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4. counting substring (number of times substring present in given string.) -> count()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+syntax - s.count(substring)
+
+Examples
+---------
+
+>>> s="anindya bhattacharya is the full name of anindya"
+>>> s.count("anindya")
+2
+
+
+syntax - s.count(substring,beginindex,endindex -1)
+
+Example
+--------
+
+>>> s="remember anindya bhattacharya is the full name of anindya"
+>>> s.count("anindya",10,len(s))
+1
+>>> s.count("anindya",10,1000)
+1
+>>> s.count("anindya",10)
+1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5. replacing string -> replace()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+syntax - s.replace("what to repalce","with what to replace")
+
+Example
+--------
+
+>>> s="remember anindya bhattacharya is the full name of anindya"
+>>> s.replace("anindya","Boss")
+'remember Boss bhattacharya is the full name of Boss'
+
+
+#Note - string is a fundamental data type, and it is immutable. Once the string object is created it can't be modified. On applying replace the object that was been referred to remains the same there is no change, another new object gets created with the modified value. The object which has been newly created is then referred.
+
+Example -
+
+>>> a= "anindya"
+>>> b="anindya"
+>>> id(a)    ---> referring to same object , same id 
+52673088
+>>> id(b)    ---> referring to same object , same id 
+52673088
+>>> a=a.replace("ani","ANI")  --> replacing string a and reassigning to string variable a. 
+>>> a
+'ANIndya'
+>>> b
+'anindya'
+>>> id(b)  ---> referring to the same object as before
+52673088  
+>>> id(a)  ---> referring to the newly created object after assignment.
+52673280 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6. spitting -> split();rsplit();lsplit()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+syntax - s.split(delimeter) -> starts splitting from the left
+syntax - s.rsplit(delimeter) -> starts splitting from the right
+syntax - s.rsplit(delimeter,maxsplit) -> starts splitting from right and splits upto maxsplit number
+syntax - s.split(delimeter,maxsplit) -> starts splitting from left and splits upto maxsplit number
+
+# Note - Splitted values are stored in a list.
+
+Example
+--------
+>>> a="anindya,bhattacharya,python,learning,faster,than,ever"
+>>> a.split(",")
+['anindya', 'bhattacharya', 'python', 'learning', 'faster', 'than', 'ever']
+
+>>> a.rsplit(",",3)
+['anindya,bhattacharya,python,learning', 'faster', 'than', 'ever']  --> starts from right splits the next 3 
+
+>>> a.split(",",3)
+['anindya', 'bhattacharya', 'python', 'learning,faster,than,ever']  --> starts from left splits the next 3 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+7. case change -> upper();lower();swapcases();title();capatalize()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------syntax - s.upper()  -> to upper case
+syntax - s.lower()  -> to lower case
+syntax - s.swapcases() -> upper to lower and lower to upper
+syntax - s.title()  -> first letter of each word to upper
+syntax - s.capitalize() -> first letter of the sentence to upper.
+
+
+Example- 
+
+>>> s.upper()
+'ANINDYA BHATTACHARYA IS A GOOD PROGRAMMER'
+>>> s.lower()
+'anindya bhattacharya is a good programmer'
+>>> s.capitalize()
+'Anindya bhattacharya is a good programmer'
+>>> s.swapcase()
+'aNINDYA bHATTACHARYA IS A GOOD PROGRAMMER'
+>>> s.title()
+'Anindya Bhattacharya Is A Good Programmer'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8.Sorted function -> sorted() Python inbuilt function,not specific to string.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+syntax -> sorted(item to be sorted) -> ascending order
+	  sorted(item to be sorted,reverse=True) -> descending order
+ 
+
+Example -
+----------
+
+WAP to do the following - input : A43BC12 ; output : ABC1234
+
+inpstr=input("Enter any string : ")
+s1=""
+s2=""
+for i in inpstr :
+    if i.isalpha() :  ---> checks if the string is a alphabet ? returns true if yes.
+        s1=s1+i
+    else :
+        s2=s2+i
+del i
+for i in sorted(s1) : ----> sorted function sorts the values at s1 ,ascending
+    print(i,end="")
+del i
+for i in sorted(s2) : ----> sorted function sorts the values at s2 , ascending
+    print(i,end="")
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9. Convert [ Ascii value to character ] & [ Character to ascii value ]
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+chr(ascii) -> character
+ord(character) -> ascii value.
+
+Example -
+
+>>> chr(97)
+'a'
+>>> chr(105)
+'i'
+
+>>> ord("A")
+65
+>>> ord("p")
+112
+>>> ord("Apple")
+Traceback (most recent call last):
+  File "<pyshell#9>", line 1, in <module>
+    ord("Apple")
+TypeError: ord() expected a character, but string of length 5 found
+>>> 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Further details @ https://www.programiz.com/python-programming/strings-method
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+WAP to print - aydninA ayrahcattahB
+
+inpstr=input("Enter any string : ")
+index=inpstr.find(" ")
+print(index)
+if (index != None) :
+    print(inpstr[index-1::-1],inpstr[len(inpstr):index-1:-1])
+else :
+     print(inpstr[len(inpstr)::-1])
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+WAP to take
+# input-a4k3g2
+# output-aekngi
+
+inp=input("Enter the required pattern " )
+string=""
+for i in inp :
+    sum=0
+    if i.isalpha() :
+        ascii=ord(i)
+        string=string+chr(ascii)
+        if (ascii==122) :  #considering the "z" character, ascii of z=122, next to z is '{' with ascii value 123 . The next value of z should be a
+            ascii=96
+        elif (ascii==90) : #considering the "Z" character, ascii of z=90, next to z is '[' with ascii value 91. The next value of Z should be A
+            ascii=64
+    else :
+        add=int(i)
+        sum=ascii+add 
+        string=string+chr(sum)
+print(string)
+    
+
+D:\Pycodes>py Test1.py
+Enter the required pattern d4z2m6
+dhzbms
+
+Enter the required pattern C5P2Z1
+CHPRZA
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

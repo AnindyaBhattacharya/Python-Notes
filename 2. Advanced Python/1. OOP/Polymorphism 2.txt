@@ -1,0 +1,35 @@
+Polymorphism - Concept of Overriding
+-------------------------------------
+Overriding means replacing the parent class functionalities with child class functionalities.
+To achieve overriding concept, minimum two classes are required with an inheritance relationship
+There are 2 types of overriding concepts - 
+	1. method overriding : child class methods overriding the functionalities of parent class
+	2. constructor overriding : child class constructors overriding the constructor of parent class.
+Basically if there are two methods/constructors of same method signature (i.e same methods name, number of arguments) in both parent and child class, then the child class method overrides the parent class
+methods which means the child class method's functionalities get executed not the parent class one.
+
+Example -
+-------
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# parent class has 0 arg constructor and a method "disp"
+# child class has a 0 arg constructor and a method "disp"
+# child class disp method runs but parent class disp method doesnot run
+class Parent:
+    def __init__(self):
+        self.name = "Anindya"
+    def disp(self):
+        print("My name is {}".format(self.name))
+        
+class Child(Parent):
+    def __init__(self):
+        self.name  = "Hari"
+    def disp(self):
+        print("My name is {}".format(self.name))
+        
+c = Child()
+c.disp()
+
+o/p-
+My name is Hari.

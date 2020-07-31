@@ -1,0 +1,315 @@
+Nested Functions
+-----------------
+Function declared within a function.
+
+example- 
+---------
+def outerfunc() :                           #outer function defined
+    print("outer function started")
+    def innerfunc() :                       #inner function defined
+        print("inner function started")     
+    innerfunc()                             #inner function called
+    print("outer function ended")
+
+outerfunc()                                 #outerfunction called
+
+
+o/p- 
+D:\Pycodes>py Test1.py
+outer function started
+inner function started
+outer function ended
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Fuction returning another function
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+fuction taking anoter function as argument - filter,map,reduce are such examples.
+
+function can also return functions.
+
+Example - 
+---------
+def outerfunc() :                           #outer function defined
+    print("outer function started")
+    def innerfunc() :                       #inner function defined
+        print("inner function started")    
+    print("outer function ended")
+    return innerfunc                        #inner function returned from outer function
+
+f1=outerfunc()                              #outerfunction called and assigned to f1
+f1()                                        # f1 now holds the inner function. calling f1() will call the inner function.
+
+o/p-
+D:\Pycodes>py Test1.py
+outer function started
+outer function ended
+inner function started
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Concept of function aliasing and calling
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example - function aliasing, assigning a function to a variable
+---------------------------------------------------------------
+def function1():
+    print("inside function1")
+
+f1 = function1  # this is function aliasing. assing a function to a varable.
+f1()		# calling f1() instead of function1()
+
+o/p-
+inside function1
+
+Example - function calling
+--------------------------
+def function1():
+    print("inside function1")
+    return "function called and ended"
+    
+
+f1 = function1()  # this is function calling. f1 variable stores the return value of the called function
+print(f1)         # return value printed.
+
+o/p-
+inside function1
+function called and ended
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Example - fuctions returning functions
+--------------------------------------
+def outerfunc() :                           # outer function defined
+    print("outer function started")
+    def innerfunc() :                       # inner function defined
+        print("inner function started")    
+    print("outer function ended")
+    return innerfunc()                      # inner function is called as a retun statement of outer function.So the return value of the inner function is returned.
+
+f1=outerfunc()                              # outerfunction called and return is assigned to f1
+print(f1)                                   # f1 now holds the return value of inner function which is NONE
+
+o/p-
+outer function ended
+inner function started
+None
+
+Example - fuctions returning functions (innerfunc is aliased at the retun of the outer function)
+------------------------------------------------------------------------------------------------
+def outerfunc(a,b) :                           # outer function defined
+    print("outer function started")
+    print("sum in outer function is",a+b)
+    def innerfunc(c,d) :                       # inner function defined
+        print("inner function started")
+        return "inner function ended",c+d
+    print("outer function ended")
+    return innerfunc                           # inner function is retured from outer function. function aliasing
+
+f1=outerfunc(5,15)                             # outerfunction called is and return is assigned to f1. return of outerfun is innerfunc. f1 is now alias to innerfunc
+print(f1(10,20))                               # f1 when called runs the inner function
+
+
+o/p-
+outer function started
+sum in outer function is 20
+outer function ended
+inner function started
+('inner function ended', 30)
+
+## By this way we can use any innerfunction(delacred inside the outerfunction) outside of the outerfunction in the program.
+
+Example - fuctions returning functions (innerfunc is called from return of outerfunc)
+--------------------------------------------------------------------------------------
+def outerfunc(a,b) :                           # outer function defined
+    print("outer function started")
+    print("sum in outer function is",a+b)
+    def innerfunc(c,d) :                       # inner function defined
+        print("inner function started")
+        return "inner function ended",c+d
+    print("outer function ended")
+    return innerfunc(10,20)                    # inner function is called from outer function. function calling. return values of innerfunc is returned.
+
+f1=outerfunc(5,15)   # outerfunction called and return is assigned to f1. innerfunc is called from the return of outerfunc. f1 hold return values of innerfunc
+print(f1)            # f1 when printed prints the return values of innerfunc
+
+o/p-
+outer function started
+sum in outer function is 20
+outer function ended
+inner function started
+('inner function ended', 30)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Decorator Function
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+When we want to add extra implementations to a functions, without changing the original parent function we use the concept of Decorator function.
+Suppose we have a function f1() with some implementations. Now if we want to add some additional functionalities to it,we use then Decorator functions without changing the original function f1().
+
+The decorator function takes another function as input to that function.
+
+Example- using "@decoratorfunctionname" before the declaration of the parent function
+--------------------------------------------------------------------------------------
+
+    # one function defined to perform division.
+    # the error caused while dividing by zero is not taken in account in the original function - div()
+    # to take in the above consideration, we add some checks to the original function in the decorator function. The parent function remains unchanged.
+
+
+    def div_decor(funct):   #defining a decor function which handles division by 0 . Takes argumaent a function. Here funct holds the div()
+        def innerfunc(a,b): #inner function
+            if b==0 :       # if b = 0, then returns nothing    
+                return "division by 0"
+            else:
+                funct(a,b)  # if b != 0, then performs what the work of div()
+        return innerfunc    # returning the innnerfunc from the decorator function.
+    
+    @div_decor              # this way we call the decorator function div_decor to work for div()
+
+    def div(a,b) :	    # original function
+        return a/b          # this return statement throws error while division by 0. To handle that we call decorator function div_decor
+
+    print(div(10,0))
+
+o/p-
+division by 0.
+
+``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+## @div_decor - this declaration makes the decorator function div_decor() to work instead of the div() function. |
+``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+
+Example- another way of using the decorator function. We can call the  inner function defined inside the decorator function.
+----------------------------------------------------------------------------------------------------------------------------
+
+# one function defined to perform division.
+# the error caused while dividing by zero is not taken in account.
+# to take in the above consideration, we add some checks to the original function in the decorator function.
+
+
+def div_decor(funct):    #defining a decor function which handles division by 0 . Takes argumaent a function
+    def innerfunc(a,b) : #inner function
+        if b==0 :        # if b = 0, then returns nothing    
+            return "division by 0"
+        else:
+            funct(a,b)   # if b != 0, then performs what the work of div()
+    return innerfunc     # returning the innnerfunc from the decorator function.    
+                 
+def div(a,b) :
+    return a/b          # this return statement throws error while division by 0. To handle that we call decorator function div_decor
+    
+variable_div_decor =  div_decor(div)  # assigning the return value of div_decor to a var.The var now holds the innerfunc(),as this has been returned from div_decor
+print(variable_div_decor(10,0))
+
+o/p-
+division by 0
+
+Example - original function just returns name, using decorator print both name and surname.
+-------------------------------------------------------------------------------
+# original function prints only name
+# using decor function we want to print name and surname.
+# here we are using a inner function which takes 2 arg, name & surname. 
+
+def name_decor(funct):
+    def inner_funct(name,surname):
+        return funct(name)+surname
+    return inner_funct
+    
+def namefunction(name): 			 #this function only pprints name. 
+   return name
+   
+var_name_decor = name_decor(namefunction)  	 #calling name_decor & passing namefunction, assigning the retun to a var.The var now contains inner_funct
+print(var_name_decor("anindya ","bhattacharya")) # calling inner_funct through var_name_decor
+
+o/p-
+anindya bhattacharya
+
+
+
+Classic Example - {the namefunction() was defined to take one arg, here using the decorator function we are taking 2 arguments for same namefunction()}
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+# original function prints only name
+# using decor function we want to print name and surname.
+# here we are using a inner function which takes 2 arg, name & surname. 
+
+def name_decor(funct):
+    def innerfunct(name,surname):
+       return funct(name)+surname
+    return innerfunct
+
+@name_decor  		# addressing the decorator function before the namefunction function.
+def namefunction(name): #this function only prints name. 
+   return name
+   
+print(namefunction("anindya ","bhattacharya")) # calling the namefunction() with 2 args
+
+o.p-
+anindya bhattacharya
+
+
+Example - checking the time taken to perform factorial of number
+----------------------------------------------------------------
+import time 
+import math 
+def calculate_time(func):  
+    def inner1(*args, **kwargs):  #function takes any arguments,
+        begin = time.time()  	  # storing time before function execution 
+        func(*args, **kwargs) 
+        end = time.time()    	  # storing time after function execution 
+        print("Total time taken in : ", func.__name__, end - begin)  # func.__name__  -> return the function taken in as argument
+    return inner1 
+@calculate_time                   # calling the decorator function
+def factorial(num): 
+    time.sleep(2) 
+    print(math.factorial(num)) 
+
+factorial(10) 
+
+o/p-
+3628800
+Total time taken in :  factorial 2.000572919845581
+
+
+Example - creating a memory storing the factotial of numbers
+--------------------------------------------------------------
+
+#using a decortor function concept
+#using a function to calculate the factorial
+#using a decorator function to hold factorial values in memory (dict).
+#will not run the factorial function for same number twice, rather it will show results stored in the memory
+ 
+def memoize_factorial(f):           # defining the decor function. f holds the facto function
+    memory = {}                     # empty dict declared
+
+    def inner(*var,**keyword):      # inner function defined to accept unlimited positional/keyword args
+        for i in var:               # loop iterating through the var tuple which is holding the passed arguments
+            if i not in memory:     # checking if the number is already found in memory         
+                memory[i] = f(i)    # if not found in memory calls the facto function to calculate factorial of the number and stores in memory
+        return memory               # returns the values stored in memory
+    return inner                    # outer function returns the inner function
+      
+def facto(num):                     # FACTORIAL FUNCTION
+    if num == 1:                    
+        return 1
+    else: 
+        return num * facto(num-1) 
+ 
+f1 =  memoize_factorial(facto)      # f1 variable holds the return of memoize_factorial, which in the inner function. f1 holds inner
+print(f1(7,2,6,8,9))                # f1 is called and arguments are passed.
+
+
+o/p-
+{7: 5040, 2: 2, 6: 720, 8: 40320, 9: 362880}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

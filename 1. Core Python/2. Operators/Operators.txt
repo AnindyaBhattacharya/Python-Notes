@@ -1,0 +1,339 @@
+Operators
+----------
+1.Arithmetic operators
+2.Relational Operatiors , Comparison operator
+3.Logical Operator
+4.Bitwise Operator
+5.Assignment Operator
+6.Special Operator
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Arithmetic Operator.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
++,-,*,/,%,// (floor division operator),** (exponential)
+
+// -> floor division 
+
+returns the lowest integer value. if the arguments are int answer is in int. if arguments in float answer is in float
+
+>>> a =10
+>>> b= 2
+>>> a//b
+5
+>>> a = 10.5
+>>> b = 5
+>>> a//b
+2.0
+>>> a= 2.9
+>>> b =1
+>>> a//b
+2.0
+
+Concatenation operator (+)
+--------------------------
+
+# Note- Both arguments should be string type only. 
+
+>>> "durga"+3
+Traceback (most recent call last):
+  File "<pyshell#9>", line 1, in <module>
+    "durga"+3
+TypeError: can only concatenate str (not "int") to str
+>>> "durga"+"3"
+'durga3'
+
+String Repeatation operator (*)
+--------------------------------
+
+#Note - One arg must be int type
+
+>>> "a"*"3"
+Traceback (most recent call last):
+  File "<pyshell#12>", line 1, in <module>
+    "a"*"3"
+TypeError: can't multiply sequence by non-int of type 'str'
+>>> "a"*3
+'aaa'
+>>> "a" * 3.5
+Traceback (most recent call last):
+  File "<pyshell#14>", line 1, in <module>
+    "a" * 3.5
+TypeError: can't multiply sequence by non-int of type 'float'
+
+>>> 2*"a" -> order of the arguments not imp
+'aa'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Relational Operator
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>,<,<=,>=
+
+Applying for string type - Sting compares based on the alphebetical order.
+
+Applying for boolean type - True > False
+
+Chaining of Relational Operators
+--------------------------------
+if all operators returns true, answer is true 
+if one operator returns false, answer is false
+
+>>> 10<20<30<40
+True
+>>> 10<20<30>40
+False
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Equality Operators
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+== , !=
+
+Chaining concept is also present,
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Logical Operator
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+and , or, not
+
+Boolean Cases
+--------------
+>>> True and False
+False
+>>> True and True
+True
+>>> True or False
+True
+>>> False or False
+False
+>>> not False
+True
+>>> not True
+False
+
+Non Boolean Cases
+------------------
+
+True - all non zero and all characters or string except empty string
+
+False - zero and empty string
+
+so,
+
+X and Y = X (when X is False i.e X = 0 or X = '')
+
+X and Y = Y (when X is True )
+
+Ex- 
+------------------
+
+>>> 10 and 20
+20
+>>> 0 and 20
+0
+>>> "ab" and "cd"
+'cd'
+>>> "" and "cd"
+''
+-------------------
+
+X or Y = X (when X is True )
+
+X or Y = Y (when X is False )
+
+>>> 10 or 20
+10
+>>> 10 and 20
+20
+>>> 0 or 20
+20
+
+
+>>> 10 or 10/0  -> 2nd part (10/0) not exectuted so not 
+10
+>>> 10 and 10/0
+Traceback (most recent call last):
+  File "<pyshell#46>", line 1, in <module>
+    10 and 10/0
+ZeroDivisionError: division by zero
+
+-------------------
+
+not is complement 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bitwise operator
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+only applied for int and boolean , for other datatype it throws error.
+
+&, | , ^ , ~,  <<, >>
+
+
+& (bitwise and) ->  if both bits are 1 then 1 else 0
+| (bitwise or)  ->  atleast one bit is 1 then result is 1 , else 0
+^ (bitwise x-or) -> if both bits are different then 1 , else if same then 0
+~ (complement operator)
+<< (left shift) -> learn @ https://www.youtube.com/watch?v=9A0V1LshYUA&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=14
+>> (right shift)
+
+>>> 4&5
+4
+
+4 = 100
+5 = 101
++
+-   ---
+4    100
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Assignment Operator
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Compound Operators-
+
++= 
+-=
+*=
+/=
+//=
+&=
+|=
+^=
+
+Invalid operators in Python
+++x 
+x++ 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------Ternary Operator
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+?:
+
+usage -> (condition)?firstValue:secondvalue -> this is the usage for java.
+
+
+## The above declaration is not used in Python ##
+
+Python usage -> x=firstValue if (condition) else second value
+
+example  -
+
+>>> x = 30 if(10<20) else 40
+>>> x
+30
+
+Ex
+---
+a= 2
+b = 3
+c = 4
+
+print ( "equal" if(a==b==c) else "greater is a" if (a>b and a>c) else "greater is b" if (b>c) else "greater is c",c)
+
+greater is c 4
+
+
+Always read teranary operators from right to left. -> control in any block moves from right to left.
+
+celsius = {x:round(9/5*(y-32),2)  if round(9/5*(y-32),2) > 0 else -1*round(9/5*(y-32),2) for x,y in fahrenheit.items() }
+
+start reading from for loop. x,y values are got in the each iteration. Then control moves to left. x,y value in each iteration moves left into the if block. 
+If conditions satisfies in "if block" then control moves further left to assign x:round(9/5*(y-32),2).
+If conditions fails in "if block" then control moves to the else block . In the else block also the control starts from the extreme right end of the block and moves left.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Special Operators
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1 Identity Operator - @ https://www.youtube.com/watch?v=9A0V1LshYUA&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=14
+---------------------
+
+is 
+---
+checking address if same or not ?
+
+a=10
+b=10
+
+print (a is b) -> true , both are pointing to the same object with two reference variable.
+
+isnot
+-----
+
+a= 10
+b= 10
+
+print (a isnot b) -> false.
+
+
+>>> list1 = [10,20,30]
+>>> list2 = [10,20,30]
+>>> print(id(list1))
+61726848
+>>> print(id(list2))
+66191888
+>>> list1 is list2
+False
+
+
+2. membership operator
+-----------------------
+
+in & (not in)
+-----------
+
+check if the given object is a member or not
+
+list1 = [10,20,30]
+>>> print(10 in list1)
+True
+>>> print(71 not in list1)
+True
+
+
+
+>>> s = "anindya bhattacharya"
+>>> print("a" in s)
+True
+>>> print(" " in s)
+True
+>>> print( "A" in  s)  -> Python is case sensetive
+False
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Precedence of operators
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+() 
+**
+~,-
+*,/,%,//
++,-
+<<,>>
+&
+^
+|
+>,>=,<,<=,==,!=
+=,+=,-=,*= ...
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

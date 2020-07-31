@@ -1,0 +1,53 @@
+Q.42. Can I dynamically load a module in Python?
+
+Dynamic loading is where we do not load a module till we need it. This is slow, but lets us utilize the memory more efficiently. In Python, you can use the importlib module for this:
+
+import importlib
+module = importlib.import_module('my_package.my_module')
+
+Q.60. What is Monkey Patching?
+
+Monkey patching refers to modifying a class or module at runtime (dynamic modification). It extends Python code at runtime.
+
+For example:
+
+from pkg.module import MyClass
+def sayhello(self):
+       print("Hello")
+MyClass.sayhello=sayhello
+
+Dynamically modifying a class or module at run-time.
+
+>>> class A:
+   def func(self):
+       print("Hi")
+>>> def monkey(self):
+       print "Hi, monkey"
+>>> m.A.func = monkey
+>>> a = m.A()
+>>> a.func()
+Hi, monkey
+
+
+Q.7. What do you know about palindromes using an iterator.
+
+>>> def isPalindrome(string):
+     left,right=iter(string),iter(string[::-1])
+     i=0
+     while i<len(string)/2:
+            if next(left)!=next(right):
+                     return False
+            i+=1
+            return True
+
+Q.13. What will the following code output?
+
+>>> a=1
+>>> a,b=a+1,a+1
+>>> a,b
+The output is (2, 2). This code increments the value of a by 1 and assigns it to both a and b. This is because this is a simultaneous declaration. The following code gives us the same:
+
+>>> a=1
+>>> b,a=a+1,a+1
+>>> a,b
+(2, 2)

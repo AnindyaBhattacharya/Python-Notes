@@ -1,0 +1,404 @@
+Inheritance
+------------
+Process of creating new class by using the properties of the existing classes. It the way a Child class inherits the properties of a Parent class.
+
+Child classes inherits the property of Parent classes thereby all the parent class attributes (variables, methods, classes)can be directly accessed by the child class.
+
+From Python3 onwards, every Python classes are the child class of object class.
+
+Declaration : ChildClass(ParentClass)   # this way we are declaring the ChildClass as a child class of ParentClass
+
+We access the parent class attributes from the child class using the "super()" method.
+
+To check if there is any inheritence inbetween two classes we use the "issubclass()" method
+
+To check if an object is an insctance of a class we use  isinstance()
+
+Types of inheritance :- 
+	
+1.single inheritance : single parent and single child
+
+	class P():
+		pass
+	class C(P):
+		pass
+
+2.multi-level inheritance : parent-child flow pattern continues
+
+	class P():
+		pass
+	class C(P):
+		pass
+	class C1(C):
+		pass
+	class C2(C1):
+		pass
+
+3.multiple inheritance: multiple parent single child
+
+	class P1():
+		pass
+	class P2():
+		pass
+	class C(P1,P2):
+		pass
+
+4.hierarchical inheritance: one parent multiple child
+
+	class P1():
+		pass
+	class P2(P1):
+		pass
+	class C(P1):
+		pass.
+
+5. hybrid inheritance : having all the different types of inheritance together.
+
+	class A : pass
+	class B(A) : pass
+	class C(B) : pass
+	class D(B,C) :pass
+
+
+
+Example - 
+```````
+# inheritance
+# 2 parent class declared
+# 1 child class declared, extending 2 parent classes
+# child class can access the attributes of parent class. 
+
+class Parent1:
+    def m1(self):
+        print("Parent1 class instance method")
+    @classmethod
+    def m2(cls):
+        print("Parent1 class class method")
+    def m3():
+        print("Parent1 class staic method")
+
+class Parent2:
+    def m4(self):
+        print("Parent2 class instance method")
+    @classmethod
+    def m5(cls):
+        print("Parent2 class class method")
+    def m6():
+        print("Parent2 class staic method")   
+
+class Child(Parent1,Parent2):
+    pass
+    
+c = Child()                     # child obect created
+c.m1()                          # parent1 class method called from child class
+c.m5()                          # parent2 class method called from child class
+Child.m3()                      # calling parent class static methods from child class.
+
+o/p- 
+
+Parent1 class instance method
+Parent2 class class method
+Parent1 class staic method
+
+Example - using of super().
+--------------------------
+Ex-1 (accessing methods)
+------------------------
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# child class method calling parent class method using super()
+class Parent1:
+    def m1(self):
+        print("Parent1 class instance method")
+    @classmethod
+    def m2(cls):
+        print("Parent1 class class method")
+    def m3():
+        print("Parent1 class staic method")
+  
+
+class Child(Parent1):
+    def m4(self):
+        print("Child class instance method")
+        super().m1()                                    # calling parent class method using super()
+    
+c = Child()                                             # child obect created
+c.m4()                                                  # parent1 class method called from child class                                               
+Child.m3()                                              # calling parent class static methods from child class.
+
+Ex - accessing methods with multiple inheritance (where each parent and child classes have different methods):
+-------------------------------------------------------------------------------------------------------------
+
+class P1:
+    def m1(self):   
+        print ("parent class P1 method")
+
+class P2:
+    def m2(self):   
+        print("parent class P2 method")
+
+class C(P1,P2):
+    def m3(self) :
+        print("child class method")
+
+c= C()
+c.m1()
+c.m2()
+c.m3()
+
+o/p-
+parent class P1 method
+parent class P2 method
+child class method
+
+
+Ex - accessing methods with multiple inheritance (where each parent classes have same methods):
+-----------------------------------------------------------------------------------------------
+
+Question is both P1 & P2 have same methods m1() , then when m1() method is called from child class, which method executes ?
+
+Answer is the pattern in which the methods are declared. The one declared first will get first priority .
+
+class P1:
+    def m1(self):   
+        print ("parent class P1 method")
+
+class P2:
+    def m1(self):   
+        print("parent class P2 method")
+
+class C(P1,P2):                                 # P1 declared before P2 thus P1.m1() methods executes not P2.m1() .Had that been the other way, then P2.m1() would have executed.
+    def m2(self) :
+        print("child class method")
+
+c= C()
+c.m1()
+c.m2()
+
+o/p- 
+parent class P1 method
+child class method
+
+
+Ex -2(accessing variables)
+--------------------------
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent class
+# child class method accessing the parent class static variables using super()
+class Parent1:
+    name = "Anindya"
+    age = 25
+    salary = 100
+    @classmethod
+    def disp(cls):
+        return "details : {}, age {}, salary {} ".format(cls.name,cls.age,cls.salary)
+  
+class Child(Parent1):
+    def __init__(self):
+        self.salary = 200       
+    def disp(self):
+        return "pervious " + Parent1.disp() + " and salary changed to " + str(self.salary) + " increase in salary is " + str(self.salary - super().salary)
+        					# accessing the Parent class variables using super(). Can only access Parent class Static varaibles
+   
+c = Child()                                     # child obect created
+print(c.disp())                                 # parent1 class method called from child class 
+
+pervious details : Anindya, age 25, salary 100  and salary changed to 200 increase in salary is 100 
+
+Ex -3
+-----
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# child class method accessing the parent class static variables using super()
+
+a = 1
+b = 2
+class Parent1:
+    a = 100
+    b = 200
+  
+class Child(Parent1):
+    a = 1000
+    b = 2000
+    
+    def sum(self):
+        print( "global value sum is {}".format(globals()['a'] + globals()['b']))
+        print( "Parent class value sum is {}".format(super().a + super().b))
+        print( "child class value sum is {}".format(Child.a + Child.b))
+
+
+c = Child()
+c.sum()     
+
+o/p- 
+global value sum is 3
+Parent class value sum is 300
+child class value sum is 3000 
+
+ex -4 (calling constructors)
+-----------------------------
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# parent class constructor executing as no constructor declared in child class
+
+class Parent1:
+    def __init__(self):
+        print("Parent class constructor executing")
+  
+class Child(Parent1):
+    pass
+
+c = Child()
+      
+o/p- 
+Parent class constructor executing
+
+ex -5 (parent class constructor called from child class using super())
+----------------------------------------------------------------------
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# parent class constructor called from child class using super().__init__
+class Parent1:
+    def __init__(self,name):
+        print("My name is {}".format(name))
+  
+class Child(Parent1):
+    def __init__(self): 
+        super().__init__("Anindya")				# calling parent class constructor
+        print ("Child class constructor executing")
+
+c = Child()
+
+o/p- 
+My name is Anindya
+Child class constructor executing
+
+ex- 6 (calling parent class constructor using class name):
+---------------------------------------------------------
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# parent class constructor called from child class using ParentClassName.__init__
+class Parent1:
+    def __init__(self,name):
+        print("My name is {}".format(name))
+  
+class Child(Parent1):
+    def __init__(self): 
+        Parent1.__init__(self,"Anindya")		     # when constructor is called with class name, self is mandatory.
+        print ("Child class constructor executing")
+
+c = Child()
+
+o/p - 
+My name is Anindya
+Child class constructor executing
+
+-------------------------------------------------------------------
+issubclass()  : checks if one class is a subclass of another class
+-------------------------------------------------------------------
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent class
+# checks if Child is a subclass of Parent1
+
+class Parent1:
+    def __init__(self,name):
+        print("My name is {}".format(name))
+  
+class Child(Parent1):
+    def __init__(self): 
+        Parent1.__init__(self,"Anindya")
+        print ("Child class constructor executing")
+
+print(issubclass(Child,Parent1))
+      
+o/p- 
+True
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent class
+# checks if Child is a subclass of Parent1
+
+class Parent1:
+    def __init__(self,name):
+        print("My name is {}".format(name))
+  
+class Child(Parent1):
+    def __init__(self): 
+        Parent1.__init__(self,"Anindya")
+        print ("Child class constructor executing")
+
+print(issubclass(Parent1,Child))
+
+o/p- 
+False
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent class
+# all classes are a child class of object class
+class Parent1:
+    def __init__(self,name):
+        print("My name is {}".format(name))
+  
+class Child(Parent1):
+    def __init__(self): 
+        Parent1.__init__(self,"Anindya")
+        print ("Child class constructor executing")
+
+print(issubclass(Parent1,object))
+
+o/p -
+True
+
+
+----------------------------------------------------------------------------   
+isinstacne()  : check if an object is an instance of a certain class or not
+----------------------------------------------------------------------------
+https://www.codevscolor.com/python-isinstance-issubclass/
+
+# inheritance
+# parent class declared
+# 1 child class declared, extending parent classe
+# checks if an object is an instance of the class
+
+class Parent:
+    def __init__(self):
+        print("Parent class constructor executing")
+class Child(Parent):
+    def __init__(self): 
+        print ("Child class constructor executing")
+        
+p = Parent()
+c = Child()
+ 
+print(isinstance(p,Parent))
+print(isinstance(c,Parent))
+print(isinstance(p,Child))
+print(isinstance(c,Child))
+print(isinstance(p,object))
+print(isinstance(c,object))
+
+o/p -
+
+Parent class constructor executing
+Child class constructor executing
+True
+True
+False
+True
+True
+True
+                              
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

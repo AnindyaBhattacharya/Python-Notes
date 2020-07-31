@@ -1,0 +1,196 @@
+Tuple Datatype
+---------------
+A tuple in Python is similar to a list. The difference between the two is that we cannot change the elements of a tuple once it is assigned whereas, in a list, elements can be changed. List objects are mutable, Tuple objects are immutable
+
+Characteristics of Tuple-
+
+1.represents group of objects, both homogeneous or heterogeneous
+2.indexing is followed : both backward and forward indexing
+3.duplicate objects are allowed
+4.insertion order is preserved. input member order is same as output member order.
+5.declared inside () 
+7.immutuable, modifications are not allowed
+
+Declaring Tuple
+----------------
+
+1.tup1 = (10,20,30)
+2.tup1 = (10,10.5,"anindya)
+3.tupl = (10,) 			# declaring only a single element in a tuple, it must end with comma. Else it will be taken as int/string.
+4.tup1 = 10,20,30  		# tuple can be declared without brackets
+5.tup1 = 10, 			# declaring a single element tuple, it must end with a comma.
+6.tup1 = ()     		# declaring empty tuple
+7.tup1 = tuple()
+8.tup1 = tuple("anindya") 	# every character of the string is now a member of a tuple.
+>>> tup1 = tuple("anindya")
+>>> tup1
+('a', 'n', 'i', 'n', 'd', 'y', 'a')
+
+Unpacking tuple, assigning members to variables
+-----------------------------------------------
+tup1 = (10,20,30.5,"anindya",True)
+a,b,c,d,e = tup1
+print(a,b,c,d,e)
+#o/p - 10 20 30.5 anindya True
+
+Indexing
+--------
+We can use the index operator [] to access an item in a tuple where the index starts from 0.
+Tuple having 6 elements will have indices from 0 to 5
+Trying to access an element outside of tuple (for example, 6, 7,...) will raise an IndexError.
+The index must be an integer.We cannot use float or other types. This will result in TypeError.
+
+Example -
+my_tuple = ('p','e','r','m','i','t')
+
+
+print(my_tuple[0])   # 'p' 
+
+print(my_tuple[5])   # 't'
+
+Likewise, nested tuples are accessed using nested indexing, as shown in the example below.
+
+Example- 
+n_tuple = ("mouse", [8, 4, 6], (1, 2, 3))
+print(n_tuple[0][3])       # 's'
+
+print(n_tuple[1][1])       # 4
+
+The index of -1 refers to the last item, -2 to the second last item and so on
+
+Example -
+my_tuple = ('p','e','r','m','i','t')
+
+
+print(my_tuple[-1]) # Output: 't'
+
+print(my_tuple[-6]) 
+# Output: 'p'
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Example - 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#tuple usage
+
+#1. unpacking tuple, assigning members to variables
+tup1 = (10,20,30.5,"anindya",True)
+a,b,c,d,e = tup1
+print(a,b,c,d,e)
+#o/p - 10 20 30.5 anindya True
+
+#2. nested tuple 
+tup1 = ((10,20,30.5),"anindya",(True,False))
+print(tup1[0])  # (10, 20, 30.5)
+print(tup1[1])  # anindya
+print(tup1[2])  # (True, False)
+print(tup1[0][2])   # 30.5
+print(tup1[1][4])   # d
+print(tup1[2][1])   # False
+
+#3. Unpacking nested tuple
+tup1 = ((10,20,30.5),"anindya",(True,False))
+a,b,c= tup1
+print(type(a),a,type(b),b,type(c),c)  # <class 'tuple'> (10, 20, 30.5) <class 'str'> anindya <class 'tuple'> (True, False)
+x,y,z=a
+print(type(x),x,type(y),y,type(z),z)  # <class 'int'> 10 <class 'int'> 20 <class 'float'> 30.5
+
+#4. iterating through the tuple
+tup1 = ((10,20,30.5),"anindya",(True,False))
+for i in tup1:
+    for j in i :
+        print(j)
+        
+for i in range(len(tup1)):
+    for j in range(len(tup1[i])) :
+        print(tup1[i][j],end=" ")
+    print()
+
+''' o/p -
+10 20 30.5
+a n i n d y a
+True False
+'''    
+#5. slicing of tuple
+tup1 = (10,20,30.5,"anindya",True,False)
+print(tup1[2:6])     # ranging from 2 to 5
+#o/p- (30.5, 'anindya', True, False)
+
+print(tup1[2:6:2])   # jump  of 2 steps
+#o/p- (30.5, True)
+
+print(tup1[-5:-2:2]) # negative index slicing
+#o/p - (20, 'anindya')
+
+#6. tuple comprehension
+tup1 = tuple(x for x in range(1,30) if x%3 == 0)
+print(tup1)
+#o/p - (3, 6, 9, 12, 15, 18, 21, 24, 27)
+
+tup1 =tuple(x**2 for x in range (1,11))
+print(tup1)
+#o/p - (1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
+
+#7 . Concatination and repetation
+tup1 = (10,20,30) # 1st declaration
+tup2 = (40,50,60)
+tup3 = tup1 + tup2
+print(tup3)
+#o/p -(10, 20, 30, 40, 50, 60)
+tup1 = tup1 + tup2 # 2nd declaration. 1st declaration is invalid here. 
+print(tup1)
+#o/p -(10, 20, 30, 40, 50, 60)
+tup4 = tup2*4
+print(tup4) #repetation
+#o/p - (40, 50, 60, 40, 50, 60, 40, 50, 60, 40, 50, 60)
+
+#8. count, index
+
+tup1 =(10, 20, 30, 40, 50, 60, 40, 50, 60, 40, 50, 60, 40, 50, 60, 40, 50, 60)
+print(tup1.count(40))
+#o/p- 5  
+print(tup1.index(40)) # only returns the first index where the item is found.
+#o/p- 3
+print(tup1.index(50,6,10)) # returns index value where 60 is found in between indexes 6 to 9
+#o/p- 7
+#code to check count of 60 in the tuples and it's postions.
+# using for loop.
+position_list = []
+j= 0
+for i in tup1:
+    if i == 60 :
+        position_list.append(j)
+    j = j+ 1
+print(position_list)
+#o/p- [5, 8, 11, 14, 17]
+
+#9. sort, length , max , min
+  sort, length , max , min are not tuple functions unlike list. 
+  we can't use tup1.sort() or tup1.min()
+  there are 2 ways of doing these.
+    one is to convert the tuple into list perform the functions and again convert the output to tuple
+    another way is to use the python inbuilt functions like sorted,len,min,max etc. The results of these inbuilt functions are lists, and we have to again convert the      lists in to tuples
+    
+tup1 = (10,5,25,69,2,0.5,65,97,23.6,87,49)     
+l1 = list(tup1)             # converting tuple to list
+l1.sort()                   # sorting list
+print(tuple(l1))            # converting list to tuple
+#o/p- (0.5, 2, 5, 10, 23.6, 25, 49, 65, 69, 87, 97)
+print(sorted(tup1))         # using python inbuilt sorted function. the o/p is a list
+#o/p- [0.5, 2, 5, 10, 23.6, 25, 49, 65, 69, 87, 97]
+print(tuple(sorted(tup1)))  # using python inbuilt sorted function. the o/p is a list. conveting the o/p to a tuple
+
+#10 . tuple contains a list, adding an element to that list.
+------------------------------------------------------------
+tup1 = (6,7,8,[9,10,11])
+lis1 = list(tup1)
+lis1[3].append(12)
+print(lis1)
+print(tuple(lis1))
+
+o/p -
+[6, 7, 8, [9, 10, 11, 12]]
+(6, 7, 8, [9, 10, 11, 12])
+

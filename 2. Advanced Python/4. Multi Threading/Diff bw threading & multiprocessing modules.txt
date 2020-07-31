@@ -1,0 +1,22 @@
+The threading module uses Threads, the multiprocessing module uses Processes. 
+The difference is that threads run in the same memory space, while processes have separate memory. 
+This makes it a bit harder to share objects between processes with multiprocessing. 
+Since threads use the same memory, precautions have to be taken or two threads will write to the same memory at the same time. 
+This is what the global interpreter lock is for.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Threading a job is to enable applications to be responsive. 
+Suppose you have a database connection and you need to respond to user input. 
+Without threading, if the database connection is busy the application will not be able to respond to the user. 
+By splitting off the database connection into a separate thread you can make the application more responsive. 
+Also because both threads are in the same process, they can access the same data structures - good performance, plus a flexible software design.
+
+Note that due to the GIL the app isn't actually doing two things at once, but what we've done is put the resource lock on the database into a separate thread so that CPU time can be switched between it and the user interaction. 
+CPU time gets rationed out between the threads.
+
+Multiprocessing is for times when you really do want more than one thing to be done at any given time. 
+Suppose your application needs to connect to 6 databases and perform a complex matrix transformation on each dataset. 
+Putting each job in a separate thread might help a little because when one connection is idle another one could get some CPU time, but the processing would not be done in parallel because the GIL means that you're only ever using the resources of one CPU. 
+By putting each job in a Multiprocessing process, each can run on it's own CPU and run at full efficiency.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+

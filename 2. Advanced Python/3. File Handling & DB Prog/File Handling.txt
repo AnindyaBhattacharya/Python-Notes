@@ -1,0 +1,120 @@
+File Handling.  Read Operation
+-------------------------------
+
+# File Handling -
+# --------------
+Files are of 2 types 
+1. Text files - .txt,.java files etc.
+2. Binary files - images,videos etc.
+
+Working with Files in python
+-----------------------------
+Step 1 - open a file - open() method 
+       - text file can be opened in - read (r) mode, write mode(w), append mode(a). By defult file opens in read (r) mode . ex - open("file path","r")
+				    - file opened in read(r) mode, but file not present, operation fails. 
+			            - file opened in write(w) mode, but file not present, new file is created and then content is written. ex - open("file path","w")
+       - binary files should be opened in - read(rb) ,write(wb),append(ab) modes
+       - openining a file in exclusive (x) mode. if the file is peresent operation fails if not present empty file is created.
+         
+Step 2 - read a file - 
+                    read() -  reads the full content. read(4) read first 4 characters. 
+                    readline() - reads a single line
+                    readlines() - reads all lines and stores each line as member to list
+
+         write a file - 
+			write() - writes only string to a file.
+			writelines() - can write list members to a file also can write string. ex- file.writelines(["anindya\n","bhattacharya"]) | file.writelines("anindya")
+
+         append a file - 
+			append()
+
+Step 3 - close a file - close().
+
+
+#Example -1 | read()
+#----------
+
+file = "D:\Pycodes\MyData.txt"
+
+rf = open(file)                 # open a file , by default in read mode
+
+print(rf.read())                # printing the full contents
+
+print(rf.read(4))               # read first 4 characters. Cursor is present at the 4th character. 
+print(rf.read(10))              # reads the next 10 characters
+
+print(rf.tell())                # prints the current cursor location. Which is 14 here
+
+rf.seek(0)                      # move cursor with seek functions. Here the cursor is moved to Oth location
+print(rf.tell())                # will show 0
+
+rf.seek(50)                     # moves the cursor to  50th location.
+print(rf.tell())                # checking current location of the cursor.
+print(rf.read(10))              # reading next 10 characters from the cursor location. Will read 10 chars from 50th location.
+
+rf.close()                      # closing the file.
+
+#Example -2 | readline()
+#----------
+
+rf = open(file)
+print(rf.readline())            # only first line is printed.
+
+# readline is a generator and printing it one time returns one line, printing it 3 times prints 3 lines.
+print(rf.readline())    
+print(rf.readline()) 
+print(rf.readline())
+
+rf.close()
+
+# Example -3 | readlines()
+# ----------------------
+
+rf = open(file)
+print(rf.readlines())           # reads each line and stores them into a list as members.
+['#|Name|Type 1|Type 2|HP|Attack|Defense|Sp. Atk|Sp. Def|Speed|Generation|Legendary\n', '1|Bulbasaur|Grass|Poison|45|49|49|65|65|45|1|FALSE\n', '2|Ivysaur|Grass|Poison|60|62|63|80|80|60|1|FALSE\n', '3|Venusaur|Grass|Poison|80|82|83|100|100|80|1|FALSE\n', '3|VenusaurMega Venusaur|Grass|Poison|80|100|123|122|120|80|1|FALSE\n']
+rf.close()
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+reading from a file and writing to a different file.
+---------------------------------------------------
+one way - selective write. 
+-------
+with open("in.txt") as f:	
+						# no need to read the file using read() or readlines().
+    with open("out.txt", "w") as f1:				
+        for line in f:				# this loop directly fetches each line of the file.
+            if "ROW" in line: 			# writes only those lines which has the word ROW.
+                f1.write(line) 
+
+
+other way - writes full content.					
+---------
+with open("in.txt") as f:
+    lines = f.readlines()		       # storing the output of readlines(), which is a list.
+    with open("out.txt", "w") as f1:
+        f1.writelines(lines)		       # writing the stored output of readlines() to the new file.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+replace content of a file
+-------------------------
+
+# Read in the file
+with open('file.txt', 'r') as file :
+  filedata = file.read()
+
+# Replace the target string
+filedata = filedata.replace('ram', 'abcd')
+
+# Write the file out again
+with open('file.txt', 'w') as file:
+  file.write(filedata)
+
+********************************
+context manager - with statement
+--------------------------------
+no need to explicitly  close the file.
+
+

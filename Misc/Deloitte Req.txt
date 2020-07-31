@@ -1,0 +1,27 @@
+Deloitte :
+
+Work you’ll do
+
+·       Implementation of security and data protection
+
+·       Participate in architectural, design, and product sessions.
+
+·       Collaborate with other developers, testers, and system engineers to ensure quality of deliverables and any product enhancements.
+
+
+·       Unit testing and debugging skills . video found | https://www.youtube.com/watch?v=RELFu2th4wM&list=PLd3UqWTnYXOlb7QmXAYRGxDGf2xJ07V9N
+
+·       Excellent knowledge of Python programming language along with knowledge of at least one Python web framework ( Django, Flask) -> video found | https://www.youtube.com/watch?v=tLpcxBmGJW8&list=PLd3UqWTnYXOkm_MTKVZ8CJmgJ6sfLUIWK
+
+·       Understanding of the threading limitations of Python, and multi-process architecture  -> video found | https://www.youtube.com/watch?v=es457q7n3P8&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD
+
+·       Basic understanding of front-end technologies, such as JavaScript, HTML5, and CSS3
+
+.	Familiarity with event-driven programming in Python
+
+·       Knowledge of PowerShell and SQL Server
+Should we well-versed with Waterfall and Agile methodologies
+Understanding of the code versioning systems such as ClearCase and Git and static code analysis tools
+
+
+https://www.youtube.com/watch?v=RELFu2th4wM&list=PLd3UqWTnYXOlb7QmXAYRGxDGf2xJ07V9N

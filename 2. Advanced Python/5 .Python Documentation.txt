@@ -1,0 +1,152 @@
+Python Documentation (pydoc tool)
+---------------------------------
+In python documentation of codes are done by writing comments inside the doc stings. 
+doc strings are identified within ''' and '''
+Every python modules have doc strings and it is highly recommended to maintain a doc string for user defined modules also.
+
+Example -  Example of a code with doc strings
+-------
+'''
+This module of code will do basic mathematical operations.
+Addition,Substraction,Division,Multiplication etc.
+This doc sting is extremely helpful and helps to improve readability of the code
+'''
+
+def sum(a,b):
+    ''' This function will perform the addition of two numbers and will return the result '''
+    return a+b
+def sub(a,b):
+    ''' This function will perform the sumstraction of two numbers and will return the result '''
+    return a-b
+def mul(a,b):
+    ''' This function will perform the multiplication of two numbers and will return the result '''
+    return a*b
+def div(a,b):
+   ''' This function will perform dicision. If there is division by zero it will not perform addition'''
+   try :
+    return a/b
+   except ZeroDivisionError:
+    return "Can't divide division by 0"
+
+''' variable declaration '''
+number1 = 100
+number2 = 200
+
+if __name__ == "__main__":
+    print(sum(number2,number1))
+    print(sub(number2,number1))
+    print(mul(number2,number1))
+    print(div(number2,number1))
+
+---------
+
+In general we can access the doc stings by importing the modules and using help method.
+
+>>> import new1
+>>> help(new1)
+o/p- 
+
+Help on module new1:
+
+NAME
+    new1
+
+DESCRIPTION
+    This module of code will do basic mathematical operations.
+    Addition,Substraction,Division,Multiplication etc.
+    This doc sting is extremely helpful and helps to improve readability of the code
+
+FUNCTIONS
+    div(a, b)
+        This function will perform dicision. If there is division by zero it will not perform addition
+
+    mul(a, b)
+        This function will perform the multiplication of two numbers and will return the result
+
+    sub(a, b)
+        This function will perform the sumstraction of two numbers and will return the result
+
+    sum(a, b)
+        This function will perform the addition of two numbers and will return the result
+
+DATA
+    number1 = 100
+    number2 = 200
+
+FILE
+    d:\pycodes\new1.py
+	
+*** NOTE ***
+Doc stings are only defined in the begining. In the begining of a module or in the begining of a function or a class. In between if there is any declaration it is ignored
+In the above example we have written some documentation before declaring the variables and they are ignored by the help() functions as they are not considered as doc strings.
+************
+
+Similar to the user defined modules, there are documentations for Pyhton inbuilt modules aslo. if we do help(math) after importing math module, we will be albe to see it's doc strings a well.
+
+Difference between dir() and help() : dir() shows the methods, classes and some builtins defined in the module.
+									: help() show us the doc stings wriiten for the module.
+Disadvantace of using help() is, we need to import the module every time and the output is always in the console. 
+To overcome this, we use a tool - "pydoc".
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+pydoc - this tool is used for documentation puroses. We can easily and convinently read the doc strings in any format. We can read them in the console, we can open them in browsers even we can create HTML file of the doc strings aswell.
+		Most importantly we need not to import any module.
+
+How to use pydoc ?
+----------------
+pydoc - the Python documentation tool
+
+pydoc <name> ...															# shows documnetation in console.
+    Show text documentation on something.  <name> may be the name of a
+    Python keyword, topic, function, module, or package, or a dotted
+    reference to a class or function within a module or module in a
+    package.  If <name> contains a '\', it is used as the path to a
+    Python source file to document. If name is 'keywords', 'topics',
+    or 'modules', a listing of these things is displayed.
+
+pydoc -k <keyword>															# searched a documentation in a module
+    Search for a keyword in the synopsis lines of all available modules.
+
+pydoc -n <hostname>
+    Start an HTTP server with the given hostname (default: localhost).
+
+pydoc -p <port>																# opens the the documentation in a browser. A webpage having all modules is opened.
+    Start an HTTP server on the given port on the local machine.  Port
+    number 0 can be used to get an arbitrary unused port.
+
+pydoc -b
+    Start an HTTP server on an arbitrary unused port and open a Web browser
+    to interactively browse documentation.  This option can be used in
+    combination with -n and/or -p.
+
+pydoc -w <name> ...															# creates an HTML file (in the same directory) containing the documentation of a particulat module
+    Write out the HTML documentation for a module to a file in the current
+    directory.  If <name> contains a '\', it is treated as a filename; if
+    it names a directory, documentation is written for all the contents.
+	
+
+Usage -
+1.  command ->	D:\Pycodes>py -m pydoc math												# opens the doc in console.
+-------------------------------------------
+o/p-
+Help on built-in module math:
+
+NAME
+    math
+
+DESCRIPTION
+    This module is always available.  It provides access to the
+    mathematical functions defined by the C standard.
+
+2. command -> D:\Pycodes>py -m pydoc -p 0												# -p portname(to specify a particular port) | -p 0 (an arbitary abailable port is selected)
+------------------------------------------
+o/p-
+Server ready at http://localhost:55824/ 												# this path when opened in browser show a webpace having documentation all modules
+Server commands: [b]rowser, [q]uit
+
+3. command -> D:\Pycodes>py -m pydoc -w math
+---------------------------------------------
+wrote math.html																# an html file math.htm is created in the path.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

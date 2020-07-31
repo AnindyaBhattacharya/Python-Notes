@@ -1,0 +1,191 @@
+Python Logging (logging module)
+-------------------------------
+To maintain logs in python we use the logging module of Python.
+Maintaining logs are important in codes, to debug codes, to find RCA, to find statistics (how many times a particular process have run, run time etc etc..)
+Python has a inbuilt module which can handle logs generated. "logging module"
+
+Logging Levels
+--------------
+There are different levels of logging and each level has a number assigned to it.
+Below list is arranged as per priority. Most prior on top and least on bottom
+
+1. CRITICAL -> 50
+2. ERROR    -> 40
+3. WARNING  -> 30
+4. INFO     -> 20
+5. DEBUG    -> 10
+7. NOTSET   -> 0
+
+Default logging level is WARNING (30). 
+One can modify the default logging level as per requirement. To modify we use the function basicConfig() of the logging module.
+
+When a logging level is set, then the log file will contain logs having level more that the set logging level. Logging levels below the set level is ignored.
+Ex - If the logging level is set to be WARNING(30),then the log file will contain logs with level as CRITICAL,ERROR and WARNING. INFO and DEBUG will be ignored.
+Ex - If the logging level is set to be DEBUG(10),then the log file will contain logs with level as CRITICAL,ERROR,WARNING,INFO and DEBUG.
+
+----------------------
+Use of logging module
+----------------------
+
+Example 1 - Define log file,logging level.
+------------
+import logging
+
+logging.basicConfig(filename="log.txt",level=logging.INFO)       # defining the log file and logging level.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        logging.error("Division by Zero")						# logging.error("msg") populates the log file with the msg and setting the LoggingLevel as ERROR
+    else:    
+        return a/b
+
+logging.info(f"the sum is {sum(10,5)}")							# logging.info("msg") populates the log file with the msg and setting the LoggingLevel as INFO
+logging.info(f"the sub is {sub(10,5)}")
+logging.info(f"the mul is {mul(10,5)}")
+logging.info(f"the div is {div(10,0)}")
+
+o/p- 
+in log.txt file:
+
+INFO:root:the sum is 15
+INFO:root:the sub is 5
+INFO:root:the mul is 50
+ERROR:root:Division by Zero
+INFO:root:the div is None
+
+*******************************************************************************************************************************
+NOTE : 
+Logging functions -> logging.critical("msg"),logging.error("msg"),logging.warning("msg"),logging.info("msg"),logging.debug("msg")
+********************************************************************************************************************************
+
+Example 2 - Modifying the format of the log file
+-------------------------------------------------
+Default format of the log file is LoggingLevel:logger:message 
+
+LoggingLevel:logger:message
+INFO:root:the sum is 15
+INFO:root:the sub is 5
+INFO:root:the mul is 50
+ERROR:root:Division by Zero
+INFO:root:the div is None
+
+We can modify the format of a log file as per requirement using the basicConfig() function of the logging module.
+There may be a scenario where we want to have a time stamp along with the logging level and message. Then we need to format the conent in the log file as per scenario.
+For formatting we need some formatting attributes, refer to https://docs.python.org/3/library/logging.html#logrecord-attributes
+We want logfile in the format -> Timeastamp:LoggingLevel:message
+
+Code:
+----
+
+import logging
+
+logging.basicConfig(filename="log.txt",level=logging.INFO,
+    format="%(asctime)s:%(levelname)s:%(message)s")         # defining the log file,logging level and formatting how the o/p will be displayed in log file.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        logging.error("Division by Zero")                     # logging.error("msg") populates the log file with the msg and setting the LoggingLevel as ERROR
+    else:    
+        return a/b
+
+logging.info(f"the sum is {sum(10,5)}")                       # logging.info("msg") populates the log file with the msg and setting the LoggingLevel as INFO
+logging.info(f"the sub is {sub(10,5)}")
+logging.info(f"the mul is {mul(10,5)}")
+logging.info(f"the div is {div(10,0)}")
+
+o/p-  Formatted to Timeastamp:LoggingLevel:message
+in log.txt
+
+2020-03-23 17:21:55,063:INFO:the sum is 15
+2020-03-23 17:21:55,063:INFO:the sub is 5
+2020-03-23 17:21:55,063:INFO:the mul is 50
+2020-03-23 17:21:55,063:ERROR:Division by Zero
+2020-03-23 17:21:55,063:INFO:the div is None
+
+Example 3 - No log file specified, no logging level specified . O/P is shown in terminal and logging level is set to default i.e WARNING
+----------  ------------------------------------------------------------------------------------------------------------------------------
+import logging
+
+logging.basicConfig(format="%(asctime)s:%(levelname)s:%(message)s")       # log file and logging level are not specified. o/p printed in terminal and level set to WARNING.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        logging.error("Division by Zero")                     # logging.error("msg") populates the log file with the msg and setting the LoggingLevel as ERROR
+    else:    
+        return a/b
+
+logging.info(f"the sum is {sum(10,5)}")                       # logging.info("msg") populates the log file with the msg and setting the LoggingLevel as INFO
+logging.info(f"the sub is {sub(10,5)}")
+logging.info(f"the mul is {mul(10,5)}")
+logging.info(f"the div is {div(10,0)}")
+
+o/p- 
+D:\Pycodes>py new1.py
+2020-03-23 17:34:45,540:ERROR:Division by Zero                # o/p is shown in the terminal.Only ERROR level is shown.INFO levels are ignored as they are below default WARNING level.
+
+
+Example 4 - Logs are written in log file in append mode by default, to chage it to write mode, modification needs to be made in basicConfig() function
+----------  -------------------------------------------------------------------------------------------------------------------------------------------
+import logging
+
+logging.basicConfig(filename="log.txt",level=logging.INFO,filemode="w",
+    format="%(asctime)s:%(levelname)s:%(message)s")          # filemode="w" sets log file to get updated in write mode. Default is append.
+
+def sum(a,b):
+    return a+b
+
+def sub(a,b):
+    return a-b
+
+def mul(a,b):
+    return a*b
+
+def div(a,b):
+    try:
+        a/b
+    except ArithmeticError:
+        logging.error("Division by Zero")                     # logging.error("msg") populates the log file with the msg and setting the LoggingLevel as ERROR
+    else:    
+        return a/b
+
+logging.info(f"the sum is {sum(10,5)}")                       # logging.info("msg") populates the log file with the msg and setting the LoggingLevel as INFO
+logging.info(f"the sub is {sub(10,5)}")
+logging.info(f"the mul is {mul(10,5)}")
+logging.info(f"the div is {div(10,0)}")
+
+=====================================================================================================================================================================================================
+
+ 

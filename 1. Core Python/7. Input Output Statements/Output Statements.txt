@@ -1,0 +1,211 @@
+Output functions
+-----------------
+
+print() -> this functions throws output to the console.
+
+
+Use cases
+---------
+
+1. print() -> o/p blank spaces
+
+2. print("string") -> o/p string
+   print("string1"+"string2") -> concatenation of strings
+   print("string1"*3) -> multiple times string is printed. one of the args must be numbers
+
+3. print(a,b,c)  -> printing multiple arguments
+   
+   >>> print("the values are",10,20,30)
+       the values are 10 20 30
+
+4. sep attribute  -> acts as a seperator
+----------------------------------------
+   default sep attribute is space
+   to change the sep attribute, specify the separator type.
+   
+>>> print(10,20,30) -> default sep , values are printed with spaces
+10 20 30   
+
+>>> print(10,20,30,sep=",") -> sep specified as "," values are printed comma separated.
+10,20,30 
+
+5. end attribute 
+-----------------
+ normally print() adds a new line at the end.
+ using "end" one can modify how to end the print() function, it can be a space, tab , comma or anything.
+
+Examples (normal print, print() - adding new line by default)
+-------------------------------------------------------------
+print(10,20,30)
+print(40,50,60)
+print(70,80,90)
+
+o/p - 
+
+10 20 30
+40 50 60
+70 80 90
+
+Examples (print on same line with comma in between)
+---------------------------------------------------
+
+print(10,20,30,end=",")  -> using end and ","
+print(40,50,60,end=",")  -> using end and ","
+print(70,80,90)
+
+o/p-
+
+10 20 30,40 50 60,70 80 90
+
+Examples (with different datatypes)
+-----------------------------------
+
+a=[10,20,30]
+b={"anindya","b","c"}
+c=(True,False,False)
+
+print(a,end="...") -> using end and "..."
+print(b,end="...") -> using end and "..."
+print(c)
+
+
+o/p- 
+
+[10, 20, 30]...{'b', 'c', 'anindya'}...(True, False, False)
+
+
+Examples
+--------
+
+a=[10,20,30]
+b={"anindya","b","c"}
+c=(True,False,False)
+
+print(a,end="\t") -> using end and "tab"
+print(b,end="\t") -> using end and "tab"
+print(c)
+
+
+o/p - 
+
+[10, 20, 30]    {'c', 'anindya', 'b'}   (True, False, False)
+
+Example- (using "sep" and "end" together)
+-----------------------------------------
+
+print(10,20,30,sep="|",end="...")
+print(40,50,60,sep="|",end="...")
+print(70,80,90,sep="|")
+
+o/p -
+
+10|20|30...40|50|60...70|80|90
+
+
+6. print() function with formatted string
+------------------------------------------
+
+%i -> integer
+%d -> integer
+%f -> float
+%s -> string
+
+Usage Examples -
+---------------
+>>> name = "anindya"
+>>> roll = 127
+>>> marks = 100
+
+>>> print("The name is %s , roll number is %i ,marks is %i " %(name,roll,marks))   -> order must be maintained.
+The name is anindya , roll number is 127 ,marks is 100 
+
+>>> print("The name is %s , roll number is %d ,marks is %d " %(name,roll,marks))  -> %d is for integer also.
+The name is anindya , roll number is 127 ,marks is 100 
+
+>>> print("The name is %s , roll number is %d ,marks is %f " %(name,roll,marks))  -> % f is for float
+The name is anindya , roll number is 127 ,marks is 100.000000 
+
+
+>>> print("The name is %s , roll number is %d ,marks is %f " %(roll,marks,name)) -> order must be maintained. name should ne string
+Traceback (most recent call last):
+  File "<pyshell#35>", line 1, in <module>
+    print("The name is %s , roll number is %d ,marks is %f " %(roll,marks,name))
+TypeError: must be real number, not str
+
+
+Usage Examples
+--------------
+Datatypes other than fundamental data types(int, float, bool, complex) are printed as string, using %s.
+
+>>> t={"a","b",10}
+>>> type(t)
+<class 'set'>
+>>> print("Printing set value %s" %(t))
+Printing set value {10, 'a', 'b'}
+
+
+7. print() function with replacement operator
+---------------------------------------------
+
+{} -> replacement operator
+
+>>> name="anindya"
+>>> roll=127
+>>> phn=9046212037
+>>> print("The name is {0}, roll number is {1}, phn number is {2}".format(name,roll,phn))  -> order must be maintained. 
+The name is anindya, roll number is 127, phn number is 9046212037
+>>> print("The name is {}, roll number is {}, phn number is {}".format(name,roll,phn)) -> order must be maintained
+The name is anindya, roll number is 127, phn number is 9046212037
+>>> print("The name is {x}, roll number is {y}, phn number is {z}".format(z=phn,y=roll,x=name))  -> any order, but assignment of x,y,z must be correct.
+The name is anindya, roll number is 127, phn number is 9046212037
+>>> dictionary = { "name" : "anindya", "home" : "bwn", "phn" : 9046212037 }
+>>> print("The name is {name} ,address is {home}, phone no is {phn}".format(**dictonary)) -> using dictonary key and values.
+The name is anindya,address is bwn, phone no is 9046212037.
+
+
+#Note - The values are stored in a tuple. {} -> this itself indicates a tuple. Using {0} ,{1}, {2} -> this shows that we are accessing members of tuple.
+
+>>> name="anindya"
+>>> roll=127
+>>> phn=9046212037
+>>> print("The name is {0}, roll number is {1}, phn number is {3}".format(name,roll,phn))  -> error made here. using 3 varibles and using the index as 3 istead of 2.
+Traceback (most recent call last):
+  File "<pyshell#29>", line 1, in <module>
+    print("The name is {0}, roll number is {1}, phn number is {3}".format(name,roll,phn)) 
+IndexError: tuple index out of range  -> using index 3 instead of 2 causing the error for the tuple.
+
+
+
+
+8. Python F-strings
+-------------------
+details : - https://realpython.com/python-f-strings/
+
+Example -
+>>> name = "Eric"
+>>> age = 74
+>>> print(f"Hello, {name}. You are {age}.")		# use f as prefix before the string.
+
+Example -		
+>>> f"{2 * 37}"						# perform calculations.
+'74'
+
+Example-
+>>> def to_lowercase(input):
+...     return input.lower()
+
+>>> name = "Eric Idle"
+>>> f"{to_lowercase(name)} is funny."			# uses functions.
+'eric idle is funny.'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+
+
+

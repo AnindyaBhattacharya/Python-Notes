@@ -1,0 +1,333 @@
+Functions 1
+------------
+
+defining of user defined functions -
+
+def functionname(arguments)
+
+example -
+-------- 
+def function1(a,b) : --> defining a function named "function" and passing arg value = 10 & 20
+	functionalities ...
+	functionalities ...
+	functionalities ...
+	functionalities ...
+	return x,y,z --> unlike other languages, multiple values can be returned.
+
+function1(10,20) --> calling the function.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Rules of calling a function (based on arguments passes)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Types of arguments -> positional,keyword,default,var-arg,keyword var-arg.
+-------------------------------------------------------------------------
+									
+Positional arguments -> def function1(a,b): pass | function1(20,30) | here value of "a" becomes 20 and "b" becomes  30
+--------------------
+Keyword Arguments -> def function1(a,b): pass | function1(a="anindya",b="10") | here a & b values are explicitly defined.
+--------------------
+Default Arguments -> def func1(a,b="Hello"):pass | func1("Anindya") | here a value is passed and when b value is not passed then it takes "Hello" by default.
+-------------------- 
+
+
+Rules -
+
+1. If any arg is passed as a positional arg, then that should be passed before the keyword arg.
+------------------------------------------------------------------------------------------------
+
+Valid syntax (a & b values are passed as positional arg before c which is passed as keyword arg)
+-------------
+def func1(a,b,c) : pass
+
+func1(100,200,c=300)
+
+Invalid Syntax
+---------------
+def func1(a,b,c) : pass
+
+func1(b=100,200,300)
+
+Error - D:\Pycodes>py Test1.py
+  File "Test1.py", line 3
+    func1(b=100,200,300)
+               ^
+SyntaxError: positional argument follows keyword argument
+
+
+2. Definfing twice the value of same argument throws error.
+------------------------------------------------------------
+
+Invalid Syntax ( a value is getting passed twice once as a positional arg and once as a keyword)
+---------------
+def func1(a,b) : pass
+
+func1(100,a=200)  
+
+Error - D:\Pycodes>py Test1.py
+Traceback (most recent call last):
+  File "Test1.py", line 3, in <module>
+    func1(100,a=200)
+TypeError: func1() got multiple values for argument 'a'
+
+Valid Syntax
+-------------
+def func1(a,b) : pass
+
+func1(100,b=200)
+
+
+3. Default argument should be passed at the last. It should be last among all passed arguments
+-----------------------------------------------------------------------------------------------
+
+Valid Syntax
+-------------
+Example
+-------
+def func1(a,b,c="number") : pass
+
+func1(100,200)
+
+Example
+--------
+def func1(a,b="number",c) : pass
+
+func1(100,200)
+
+Invalid Syntax (defult arg is not the last arg getting passed to the function)
+---------------
+def func1(b="number",a) : pass
+func1(100)
+
+Err-
+D:\Pycodes>py Test1.py
+  File "Test1.py", line 1
+    def func1(b="number",a) : pass
+             ^
+SyntaxError: non-default argument follows default argument
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable Arg Function Call (only applicable to positional arguments)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+When the number of passed arguments are not fixed. They vary,then this type of function call is necessary.
+
+If there is a need to pass 2 arg at one time and 3 arg at another time, then there would be a need of 2 functions with same functionality for that . To eliminate the problem of writing the same function twice once for accepting 2 values another for accepting 3 values we use the concept of Var-Arg function, which dynamically takes in to account the number of arguments passed.
+
+Example -
+
+Code without Var-Arg
+---------------------
+#defining the same function twice, once for 2 arg and other for 3 arg. Bad process
+
+def f1(a,b):
+    print("2 Arg call")
+def f2(a,b,c):
+    print("3 Arg call")
+
+f1(10,20)
+f2(30,40,50)
+
+o/p-
+
+D:\Pycodes>py Test1.py
+2 Arg call
+3 Arg call
+
+
+Code with Var-Arg (using "*variablename" we use var-arg)
+------------------
+#defining the function with (*var_arg) automatically makes the function workable for any no positional arg passed
+
+def f1(*var_arg): 
+    print("any Arg call")
+
+f1(10,20)
+f1(30,40,50)
+f1(6,7,"ab",True)
+
+-------------------------------------------------------------------------------------
+# Note - The arguments passed to the var-arg variable are stored in form of a "tuple"
+-------------------------------------------------------------------------------------
+
+Example -
+
+def f1(*n):
+    print(type(n))  -> prints the type of the var-arg variable, here n .
+
+f1(10,20)
+f1(30,40,50)
+f1(6,7,"ab",True)
+
+O/p
+
+D:\Pycodes>py Test1.py
+<class 'tuple'>
+<class 'tuple'>
+<class 'tuple'>
+
+
+Example - addition using var-arg concept.
+-----------------------------------------
+
+Code Without Var-arg
+---------------------
+
+#defining the same function of addition twice, once for 2 arg and other for 3 arg
+
+def sum1(a,b):
+    sum=0
+    sum=a+b
+    print("Sum1 is ",sum)
+def sum2(a,b,c):
+    sum=0
+    sum=a+b+c
+    print("Sum2 is ",sum)
+
+sum1(10,20)
+sum2(30,40,50)
+
+
+Code With Var-arg
+------------------
+#defining the function of addition only once using var-arg.  Here we are using (*var). As var is a tuple we are iterating through the members and adding them.
+
+def f1(*var):
+    sum = 0
+    for i in var :
+        sum=sum+i
+    print("Sum is ",sum)
+
+f1(10,20)
+f1(30,40,50)
+f1(6,7,8,9,10,11,12)
+
+Example -
+---------
+#declaring two arguments, both are positional and one among them is var-arg declared at the end.
+
+def f1(argno,*var):
+    sum = 0
+    for i in var :
+        sum=sum+i
+    print("Sum of ",argno,"is :",sum)
+
+f1("2Arg",10,20)
+f1("3Arg",30,40,50)
+f1("7Arg",6,7,8,9,10,11,12)
+
+O/p -
+
+D:\Pycodes>py Test1.py
+Sum of  2Arg is : 30
+Sum of  3Arg is : 120
+Sum of  7Arg is : 63
+
+Example -
+---------
+#declaring two arguments, both are positional. If the var-arg is not defined at the end then we should use keyword for the other poistional arg during calling of the function.
+#If Var Arg not defined at end,then all other arg should be passed using keyword arg and as rule says keyword arg should be passed after positional arg.
+
+Valid Syntax
+-------------
+def f1(*var,argno):
+    sum = 0
+    for i in var :
+        sum=sum+i
+    print("Sum of ",argno,"is :",sum)
+
+f1(10,20,argno="2Arg")
+f1(30,40,50,argno="3Arg")
+f1(6,7,8,9,10,11,12,argno="7Arg")
+
+o/p- 
+D:\Pycodes>py Test1.py
+Sum of  2Arg is : 30
+Sum of  3Arg is : 120
+Sum of  7Arg is : 63
+
+
+Invalid Syntax
+--------------
+def f1(*var,argno):
+    sum = 0
+    for i in var :
+        sum=sum+i
+    print("Sum of ",argno,"is :",sum)
+
+f1("2Arg",10,20)  
+f1("3Arg",30,40,50)
+f1("7Arg",6,7,8,9,10,11,12) -> here in all the cases : the arg that are passed are getting stored at the tuple "var" as a part of var-arg and "argno" remains empty. If we want to pass a value to "argno" we have to explicitely define using keyword argno="7Arg".
+
+Error-
+D:\Pycodes>py Test1.py
+Traceback (most recent call last):
+  File "Test1.py", line 8, in <module>
+    f1("2Arg",10,20)
+TypeError: f1() missing 1 required keyword-only argument: 'argno'
+ 
+
+Example-
+---------
+
+def f1(*var,argno="Default"):
+    sum = 0
+    print("var contains ",var," and argno contains :",argno)
+
+f1(10,20,"2Arg")
+f1(30,40,50,"3Arg")
+f1(6,7,8,9,10,11,12,"7Arg")
+
+D:\Pycodes>py Test1.py
+var contains  (10, 20, '2Arg')  and argno contains : Default
+var contains  (30, 40, 50, '3Arg')  and argno contains : Default
+var contains  (6, 7, 8, 9, 10, 11, 12, '7Arg')  and argno contains : Default
+
+--------------------------------------------------------------------------------------------
+## NOTE - Var-Arg concept is only used for positional arguments. Not for keyword arguments. |
+--------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Variable KeyWord Arguments -(only for keyword arguments)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+
+Concept is similar to Var-Arg for Positional Arg. This is used explicitly for keyword arguments.
+
+#Note- Unlike in var-arg where we used (*variablename) ,here we use (**variablename)
+#Note- Unlike in var-arg where (variablename) used to be a tuple ,here (variablename) is a dict.
+
+Examples
+---------
+
+def f1(**keyvar):
+    print(type(keyvar)) #datatype of keyvar
+    print("Info")
+    for i,j in keyvar.items():  # accessing dict
+        print(i,"---------------",j)
+
+f1(name="Anindya",home="bwn",ofc="cts",id=123)
+f1(name="Ila",relation="mom")
+f1(name="anu",income="pension",relation="dad",age=65,work="dvc")
+
+o/p- 
+
+D:\Pycodes>py Test1.py
+<class 'dict'>
+Info
+name --------------- Anindya
+home --------------- bwn
+ofc --------------- cts
+id --------------- 123
+<class 'dict'>
+Info
+name --------------- Ila
+relation --------------- mom
+<class 'dict'>
+Info
+name --------------- anu
+income --------------- pension
+relation --------------- dad
+age --------------- 65
+work --------------- dvc
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

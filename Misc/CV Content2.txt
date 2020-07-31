@@ -1,0 +1,59 @@
+Good Experiemce as a Python Back end Developer
+Analysis and design of applications 
+Django Framework that was used in developing web applications to implement the model view code architecture
+Exposure of implementing and authentications using ORM libraries
+Used SQL alchemy as ORM fpor writing orm queries
+Knowledge about setting up Python Rest API framework using Django
+Having experience in using bith versions of Pyhton 2 & 3
+Familiar with Pandas NumPy and Matplotlib
+Responsible for creating a database and it's validations and authorizations with MYSql
+Created Database using mYSQL and wrote several queries to extract data from it
+Worked on HTML and HTML5and CSS and CSS3
+Experience in working with Python Unit Test Libraries for the purpose of testing Python programs
+Good Experience in working with various Python IDE like Pycharm,Idle
+----------------------------------------------------------------------------------
+Junior Python Developer and Webmaster
+Developed Python based API (RESTful Web Service) to track sales and perform sales analysis using Flask, SQLAlchemy and PostgreSQL.
+Developed and designed an API (RESTful Web Service) for the company’s website.
+Developed and designed e-mail marketing campaigns using HTML and CSS.
+Maintained customers relationship management databases (MySQL / PostgreSQL)
+Developed server based web traffic statistical analysis tool using Flask, Pandas.
+Managed companies virtual servers at Amazon EC2, S3
+
+------------------------------------------------------------------------------------
+Configured Microsoft Active Directory Server
+Configured Microsoft Domain Controller
+Managed, developed, and designed a dashboard control panel for customers and Administrators using Django, OracleDB, PostgreSQL, and VMWare API calls.
+Maintained Oracle, and Postgres DB's
+Wrote multiple programs in Python to monitor virtual machine usage data using VMWare API calls.
+Wrote a program to monitor Virtual Machine performance data using VMWare API's.
+Wrote a program to use REST API calls to interface with Veeam backup server, and parse output reports of an excel file in python to monitor customer backup usages.
+Learned python in 3 months to a proficient level.
+Researched various Network, Storage, Compute technologies, and IaaS provisioning software to include: CloudStack, OpenStack, OnAPP, NetIQ, and BMC.
+--------------------------------------------------------------------------------------
+
+Requirement 
+
+Hands-on Python Development
+Strong problem solving and reverse engineering
+Expertise in web python frameworks(django, flask,etc)
+Agile methodologies
+Knowledge of ORM(object-relational mapping)
+Good understanding of Web services and REST API
+Understanding of Databases and SQL
+Knowledge of TLC scripting
+
+Used Python scripts to update the content in database and manipulate files.
+Translated the customer requirements into design specifications and ensured that the requirements translate into software solution.
+Used Python based GUI components for the front-end functionality such as Tkinter.
+Good Experience in C/C development of multi-threaded applications in a Linux Environment.
+Good Experience in error and exceptional handling.
+Development of test framework using the Python
+\
+
+Worked as Linux Administrtor having knowlege of Disk management,storage management,LVM,File system management,User management and Process administration.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Django Developer - https://www.livecareer.com/resume-search/r/python-developer-cf469405dd8b45c18cef12838599e2fa

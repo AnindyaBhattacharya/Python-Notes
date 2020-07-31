@@ -1,0 +1,386 @@
+Exception Handling ~ 1
+----------------------
+
+There are two types of errors that typically occur when writing programs. 
+	The first, known as a syntax error, simply means that the programmer has made a mistake in the structure of a statement or expression.
+	Second,logic error that leads to a runtime error that causes the program to terminate. These types of runtime errors are typically called exceptions.
+
+When an exception occurs or “raised.” One can “handle” the exception that has been raised by using the concept of Exception Handling. 
+
+key words
+---------
+1.try
+2.except.
+3.else
+4.finally
+5.rise
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Syntax - using try,except,else
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Type -1
+-------
+try :
+	statements / Error codes
+except exception name1 :
+	exception code, the code that should run when "exception name1" is encountered in try block.
+	there should be no other statements in between try and except blocks. except block should immediately follow try block.
+except exception name2 :
+	exception code, the code that should run when "exception name2" is encountered in try block.
+	again there should be no statements in between two except blocks
+except :
+	default exception, if any exception is encountered other than the above mentioned two, this block executes.
+	default exception block should be declared at the last.
+	again there should be no statements in between two except blocks	
+else :
+	when no exception arises,i.e the code in try block runs error free this block is executed.
+	else block should be at last after try and all exception blocks.
+	else block should not be declared in between try and except blocks or in between two except blocks
+
+Type -2
+-------
+try :
+	statements / Error codes
+except (exception name1,exception name2,exception name3) :
+	exception code, the code that should run when either of the 3 exception is encountered in try block.
+	there should be no other statements in between try and except blocks. except block should immediately follow try block.
+except :
+	default exception, if any exception is encountered other than the above mentioned two, this block executes.
+	default exception block should be declared at the last.
+	again there should be no statements in between two except blocks
+else :
+	when no exception arises,i.e the code in try block runs error free this block is executed.
+	else block should be at last after try and all exception blocks.
+	else block should not be declared in between try and except blocks or in between two except blocks
+
+Type -3
+-------
+try :
+	statements / Error codes
+except (exception name1,exception name2,exception name3) as a :
+	exception code, the code that should run when either of the 3 exception is encountered in try block.
+	storing the exception in a reference varaible here "a"
+except BaseException as b:
+	BaseException class is the parent class for all exception.
+	Declaring "BaseException" acts as a default exception as it encompasses all possible exceptions.
+	storing the exception in a reference varaible here "b"
+else :
+	when no exception arises,i.e the code in try block runs error free this block is executed.
+	else block should be at last after try and all exception blocks.
+	else block should not be declared in between try and except blocks or in between two except blocks
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##Note -
+
+Invalid Syntax - only try and else not allowed. If else is there there must be a except block
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example 1 - Error code with no exception handling | Error encountered rest of the code skipped
+----------------------------------------------------------------------------------------------
+#Exception handling
+
+print("Code Starting")
+
+#encountering a situation where user input is taken for division,but no exception is set to tackle division by zero.
+
+y =input("Enter two numbers : ").split(",")
+print(int(y[0])/int(y[1]))
+
+print("rest of the code")
+
+o/p- 
+Code Starting
+Enter two numbers : 20,0
+Traceback (most recent call last):
+  File "Test1.py", line 7, in <module>
+    print(int(y[0])/int(y[1]))
+ZeroDivisionError: division by zero 
+
+Example 2 - Error code with exception handling | Error encountered and handled rest of the code runs
+----------------------------------------------------------------------------------------------------
+#Exception handling
+print("Code Starting")
+
+#encountering a situation where user input is taken for division,but exception is set to tackle division by zero.
+try:  
+    y =input("Enter two numbers : ").split(",")
+    print(int(y[0])/int(y[1]))
+except ZeroDivisionError:
+    print("enter divisor value not equal to zero")
+    y =input("Enter two numbers : ").split(",")
+    print(int(y[0])/int(y[1]))
+
+print("rest of the code")
+
+o/p-
+Code Starting
+Enter two numbers : 20,0
+enter divisor value not equal to zero
+Enter two numbers : 20,3
+6.666666666666667
+rest of the code
+
+Example 3 - Error code with wrong exception handling | Error encountered and exception entered is wrong code terminates
+-----------------------------------------------------------------------------------------------------------------------
+#Exception handling
+
+print("Code Starting")
+
+#encountering a situation where user input is taken for division,but no exception is set to tackle division by zero.
+try:
+    y =input("Enter two numbers : ").split(",")
+    print(int(y[0])/int(y[1]))
+
+# except block used to tackle TypeError but error in try bolck is ZeroDivisionError. Except block fails.
+except TypeError:
+    print("enter divisor value not equal to zero")
+    y =input("Enter two numbers : ").split(",")
+    print(int(y[0])/int(y[1]))
+
+print("rest of the code")
+
+o/p-
+Code Starting
+Enter two numbers : 10,0
+Traceback (most recent call last):
+  File "Test1.py", line 8, in <module>
+    print(int(y[0])/int(y[1]))
+ZeroDivisionError: division by zero
+
+Example 4 - Error code with multiple exception handling | Multiple except blocks with errors
+--------------------------------------------------------------------------------------------
+
+** Note - In try block there are 3 errors and there are 3 except block. When the first error is encountered in the try block then control comes out of the try block.
+	  Rest 2 error statements are not executed in the try block. Once one exception is encountered in try block rest of try block code is not executed.
+
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))
+    print(100/y)                            		 # error due to zero division . This excepion is encountered first, rest code in try block not executed
+    print("anindya"+y)                      		 # error due to type mismatch(typeerror) concating string and integer
+except ZeroDivisionError:
+    print("division by zero not allowed")   		 # prints this statement only
+except TypeError:
+    print("sting and number concatination not possible") # not printed as the control is already out of the try block before this error is encountered.
+
+print("rest of the code")
+
+o/p-
+
+Code Starting
+Enter one number : 0
+division by zero not allowed
+rest of the code
+
+Example 5 - Error code with multiple exception handling | One except block with multiple err handling
+-----------------------------------------------------------------------------------------------------
+#Exception handling
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))   # error as we have given input as string and try to typecast as int. This excepion is encountered first. Rest skipped
+    print(100/y)                            # error due to zero division . 
+    print("anindya"+y)                      # error due to type mismatch(typeerror) concating string and integer
+except (ZeroDivisionError,TypeError,ValueError) as a:
+    print("error encountered is ", a)       # prints the detailed error faced. ValueError
+else:
+    print("no error encountered")
+
+print("rest of the code")
+
+o/p-
+
+Code Starting
+Enter one number : anindya
+error encountered is  invalid literal for int() with base 10: 'anindya'
+rest of the code
+
+Example 6 - Error code with in try block with default exception handling
+-------------------------------------------------------------------------
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))   
+    print(100/y)                            
+    print("anindya"+y)                          # error due to type mismatch(typeerror) concating string and integer
+except (ZeroDivisionError,ValueError) as a:     # TypeError not handled in except block
+    print("error encountered is ", a)  
+except:
+    print("error encountered in try block")      # default except block executed
+else:
+    print("no error encountered")
+
+print("rest of the code")
+
+o/p- 
+Code Starting
+Enter one number : 10
+10.0
+error encountered in try block
+rest of the code
+
+Example 7 - Error code with in try block with default exception handling using BaseException class
+--------------------------------------------------------------------------------------------------
+** Benefit of this way of default exception is we can identify exactly what error is encountered.
+
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))   
+    print(100/y)                            
+    print("anindya"+y)                          	# error due to type mismatch(typeerror) concating string and integer
+except (ZeroDivisionError,ValueError) as a:     	# TypeError not handled in except block
+    print("error encountered is ", a)  
+except BaseException as b:
+    print("errorencountered in try block is ",b)      	# default except block executed
+else:
+    print("no error encountered")
+
+print("rest of the code")
+
+o/p- 
+Code Starting
+Enter one number : 10
+10.0
+errorencountered in try block is  can only concatenate str (not "int") to str
+rest of the code
+
+Example 7 - Else block execution . No error in try
+--------------------------------------------------
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))   
+    print(100/y)                            
+    print("anindya"+" bhattacharya")      
+except (ZeroDivisionError,ValueError) as a:     
+    print("error encountered is ", a)  
+except BaseException as b:
+    print("errorencountered in try block is ",b)     
+else:
+    print("no error encountered")   # no errors intry block, else executes
+
+print("rest of the code")
+
+o/p-
+Code Starting
+Enter one number : 10
+10.0
+anindya bhattacharya
+no error encountered
+rest of the code
+
+Example 8 - Function is creating exception | handling it using try except
+-------------------------------------------------------------------------
+
+print("Code Starting")
+
+def f1() :
+    y = int(input("Enter one number : "))   
+    print(100/y)                            
+    print("anindya"+" bhattacharya")
+
+try:
+    f1()						# raises exception.
+except (ZeroDivisionError,ValueError) as a:     
+    print("error encountered is ", a)  
+except BaseException as b:
+    print("errorencountered in try block is ",b)     
+else:
+    print("no error encountered")
+    
+print("rest of the code")
+
+o/p-
+Code Starting
+Enter one number : 0
+error encountered is  division by zero
+rest of the code
+
+Example 9 - Exception raied in except block, abnormal termination
+-----------------------------------------------------------------
+
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))   
+    print(100/y)                            
+    print("anindya"+" bhattacharya")
+except (ZeroDivisionError,ValueError):     
+    print(10/0)    
+else:
+    print("no error encountered")
+    
+print("rest of the code")
+
+o/p- 
+
+Code Starting
+Enter one number : 0
+Traceback (most recent call last):
+  File "Test1.py", line 6, in <module>
+    print(100/y)
+ZeroDivisionError: division by zero
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Test1.py", line 9, in <module>
+    print(10/0)
+ZeroDivisionError: division by zero
+
+
+Example 9 - Try Except block can be declared in a except block | Try Except block can be declared in a else block 
+----------------------------------------------------------------------------------------------------------------
+import sys
+
+print("Code Starting")
+
+try:
+    y = int(input("Enter one number : "))   
+    print(100/y)                            
+    print("anindya"+" bhattacharya")
+except (ZeroDivisionError,ValueError):  
+    try :                                                      # new try & except block declared within a except block
+        print("enter number other than zero")
+        y = int(input("Enter one number : "))   
+        print(100/y)  
+    except ZeroDivisionError:
+        print("nuber entered is again zero , enough !! exiting the process")
+	sys.exit("Process terminated")			      # exiting code in pyton, use sys module then sys.exit()
+else:
+    print("no error encountered")
+    
+print("rest of the code")
+
+o/p- 
+Code Starting
+Enter one number : 0
+enter number other than zero
+Enter one number : 0
+nuber entered is again zero , enough !! exiting the process
+Process terminated
+
+Example 10 - Using try to check a file permission and if found yes then trying to open it in else block
+-------------------------------------------------------------------------------------------------------
+
+import os
+
+my_file = "D:\Python Notes\Exception Handling\Exception Handling 1.txt"
+
+try :
+    file = open(my_file)                        # checking if file can be opened, that is having an access to open
+    
+except IOError as e: 
+    print("cant open file ", e)                 # if it doesnot have an access throws error and exits
+
+else :
+    print(file.read())                          # if try block successfully runs then only it reads the file
+
+finally :
+    file.close()
+    print ("file is closed")

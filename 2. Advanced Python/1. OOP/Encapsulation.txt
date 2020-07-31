@@ -1,0 +1,86 @@
+Encapsulation
+--------------
+
+__ (double underscore) acts as a private modifier to python variables and methods
+
+varaibles / methods declared with private modifiers can only be accessed within the class, not from outside of class.
+
+to modify private variables we use setter and getter methods, indirectly accessing the private var.
+
+example -
+
+class A :
+    
+    __pvt = 200                                     # declaring a static variable in class with private modifier
+         
+    def show(self):
+        print("the value is ", self.__pvt)          # printing the the value of the private variable
+        
+    def setter_method(self,value):                  # defining a setter method to modify the static variable
+        self.__pvt = value
+        
+        
+    
+obj = A()                                           # creating an object
+obj.show()                                              
+obj.__pvt = 2000                                    # trying to modify private variable from outside class
+obj.show()
+obj.setter_method(3000)                             # successfully modifying private variable through setter methods.
+obj.show()
+
+Example - 2
+-------
+class A :
+    
+    __pvt = 200                                     # declaring a static variable in class with private modifier
+    
+    def __init__(self,a):
+        self.__pvt = a  
+		
+    def show(self):
+        print("the value is ", self.__pvt)          # printing the the value of the private variable declated in the constructor.
+		
+    @classmethod  
+    def setter_method(cls,value):                   # defining a setter method to modify the static variable
+        cls.__pvt = value
+		
+    @classmethod
+    def getter_method(cls):
+        return cls.__pvt
+        
+    
+obj = A(1000)                                       # creating an object
+obj.show()                                              
+obj.setter_method(3000)                             # successfully modifying private variable through setter methods.
+print(obj.getter_method())
+
+Example -3 
+----------
+class A :
+    def __init__(self,a):
+        self.pvt = a    
+    def show(self):
+        print("the value is ", self.pvt)          # printing the the value of the pvt.
+   
+    
+obj = A(1000)
+obj.pvt =  5000                                    # modifying the value of pvt outside of the class, and it works.
+obj.show()       
+
+o/p-
+the value is  5000                                       
+
+To stop this or to protect this use private modifier.
+
+class A :
+    def __init__(self,a):
+        self.__pvt = a    
+    def show(self):
+        print("the value is ", self.__pvt)          # printing the the value of the __pvt.
+   
+    
+obj = A(1000)
+obj.__pvt =  5000                                    # modifying the value of __pvt outside of the class, and it doesnot works.
+obj.show()   
+
+o/p - 1000

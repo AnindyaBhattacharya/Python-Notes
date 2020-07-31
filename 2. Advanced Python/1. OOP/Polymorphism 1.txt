@@ -1,0 +1,462 @@
+Polymorphism
+------------
+Polymorphism means behaving in different ways in different cases. Acting in different forms.
+
+Two types of polymorphism in Python
+
+1) Compile Time Polymorphism -> overloading concept
+2) Run time polymorphism. -> overriding concept
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Overloading Concept.
+--------------------
+
+Areas of overloading
+
+operator overloading.-> when operators behave differently in different cirumstances. For example : 10 + 20 = 30 ; "ab" + "cd" = "abcd"
+
+
+method overloading.  -> not applicable in python. A python class having multiple methods, then the last declared method is considered by Python.
+
+		      java supports overloading because two methods with same name can be distinguished in java with the argument's datatypes.
+		      ex- m1(int a) and m1(str a) both are distinguished by the datatype of the arguments.
+		      But in python there is no concept of declaring datatypes, it is dynamically typed language. so it's not possible to distinguish between 2 methods of same name.
+			  ex - m1(a) and m1(a) in both cases "a" can be anything like sting, int, float. Nothing is explicitly defined. Thus it's not possible to achieve overloading in python.
+		      
+			  Also when question arises regarding the number of argumnets we can achieve that in python using concept of default arguments and var-arg arguments.
+			  We will be using only one method to handle sometimes 2 arg, sometimes 3 arg.
+			
+		      class A:
+    			def sum(self,a=None,b=None,c=None):
+        			if a != None and b != None and c != None :
+            				print("the sum of 3 no is " ,a+b+c)
+        			elif a != None and b != None :
+            				print("the sum of 2 no is " ,a+b)
+        			else:
+            				print("please provide atleast 2 value")
+            
+		     A().sum(10,20,30)
+		     A().sum(10,20)
+		     A().sum(10)
+
+		     o/p- 
+
+		     the sum of 3 no is  60
+		     the sum of 2 no is  30
+			 please provide atleast 2 value
+		
+		     So by no means there is any need of method overloading in python.
+
+constructor overloading -> not applicable in python . A python class having multiple constructors, then the last declared constructor is considered by Python similar to method overloading.
+
+
+---------------------
+Operator Overloading
+`````````````````````
+
+Python operators ->  +,-,*,/,//,**,<,>,<=,>=,+=,-+,*= etc etc . These Python Operators behave differently in different circumstances.
+
+For instance : number + number  = number ( plus operator performs addition)
+			   string1 + string2 = string1string2 ( plus operator performs concatination)
+	
+			   number * number = number (* operator performs multiplication)
+	           string * integer = repetition ( * operator performs string repetition)
+
+Therefore these operators behave differently as per situations. This is broadly the concept of Operator overloading.
+
+Generally we saw in the above examples that these operators work mainly with strings and ints. Does they work with other different object ? Yes they work.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Operators overloading with different objects, usage of different Magic methods
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example -1 Trying to add two Book class objects (We want a code which will return sum of pages when two book objects are added)
+-------------------------------------------------------------------------------------------------------------------------------
+
+class book :
+    def __init__(self,pages):
+        self.pages = pages
+
+b1 = book(100)
+b2 = book(200)
+
+print(b1+b2)
+
+Error- TypeError: unsupported operand type(s) for +: 'book' and 'book' 	      #  Unable to add two book type objects. Thus fails
+
+To make the above code compatible we need to define a magic method inside the class. __add__()
+
+
+Example 2 - above code using magic method __add__()
+---------------------------------------------------
+class book :
+    def __init__(self,pages) :
+        self.pages = pages
+    def __add__(self,other):                    # __add__ method is included to make the operator overloading of "+" applicable
+        return self.pages + other.pages
+
+b1 = book(100)
+b2 = book(200)
+
+print(b1+b2)
+
+o/p- 
+300
+
+
+Magic methods in Operator Overloading
+--------------------------------------
+
+Magic methods are python specific methods with special functionalities. They are declared by using double underscore at start and end.
+In general operator overloading is applicable on integer type objects , string type objects, float type objects.
+By declaring magic methods we can apply the concept of operator overloading for all type of objects.
+
+operators	magicmethods
++		__add__()
+-		__sub__()
+*		__mul__()
+/		__div__()
+//		__floordiv__()
+**		__pow__()
+%		__mod__()
+
+>		__gt__()
+>=		__ge__()
+<		__lt__()
+<=		__le__()
+==		__eq__()
+!=		__ne__()
+	
++=		__iadd__()
+-=		__isub__()
+*=		__imul__()
+/=		__idiv__()
+//=		__ifloordiv__()
+**=		__ipow__()
+%=		__imod__()
+
+These are the magic-methods corresponding to the pyhton operators.
+
+Example - 1 : multiplying two book objects using magic methods.
+---------------------------------------------------------------
+Basically we are performing arithmetic operations in between two objects. Just to make the operator work in between objects we are using corresponding magic methods.
+In this example we are performing multiplication between 2 objects but actually we are multiplying 2 numbers only. For instance we are multiplying two book objects 
+here but actually we are multiplying their pages(which are numbers) in the __mul__() function.
+
+class book :
+    def __init__(self,pages) :
+        self.pages = pages
+    def __mul__(self,other):                    # __mul__ method is included to make the operator overloading of "*" applicable
+        return self.pages * other.pages         # multiplying pages of two books
+
+b1 = book(200)                                  # book object 1
+b2 = book(300)                                  # book object 2
+
+print(b1*b2)                                    # multiplying two book objects, in reality the __mul__ method is acting and a result is returned.
+  
+o/p- 6000
+
+
+Example 2 - using __add__() for concatinations
+-----------------------------------------------
+class book :
+    def __init__(self,var1) :
+        self.pages = var1
+    def __add__(self,other):                    # __add__ method is included to make the operator overloading of "+" applicable
+        return self.pages +" " +other.pages     # concating two strings
+        
+publisher = book("abp ")                        # book object 1
+author = book("anindya")                        # book object 2
+
+print(author+publisher)                         # adding 2 book objects to concat the author name and publisher
+    
+o/p- anindya abp
+
+
+Example 3 - Adding 2 Test objects, where another object A is passed in Test object 
+-----------------------------------------------------------------------------------
+
+class A:
+    def __init__(self,var):
+        self.var = var
+    def __add__(self,other):
+        return self.var + other.var   # addition when A objects are added
+    
+class Test:
+    def __init__(self,var):
+        self.var = var
+    def __add__(self,other):
+        return self.var + other.var   # A(10)+A(20), self.var & other.var holds A objects, which implies A class object addition, thus it run __add__() of A class
+    
+print( Test(A(10)) + Test(A(20)) )    # Passing A object to Test object . Test object addition runs __add__() of Test class
+        
+o/p- 30
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Concept of __str__(self) or __repr__(self)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example : Trying to print value of a reference variable which points to an object
+------------------------------------------------------------------------------
+
+class Test:
+    def __init__(self,var):
+        self.var = var
+
+t1 = Test("anindya")                # t1 is reference to the Test object
+
+print(t1)                           # printing t1
+
+o/p - <__main__.Test object at 0x023BE590> 
+
+The output we get is <__main__.Test object at 0x023BE590>, 
+If we want to modify the output to something logical or understandable ,we need to use the __str__() or the __repr__() methods.
+
+Example : Above Example using __str__()
+```````````````````````````````````````
+
+class Test:
+    def __init__(self,var):
+        self.var = var
+    def __str__(self):
+        return "new Test obect is created"
+
+t1 = Test("anindya")                # t1 is reference to the Test object
+
+print(t1)                           # printing t1     
+
+o/p- new Test obect is created
+
+or
+--
+
+class Test:
+    def __init__(self,var):
+        self.var = var
+    def __repr__(self):
+        return "new Test obect is created"
+
+t1 = Test("anindya")                # t1 is reference to the Test object
+
+print(t1)                           # printing t1     
+
+new Test obect is created
+
+Therefore to modify the output when an object is getting printed we can take help of __str__(self) or __repr__(self) methods. 
+Whenever we are trying to print any object or object reference then the corresponding class __str__() or repr__() methods are called.
+Whenever a value is returned then, that value itself is printed, __str__() is not executed.
+Whenever we are trying to print any object or object reference, then only the __str__() gets executed.
+
+
+Example- t1 is holding a value. thus only the value is printed.
+---------------------------------------------------------------------------------
+class Test:
+    def __init__(self,var):
+        self.var = var
+    def __str__(self):
+        return "new Test obect is created"
+    
+    def name(self):
+        return self.var
+        
+t1 = Test("anindya bhattacharya").name()           # t1 is holding a value
+print(t1)                                          # printing t1's value    
+
+o/p - anindya bhattacharya
+
+
+Example- t1 is holding an object .thus the __str__() function gets executed
+---------------------------------------------------------------------------
+
+class Test:
+    def __init__(self,var):
+        self.var = var
+    def __str__(self):
+        return "new Test obect is created"
+    
+    def name(self):
+        return self.var
+        
+t1 = Test("anindya bhattacharya")           	   # t1 is holding a Test object
+
+print(t1)                                          # executing the __str__()  
+
+o/p- new Test obect is created
+
+
+Example - __add__() returns a value & value is getting printed, __str__() function not executed
+------------------------------------------------------------------------------------------------
+
+class book:
+    def __init__ (self,pages):
+        self.pages = pages  
+    def __str__(self):
+        return "total pages are {}".format(self.pages)
+    def __add__(self,other):
+        return self.pages +other.pages
+    
+print( book(100) + book(200) )                      #__add__() returns a value, thus that value is printed and __str_() is not executed.
+
+o/p- 300
+
+
+Example - __add__() returns an object & value is getting printed, __str__() function getting executed
+------------------------------------------------------------------------------------------------------
+class book:
+    def __init__ (self,pages):
+        self.pages = pages  
+    def __str__(self):
+        return "total pages are {}".format(self.pages)
+    def __add__(self,other):
+        sum = self.pages +other.pages
+        return (book(sum))                          #__add__() returns an object,a new book object is created with self.pages equals sum.
+print( book(100) + book(200) )                      #__add__() returns an object, thus __str_() is getting executed as we are trying to print an object.
+
+o/p- total pages are 300
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+So far we have been adding two objects only, now if we want to add more than 2 objects is it possible ? Yes possible.
+We will  be using the two magic method  __add__() and __str__() together to achieve that purpose.
+
+Example - Using "+" operator in between more than 2 objects
+------------------------------------------------------------
+
+Error code- 
+``````````
+
+using "+" between two book objects .  __add__() gets executed , which return a value integer.
+adding the third book object to the retuned value raises and error. (int object + book object = error)
+
+class book:
+    def __init__ (self,pages):
+        self.pages = pages  
+    def __str__(self):
+        return "total pages are {}".format(self.pages)
+    def __add__(self,other):
+        sum = self.pages + other.pages
+        return sum                                      #__add__() returns a value 
+print( book(100) + book(200) + book(300) + book(400) )  # adding frst 2 book objects return a value which is an int object,then it is added to a 3rd book object, raising an error
+
+
+Error - TypeError: unsupported operand type(s) for +: 'int' and 'book'
+
+
+Solution
+-----------
+
+we are using "+" between two book objects, the __add__() gets executed.
+had __add__() returned an int/ float object , then adding the result to a 3rd book object would have raised error. (int object + book object = error)
+so if the __add__() returns another book object, then it can be added to the 3rd book object, and then the result is again a book object which can be addded to the 4th.
+finally the result returned on using "+" between 4 book object is another book object.
+on printing the result, we are actually trying to print an object, therefore the __str__() method of book object is executed. 
+
+class book:
+    def __init__ (self,pages):
+        self.pages = pages  
+    def __str__(self):
+        return "total pages are {}".format(self.pages)
+    def __add__(self,other):
+        sum = self.pages + other.pages
+        return (book(sum))                              #__add__() returns an object, book object
+print( book(100) + book(200) + book(300) + book(400) )  # using "+" btwn first 2 book objects return another book object which is then added to the third and so on..
+
+
+This way we can use "+" operator in between more than 2 objects.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+So far we have been using "+" operator between two similar type of objects, like book + book. Can it be possible to use "+" between two differnt type of objects ?
+We can use "+" between two different type of objects also.
+
+Example - Using + operator between two different objects
+--------------------------------------------------------
+
+class gst:
+    def __init__(self,gst):
+        self.gst = gst
+    
+class incometax :
+    def __init__(self,itax):
+        self.incometax = itax
+    def __str__(self):
+        return "net tax received by govt is sum of income-tax and gst tax = {} crore ".format(self.incometax)
+    def __add__(self,other):
+        net_tax = self.incometax + other.gst			# adding incomete tax & gst tax of two different classes.
+        return(incometax(net_tax))
+    
+print( incometax(2000) + gst(1000) )					# adding two different object types, incometax and gst together.
+
+o/p- net tax received by govt is sum of income-tax and gst tax = 3000 crore
+
+
+example - 
+--------
+
+class gst:
+    def __init__(self,gst):
+        self.gst = gst
+    
+    def rebategst(self):
+        return self.gst*0.8
+    
+class incometax :
+    def __init__(self,itax):
+        self.incometax = itax
+    def __str__(self):
+        return "net tax received by govt is sum of income-tax and gst tax = {} crore ".format(self.incometax)
+    def __add__(self,other):
+        net_tax = self.incometax + other.rebategst() # considering the rebategst method of gst class in __add__() of incometax class
+        return(incometax(net_tax))
+    
+print( incometax(2000) + gst(1000) )				 # adding incometax class and gst class, thus __add__() of incometax calss will run.
+
+o/p - net tax received by govt is sum of income-tax and gst tax = 2800.0 crore
+
+
+Example - using "*" operator between two different class objects
+----------------------------------------------------------------
+
+class employee :
+    def __init__(self,name,salary):
+        self.name = name
+        self.salary = salary
+    def __str__(self):
+        return "net monthly slary paid to {} based on working days is : {} ".format(self.name,self.salary)
+    def __mul__(self,other):
+        netsalary = self.salary*other.days
+        return employee(self.name,netsalary)
+
+class timesheet:
+    def __init__(self,days):
+        self.days = days
+    
+print( employee("anindya",2000) * timesheet(20) )
+
+o/p- net monthly salary paid to anindya based on working days is : 40000
+
+=======================================================================================================================================================================
+Summary :-
+We can use the concept of operator overloading with different Python operators in between objects. Every Python operator is associated with magic methods.
+Whenever a Python operator is used in between two or more objects then the corresponding magic method comes to play.
+The list of operators and their corresponding magic methods are listed in the document above.
+Concept of __str__() or __repr__() has been documented.
+Examples with combination of magic methods like [ __add__() or __mul__() ] along with [ __str__() ] has been documented.
+Examples of magic methods returning objects has been documents as well.
+Example of usages of operators in between multiple objects and objects of different classes have been discussed aswell.
+## Note - method overloading or constructor overloading is not applicable in Python.
+## A python class with multiple methods / constructors i.e many methods with same name, then only the last declared method is considered by Python for execution
+ 
+=======================================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+		
+

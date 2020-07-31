@@ -1,0 +1,8 @@
+1. How you document the code ?
+2. How you convert the list into stack ?
+3. Can foreign key be a composite key ?
+4. Difference between stored procedure and function in query?
+5. What is global interpreter lock ?
+6. Differnce bw Primary and Foreign key ?
+7. Threading how it is acheived ?
+8. How do u test your codes ?

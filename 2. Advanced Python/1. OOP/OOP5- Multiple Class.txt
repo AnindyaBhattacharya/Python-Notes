@@ -1,0 +1,88 @@
+Multiple Classes | Nested Class | Inner Class
+----------------------------------------------
+
+#--------------------------------------------------------------------------
+calling one calls into another class by creating object of the other class
+#--------------------------------------------------------------------------
+
+class A:
+    def __init__(self):
+        self.name = "anindya"
+        self.otherclass = B.m2()
+    def m1(self):
+        print("info {} ,{} ".format(self.name,self.otherclass))
+    
+class B:
+    def m2():
+        return 127
+
+A().m1() 
+
+o/p- 
+info anindya ,127
+-----------------------------------------------------
+
+class A:
+    def __init__(self):
+        self.name = "anindya"
+        self.otherclass = B()
+    def m1(self):
+        print("info {} ,{} ".format(self.name,self.otherclass.m2()))
+    
+class B:
+    def m2(self):
+        return 127
+
+A().m1() 
+
+
+#----------------------------------------------
+#Passing an object into another class method.
+#----------------------------------------------
+class Student:
+    def __init__(self,name,roll,marks):
+        self.name = name
+        self.roll = roll
+        self.marks = marks
+    def display(self):
+        print("name is ", self.name)
+        print("roll is ", self.roll)
+        print("marks is ", self.marks)
+    
+class marks:
+    def marksreview(stud):
+        stud.marks = stud.marks + 10
+        stud.display()
+
+stud1 = Student("anindya",127,55)
+marks.marksreview(stud1) 
+
+#-----------------------------------------------
+#passing function in constructor of a class
+#-----------------------------------------------
+def display(a,b,c):
+    print("name is ", a)
+    print("roll is ", b)
+    print("marks is ", c)
+    
+class Student:
+    def __init__(self,name,roll,marks,display):
+        self.name = name
+        self.roll = roll
+        self.marks = marks
+        self.display=display
+    
+    def show(self):
+        print("What nonsense")
+        self.display(self.name,self.roll,self.marks)
+        
+
+class marks:
+    def marksreview(stud1):
+        stud1.marks = stud1.marks + 10
+        stud1.show()
+
+marks.marksreview(Student("anindya",127,55,display))
+
+     
+    

@@ -1,0 +1,295 @@
+break, continue, pass statements, del keyword
+---------------------------------------------
+
+break -> exits the loop
+continue -> exits the current iteration and moves to the next iteration.
+
+
+break
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+while condition :
+	if condition1 :
+	break
+
+comes out of the loop.
+
+---------------------
+for else statements
+---------------------
+else block can be used along with for loop.
+else block always exectuted for "for loop" statement. 
+
+# Note - if the "break" statement is executed in loop, then the else block is not executed
+------------------------------------------------------------------------------------------
+
+Examples- else block not executed as break is executed.
+------------------------------------------------------
+
+number=[10,29,70,25,38,90,20]
+for i in number :
+    if (i>=60) :
+        print("skipping all the other values as the number in between is more than 60")
+        break
+    print("values taken is : ",i)
+else :
+    print("all values are taken")
+
+o/p -
+
+D:\Pycodes>py Test1.py
+values taken is :  10
+values taken is :  29
+skipping all the other values as the number in between is more than 60
+
+
+Examples- else block getting executed as break is not executed.
+---------------------------------------------------------------
+
+number=[10,29,30,25,38,40,20]
+for i in number :
+    if (i>=60) :
+        print("skipping all the other values as the number in between is more than 60")
+        break
+    print("values taken is : ",i)
+else :
+    print("all values are taken")
+
+o/p-
+
+D:\Pycodes>py Test1.py
+values taken is :  10
+values taken is :  29
+values taken is :  30
+values taken is :  25
+values taken is :  38
+values taken is :  40
+values taken is :  20
+all values are taken
+
+Example - Else block executed as there is no break in the code
+---------------------------------------------------------------
+
+number=[10,29,30,25,38,40,20]
+for i in number :
+    print("values taken is : ",i)
+else :
+    print("all values are taken")
+
+o/p -
+
+D:\Pycodes>py Test1.py
+values taken is :  10
+values taken is :  29
+values taken is :  30
+values taken is :  25
+values taken is :  38
+values taken is :  40
+values taken is :  20
+all values are taken
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+continue statement
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+while condition :
+	action 1
+	action 2
+	action 3
+	if condition1 :
+		continue
+	action 4
+	action 5
+
+action 4, action 5 -> skipped. next iteration starts.
+
+Example-
+--------
+Code fails due to division by 0
+------------------------------
+
+number=[10,5,0,2,3,0,20]
+for i in number :
+    print("""100 divided by %d "result" is %f""" %(i,(100/i)))
+
+o/p-
+
+100 divided by 10 "result" is 10.000000
+100 divided by 5 "result" is 20.000000
+Traceback (most recent call last):
+  File "Test1.py", line 3, in <module>
+    print("""100 divided by %d "result" is %f""" %(i,(100/i)))
+ZeroDivisionError: division by zero
+
+
+Correcting code, skipping the 0 from the list and moving on with the next iterations | using continue statement
+---------------------------------------------------------------------------------------------------------------
+
+number=[10,5,0,2,3,0,20]
+for i in number :
+    if (i==0) :
+        print("skipping division by 0")
+        continue
+    print("""100 divided by %d " the result" is %f""" %(i,(100/i)))
+
+
+o/p - 
+
+100 divided by 10 " the result" is 10.000000
+100 divided by 5 " the result" is 20.000000
+skipping division by 0
+100 divided by 2 " the result" is 50.000000
+100 divided by 3 " the result" is 33.333333
+skipping division by 0
+100 divided by 20 " the result" is 5.000000
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pass statement
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+pass is a keyword in python.
+for empty implementations in any block "pass" statement is used.
+
+details about pass @ https://www.youtube.com/watch?v=yfXr_iA9zGo&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=23&t=126s
+
+Examples- Else block fails as there is no implementations
+---------------------------------------------------------
+
+number=[10,29,30,25,38,40,20]
+for i in number :
+    print(100%i)
+else :
+    
+
+Error- 
+D:\Pycodes>py Test1.py
+  File "Test1.py", line 11
+
+    ^
+SyntaxError: unexpected EOF while parsing
+
+Example -2
+-------------
+number=[10,29,30,25,38,40,20]
+for i in number :
+    print(100%i)
+else : pass
+
+o/p- 
+
+D:\Pycodes>py Test1.py
+0
+13
+10
+0
+24
+20
+0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+del keyword
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+deletes the variables and the object it is pointing to is also deleted by the garbage collector.
+the variable can't be used further. re declaration of the variable is again required.
+
+syntax -
+----------
+x=10
+y=20
+del x
+print(x)
+
+Error -
+
+D:\Pycodes>py Test1.py
+Traceback (most recent call last):
+  File "Test1.py", line 4, in <module>
+    print(x)
+NameError: name 'x' is not defined
+
+
+syntax - multiple deletion of variable is possible at a time
+-------------------------------------------------------------
+
+x=10
+y=20
+del x,y
+print(y)
+
+Error -
+
+D:\Pycodes>py Test1.py
+Traceback (most recent call last):
+  File "Test1.py", line 4, in <module>
+    print(y)
+NameError: name 'y' is not defined
+
+syntax - same object pointed by different variables, if one variable is del, then also the object remains intact not deleted, as there are other variables pointing it.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+x="anindya"
+y="anindya"
+z="anindya"
+print(id(x),id(y),id(z))
+del x
+print(y,id(y))
+print(z,id(z))
+
+o/p- 
+
+D:\Pycodes>py Test1.py
+22469600 22469600 22469600
+anindya 22469600
+anindya 22469600
+
+
+difference between "del" and "None"
+------------------------------------
+
+del - deletes both variables and the object associated with the variable.
+None - only delinks the variable from the object it has been pointing to. It makes the variable value empty or null.
+
+
+Example- 
+---------
+
+x="anindya"
+y="anindya"
+z="anindya"
+print(id(x),id(y),id(z))
+del x
+y = None
+print(x)
+
+Error -
+D:\Pycodes>py Test1.py
+51305440 51305440 51305440
+Traceback (most recent call last):
+  File "Test1.py", line 7, in <module>
+    print(x)
+NameError: name 'x' is not defined
+
+Example -
+---------
+
+x="anindya"
+y="anindya"
+z="anindya"
+print(id(x),id(y),id(z))
+del x
+y = None
+print(y)
+
+o/p-
+
+D:\Pycodes>py Test1.py
+49601504 49601504 49601504
+None
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+

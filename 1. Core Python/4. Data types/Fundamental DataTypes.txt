@@ -1,0 +1,109 @@
+DataTypes
+-------------
+1. Int -> Hold Integral Values
+
+	Decimal int -> with base 10
+	Binarty int -> with base 2
+	Ocatal int -> with base 8
+	Hexa Decimal -> with base 16
+
+examples - 
+ 	A=20 -> decimal int
+
+	a=1111 -> decimal int.  To make the value as binary we need to represent a=0b1111. This way it can be represented in binary form. Starting with 0b (zero & b\B)
+	>>> a=0b11111
+	>>> a
+	31
+
+	a=0o7657 -> in octal. Starting with 0o (zero & o\O)
+	
+	a=0xaf91 -> in hexaecimal. Starting with (zero & x\X) . For Hexadecimal values - A to F can be both in caps or small
+
+	>>> a=0Xa9f36
+	>>> a
+	696118
+	>>> type(a)
+	<class 'int'>
+	>>>
+	
+	Python will always give the output in interger
+	
+	There is no concept of long in Python. The size and range concept is not there. int can contain very large numbers.
+	In java int is a primitive data type. In python every data types is an object. 
+	In primitive data types the range and size is specified, like int is of 4 bytes.
+	But for case of object there is no range or size of the object. Student S = new Student(); There can be 10 students, there can be 10000 students. So there is no limit.
+	As in python all datatypes are implemented as objects, so there is no concept of limit. It can range to very long numbers.
+	
+Base conversion functions -
+
+	convert deciaml to binary/ octal to binary/hexa decimal to binary :
+	
+	>>> bin(15)
+	'0b1111'
+	>>> bin(0o7775)
+	'0b111111111101'	
+	>>> bin(0xabcdef)
+	'0b101010111100110111101111'
+
+	Convert to octal
+	oct(0xabcd)
+
+	Convert to hex
+	hex(0b11111)
+
+
+----------------
+
+2. Float -> holds decimal values
+
+	there is no concept of double in python only float.
+	
+	there is also no concept of binary,octal,hexadecimal.
+	
+	exponential values are accepted
+	
+	>>> a=1.2e100
+	>>> type(a)
+	<class 'float'>
+
+
+------------------
+
+3. complex data type
+
+	a=2+5j
+	a.real = 2.0
+	a.imag = 5.0
+
+	addition of complex numbers are possible
+
+------------------
+
+4. boolean
+	
+	True
+	False
+
+------------------
+
+5. str -> hold strings
+
+single quotess -> char
+double quotes -> string
+triple quotes-> multi line string
+
+-------------------
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+	

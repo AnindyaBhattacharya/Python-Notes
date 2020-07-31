@@ -1,0 +1,98 @@
+DataType Continued ...
+-----------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bytes DataType (rarely used)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+converting the list into an immutable data type, which doesnot allow reallocation.
+
+example 1 - 
+----------
+>>> x = [10,20,30,40]
+>>> type(x)
+<class 'list'>
+>>> b = bytes(x) -> conveted to bytes
+>>> type(b)
+<class 'bytes'>
+>>> b[0]
+10
+>>> b[2]
+30
+
+Example -2
+------------
+bytes contains only integers.
+
+>>> x = [10.5,3.4]
+>>> b = bytes(x)
+Traceback (most recent call last):
+  File "<pyshell#27>", line 1, in <module>
+    b = bytes(x)
+TypeError: 'float' object cannot be interpreted as an integer
+
+Ex 3-
+-----
+
+bytes is immutable(values can't be changed in an object)
+
+>>> x = [2,4,6,8,10]
+>>> b = bytes(x)
+>>> b[1]
+4
+>>> b[1] = 2
+Traceback (most recent call last):
+  File "<pyshell#33>", line 1, in <module>
+    b[1] = 2
+TypeError: 'bytes' object does not support item assignment
+
+Ex-4
+-----
+Bytes data type can't hold integers more than 256 & negative integers. Range is - 0 to 256 .
+
+>>> x = [254,255,256,257,258]
+>>> bytes(x)
+Traceback (most recent call last):
+  File "<pyshell#35>", line 1, in <module>
+    bytes(x)
+ValueError: bytes must be in range(0, 256)
+
+
+>>> x = [ -1,0,1,2,3,4]
+>>> bytes(x)
+Traceback (most recent call last):
+  File "<pyshell#37>", line 1, in <module>
+    bytes(x)
+ValueError: bytes must be in range(0, 256)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bytearray (rarely used)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Same as bytes all characteristics are same, but is mutable. Data can be changed.
+
+>>> x = [10,20,30,40]
+>>> x = bytearray(x)  -> conveting to bytearray ..
+>>> x[1]
+20
+>>> x[1] = 200
+>>> x[1]
+200
+>>> for i in x :
+	print(i)
+
+	
+10
+200
+30
+40
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+

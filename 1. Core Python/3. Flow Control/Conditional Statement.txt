@@ -1,0 +1,42 @@
+Conditional statements
+-----------------------
+if
+if-else
+if-elif-else
+
+No switch case statements.
+
+Syntax
+-------
+no curly baces
+indentation is important
+Use ":" after the if and else condition
+
+if condition :
+	Statement 1
+	Statement 2
+elif condition :
+	Statement 3
+	Statement 4
+else :
+	Statement 5
+
+
+Example -1
+-----------
+
+n=input("enter any name")
+if ((n.casefold()=="anindya") or (n.casefold()=="saheb")):
+    print("He is Anindya",end=" ")
+    print("Bhattacharya")
+elif (n.casefold()=="anutosh") :
+    print("He is anindya's baap")
+elif (n.casefold()=="ila") :
+    print("She is anindya's ma")
+else :
+    print("He is someone else")
+
+Note - casefold() function is used to ignore cases in Python
+
+---------------------------------------------------------------------------------------------------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

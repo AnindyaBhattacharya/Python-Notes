@@ -1,0 +1,170 @@
+OOP ways of declaring threads
+-----------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2 .Using OOP. Creating class and extending class to parent class Thread of the threading module.
+-----------------------------------------------------------------------------------------------
+
+OOP way, by extending Thread class of threading module.
+Thread class has a run method, we need to override the run methods in the child class of Thread.
+ChildThread is the child class of Thread. We write the implementations in run method of this class
+
+Example 1 - creating a child class of Thread class, overriding the run() of the parent class from the child class.
+------------------------------------------------------------------------------------------------------------------
+
+from threading import *						# importing threading
+
+class ChildThread(Thread):					# creating a child class of Thread.
+    def run(self):
+        for i in range(10):
+            print("Child Thread")
+class MainThread():						# creating a class.
+    def run(self):
+        for i in range(10):
+            print("Main Thread")
+    
+t1 = ChildThread()						# creating the object of the threading class.
+t1.start()							# main thread starting the child thread. Child thread is responsible to handle the class ChildThread
+
+t2 = MainThread()						# Main thread executing this class.
+t2.run()
+
+o/p- 
+Child Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Main Thread
+Main Thread
+Main Thread
+
+Example 2 - creating a child class of Thread,  but the child class has it's own constructor then it is necessary to decare the parent class constructor also
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+# declaring the child class.
+# declaring a constructor in the child class.
+# it is must to call the parent class constructor from the child class constructor.
+	this is because the start() method of the Parent class accepts some values from Parent constructor.
+	if only child constructor is declared, then it overrides the parent constructor and the start method method doesnot get the required vales.
+	so it is absolutely necessary to declare the parent class constructor in the child class constructor.
+# write impelentations in the run() method, that will override the run method of the parent class and the start() method will execute the run method.
+
+import threading
+import datetime
+
+class myThread (threading.Thread):
+    def __init__(self, name, counter):
+        threading.Thread.__init__(self)				# calling the parent constructor from the child constructor.
+        self.threadID = counter
+        self.name = name
+        self.counter = counter
+    def run(self):
+        print("\nStarting " + self.name)
+        print_date(self.name, self.counter)
+        print("Exiting " + self.name)
+
+def print_date(threadName, counter):
+    datefields = []
+    today = datetime.date.today()
+    datefields.append(today)
+    print("{}[{}]: {}".format( threadName, counter, datefields[0] ))
+
+# Create new threads
+thread1 = myThread("Thread", 1)
+thread2 = myThread("Thread", 2)
+
+# Start new Threads
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+print("\nExiting the Program!!!")
+
+
+Example - 2 .. Example 2 of the second way of declaration can be simply written as
+-----------------------------------------------------------------------------------
+from threading import *
+import datetime
+
+class myThread :
+    def __init__(self, name, counter):
+        self.name = name
+        self.counter = counter
+    def run(self):
+        print("\nStarting " + self.name)
+        print_date(self.name, self.counter)
+        print("Exiting " + self.name)
+
+def print_date(threadName, counter):
+    datefields = []
+    today = datetime.date.today()
+    datefields.append(today)
+    print("{}[{}]: {}".format( threadName, counter, datefields[0] ))
+
+# Create new threads
+thread1 = Thread(target=myThread("Thread", 1).run())
+thread2 = Thread(target=myThread("Thread", 2).run())
+
+# Start new Threads
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+print("\nExiting the Program!!!")
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.Using OOP. Without extending Thread class.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OOP way of defining thread,not by extending the Thread class of threading module.
+# Define a class, with modules and implementations.
+# Create an object of the class.
+# Assign the methods of the class as a target to the Thread class.
+# This it the best method to create threads by OOPS, there is no worry of inheritance.There is no worry of constructor calling like the above one.
+
+
+from threading import *
+
+class ChildThread():
+    def __init__(self,name):
+        self.name=name
+        
+    def method1(self):
+        for i in range(10):
+            print("{} is running the child thread method 1".format(self.name))
+    
+    def method2(self):
+        for i in range(10):
+            print("{} is running the child thread method2".format(self.name))
+         
+    def method3(self):
+        # To run the above 2 methods in a single thread,including them in a single method and later setting this method as a target during thread creation.
+        self.method1()
+        self.method2()
+    
+class SecondChildThread():
+    @classmethod
+    def classmethod(cls):
+        for i in range(10):
+            print("class method from SecondChildMethod")
+
+obj1 = ChildThread("Anindya")
+thread1 = Thread(target=obj1.method3)				# setting instance method (method3) as a target to the thread.
+thread2 = Thread(target=SecondChildThread.classmethod)          # setting class method (method3) as a target to the thread.
+thread1.start()
+thread2.start()

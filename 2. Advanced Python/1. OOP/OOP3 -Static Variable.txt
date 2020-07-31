@@ -1,0 +1,182 @@
+OOPS Variables
+--------------
+
+Static Variable
+````````````````
+Static variables are class level vaiables, they a fixed for a particular class.Unlike Instance variables which are object level variable(their values changes from object to object), static variables are fixed for a paricular class and doesnot change with object to object.
+For all object of the same class the static variable values are always the same.
+For example in a student class, the name of a student, roll number, department differ from person to person, i.e object to object. Thus they are instance variables. 
+Where as in the same student class, the name of the college is same for each and every student and it doesnot change. Thus that is a static variable.
+
+Declaring Static Variables
+--------------------------
+
+Static varaibles can be declared at -
+1.inside class outside any methods or constructors directly.
+2.inside constructors using class name
+3.inside instance methods using class name
+4.inside class methods using cls.variablename or classnname.variablename
+5.inside static methods using classname
+6.outside class using class name
+
+Example-
+----------
+#declaring static methods
+class Student:
+    clg = "AOT"
+    def __init__(self,var1):
+        self.name = var1
+        Student.Univ = "WBUT"
+    
+    def instancemethod(self):
+        Student.Location = "ADST"
+    
+    @classmethod
+    def classmethod():
+        cls.Dist = "Hooghly"
+        Student.State = "WB"
+    
+    @staticmethod
+    def staticmethod():
+        Student.Director = "DB"
+    
+Student.Fees = "3.5L"
+print(Student.__dict__)			# prints the static variables linked to the class
+
+o/p - shows only 2 static variables . clg & Fees . As other methods or constructor are not called
+
+{'__module__': '__main__', 'clg': 'AOT', '__init__': <function Student.__init__ at 0x034694B0>, 
+'instancemethod': <function Student.instancemethod at 0x034694F8>, 'classmethod': <classmethod object at 0x03460970>,
+ 'staticmethod': <staticmethod object at 0x03460990>, '__dict__': <attribute '__dict__' of 'Student' objects>,
+ '__weakref__': <attribute '__weakref__' of 'Student' objects>, '__doc__': None, 'Fees': '3.5L'}
+
+Example 
+-------
+#declaring static methods
+class Student:
+    clg = "AOT"
+    def __init__(self,var1):
+        self.name = var1
+        Student.Univ = "WBUT"
+    
+    def instancemethod(self):
+        Student.Location = "ADST"
+    
+    @classmethod
+    def classmethod(cls):
+        cls.Dist = "Hooghly"
+        Student.State = "WB"
+    
+    @staticmethod
+    def staticmethod():
+        Student.Director = "DB"
+    
+Student.Fees = "3.5L"
+stu=Student("Anindya")                  #object created, constructor called, static variable in constructor gets declared
+stu.instancemethod()                    #instance method called, static variable in instance method gets declared
+Student.classmethod()                   #classmethod method called, static variable in classmethod method gets declared
+Student.staticmethod()                  #static method called, static variable in static method gets declared
+
+print(Student.__dict__)                 # prints all the static variables linked to the class
+
+
+o/p-
+{'__module__': '__main__', 'clg': 'AOT', '__init__': <function Student.__init__ at 0x02CF94B0>,
+ 'instancemethod': <function Student.instancemethod at 0x02CF94F8>, 'classmethod': <classmethod object at 0x02CF09B0>,
+ 'staticmethod': <staticmethod object at 0x02CF09D0>, '__dict__': <attribute '__dict__' of 'Student' objects>,
+ '__weakref__': <attribute '__weakref__' of 'Student' objects>, '__doc__': None,
+ 'Fees': '3.5L', 'Univ': 'WBUT', 'Location': 'ADST', 'Dist': 'Hooghly', 'State': 'WB', 'Director': 'DB'}
+
+
+Accessing the static variables
+-------------------------------
+
+Static variables can be accessed -
+
+1. Inside class by using :-
+	a. classname.variablename or self.variablename(only for accessing not declaring) inside instance methods and constructors . 
+	   If an instance varaibles is declared with the same name as a static variable then calling self.variablename will retun the value of instance variable.
+	b. cls.variablename or classname.variablename inside the classmethods
+	c. classname.variablename inside the static method.
+
+2. Outside class by using :-
+	a. classname.variablename 
+	b. objectreference.variablename
+
+** Note - It's always better to access it using classname.variablename.
+
+Example : -
+---------
+
+# accessing the static variables.
+class Student():
+    static_var1 = "accessing static variable"
+    def __init__(self):
+        print("inside constructor")
+        print("using self " , self.static_var1)
+        print("using classname ",Student.static_var1)
+    def instacemethod(self):
+        print("inside instance method")
+        print("using self " , self.static_var1)
+        print("using classname ",Student.static_var1)
+    @classmethod
+    def classmethod(cls):
+        print("inside class method")
+        print("using cls " , cls.static_var1)
+        print("using classname ",Student.static_var1)
+    @staticmethod
+    def staticmethod():
+        print("inside static method")
+        print("using classname ",Student.static_var1)
+
+print("outside class using classname ",Student.static_var1)
+stu = Student()
+print("outside class using object reference ",stu.static_var1)
+stu.static_var1
+stu.instacemethod()
+Student.classmethod()
+Student.staticmethod()
+
+o/p-
+outside class using classname  accessing static variable
+inside constructor
+using self  accessing static variable
+using classname  accessing static variable
+outside class using object reference  accessing static variable
+inside instance method
+using self  accessing static variable
+using classname  accessing static variable
+inside class method
+using cls  accessing static variable
+using classname  accessing static variable
+inside static method
+using classname  accessing static variable
+
+Ex- 2 If Instance Variable and Static Variable name is same, then calling by self.variablename Instance variable value is returned.
+-----------------------------------------------------------------------------------------------------------------------------------
+class Student:
+    clg = "AOT"
+    def __init__(self,var1):
+        self.name = var1
+        self.clg = "Academy of Tech"
+        Student.Univ = "WBUT"
+    
+    def instancemethod(self):
+        Student.Location = "ADST"
+        print(f"Calling using self : The clg name is {self.clg}")
+        print(f"Calling using class name :  The clg name is {Student.clg}")
+        
+stu=Student("Anindya")                  
+stu.instancemethod()
+
+o/p-
+Calling using self : The clg name is Academy of Tech
+Calling using class name :  The clg name is AOT
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Local Variables
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Local Variables are specific to methods declared in the class. 
+To make the local variable available to other methods of same class or even outside of class we should use the keyword "global"
+

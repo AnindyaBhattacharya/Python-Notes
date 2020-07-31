@@ -1,0 +1,300 @@
+Class Methods
+--------------
+There are 3 types of methods
+
+1.Instance Methods:- a method where atleast one instance variable is declared.
+Declaration :-
+
+	def instance_method(self):		# self must be the first arg ,which acts as a current object reference inside class
+
+2.Class Methods:- a method where only static variables are declared and no instance variables
+Declaration :-
+
+	@classmethod					# decorator must be defined
+	def class_method(cls):			# cls must be the first arg ,which points to current class 
+
+3.Static Methods:- a method for general functional implementations. It can have no static or instance variables
+Declaration :-
+
+	@staticmethod				# decorator must be defined
+	def static_method(): 			
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Instance Methods 
+------------------
+
+Instance Methods are always related to objects. 
+Instance method must have atleast one Instance variable.
+Instance Method have the first argument as self.
+Instance methods are accessed outside the class by object reference.
+
+Example -
+-------
+class Student:
+    def __init__(self,*var):
+        self.name = var[0]
+        self.roll = var[1]
+        self.marks = var[2]
+
+    def display_info(self):							# instance methods declared. 1st arg is self
+        print("student name is {} roll is {} ".format(self.name,self.roll))	# contains atleast one instance method, criteria fulfilled
+
+    def grade(self):								# instance methods declared. 1st arg is self
+        if self.marks  > 35 :							# contains atleast one instance method, criteria fulfilled
+            print("ttm pass" )
+        elif self.marks > 60 :
+            print("pass")
+        else :
+            print("daha fail")
+
+stu=Student("anindya",127,60)
+stu.display_info()								# instance method called with object reference
+stu.grade()									# instacne method called with object reference
+print("*"*20)
+
+o/p-
+student name is anindya roll is 127
+ttm pass
+*************************************
+
+Example - each of the variables cls,self,x refer to the current object. 
+------------------------------------------------------------------------
+
+class Test :
+    def m1(cls,name,roll):                                                  # m1 an instance method
+        cls.roll  = roll
+        cls.name = name
+        
+    def m2(self,addr,marks):                                                # m2 an instance method
+        self.addr = addr
+        self.marks = marks
+    
+    def m3(x):                                                              # m3 an instance method 
+        print("student details is roll {}, name {}, address {}, marks {} ".format(x.name,x.roll,x.addr,x.marks))
+    
+t1 = Test()                                                                 # object created
+t1.m1(10,"Anindya")                                                         # method called with object reference, thus instance method
+t1.m2("BWN",100)							    							# method called with object reference, thus instance method
+t1.m3()									   									# method called with object reference, thus instance method
+ 
+
+
+Instance methods used as Setter and Getter Methods
+--------------------------------------------------
+
+Sometimes we use Instance methods to declare or to fetch Instance Variables, then those Instance methods are called Setter and Getter methods.
+Setter and Getter methods are used to fetch instance varaibles with private modifier from outside of the class.
+This process of variable declaration is used for enhanced security. We can run some validation checks to improve security inside these functions.
+Generally we declare instance variables using constructors. But by this way we declare a function where we can put some validations or check before changing values to sensitive Instance variables.
+
+Classic Example (change of password)
+------------------------------------
+
+import sys
+class Customer:
+    def __init__(self,name,custid,mobile):
+        self.name = name
+        self.custid = custid
+        self.mobile = mobile
+        
+    def setPassword(self):											# one method is set explicitly to assign values in password with validations
+        for i in range(4):
+            if i < 3 :
+                print("OPT sent to ",self.mobile," is 1455")
+                OTP = int(input("enter OPT "))
+                if OTP != 1455 and i < 2 :
+                        print("re-enter OTP ")
+                else :
+                    self.psw = input("Enter New Password ")
+                    break
+            else :
+                sys.exit("maximum limit reached, try again later") 
+  
+    def getPassword(self):						      				# one method set explicitly to fet the password,that too with validations
+        if int(input("Verify Cust-ID ")) == self.custid :
+            return self.psw
+        else :
+            sys.exit("invalid cust-id")
+            
+Cust1 = Customer("Anindya",127,9046212037)
+Cust1.setPassword()							     					 # calling the setPassword method for the object 
+print("newly cahnged password is ",Cust1.getPassword())			     # calling the getPassword method fot the object
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Class methods :-
+--------------
+
+Difference between classmethods and instance methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. 	Inside method body if we are using atleast one instance variable or Instance method, then that method automatically becomes an Instance method
+	Inside method body if we declare only static variables, then it is recommended to declare the method as classmethod.
+
+2.	To declare instance methods we need not to declare any decorators
+	To declare class methods we need to declare a decorator @classmethod
+
+3.	The first argument to any instance method is always self, which is reference to current object. self is not a keyword it can be any variable name.
+	The first argument to any classmethod is always cls, which is reference to current class. cls is not a keyword it can be any variable name.
+
+4.	Inside instance method we can declare both instance and static variables.
+	Inside class methods we can declare only  static variables.
+
+5.	Instance methods are called always by object reference.
+	Class methods are called either by classname or by object reference, better to call by classname 
+
+
+Example
+--------
+#class methods
+
+class Test:
+    Legs = 4
+    @classmethod
+    def legs(cls,name):
+        print("the animal {} has {} number of legs ".format(name,cls.Legs))
+        
+Test.legs("dog")
+Test.legs("cat")
+
+o/p- 
+the animal dog has 4 number of legs
+the animal cat has 4 number of legs
+
+Example -
+---------
+
+#checking the number of times an object is created
+class Test:
+    counter = 0
+    def __init__(self):
+        Test.counter = Test.counter + 1
+    @classmethod
+    def count(cls):
+        print("{} number of times object is created ".format(cls.counter))
+
+t1= Test()
+t2= Test()
+t3= Test()
+Test.count()
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Static Methods
+---------------
+
+Static methods are used when we are not using static variables, or instance variables , but we are using the static method for general purpose implementations.
+Static methods are defined with a decorator @staticmethod. But @staticmethod is not mandatory but using the decorator is a good practice.
+Static methods are always called by classname.
+Static method can accept static varaiables using classname.variable name, but it can't accept instance variables, because as per definition the method which accepts atleast 1 instance variable automatically becomes an instance method.
+
+Example -
+-------
+class Test:
+    @staticmethod
+    def m1(x,y):
+        print("sum is ",x+y)
+        
+    @staticmethod
+    def m2(x,y):
+        print("product is ",x*y)
+        
+Test.m1(10,20)
+Test.m2(10,20)
+
+
+Example :-
+--------
+class Test:
+    a = 10
+    @staticmethod
+    def m2():
+        print("product is ",Test.a*10)
+Test().m2()
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**      **
+   NOTE 
+**      **
+
+classmethod only madatorily needs a decorator @classmethod. staticmethods can have or not a decorator @staticmethod, but it is good to use a decorator. instance methods needs no decorator.
+
+There could be a case where a method is declared inside class without using a decorator. Then there are two possibilities , that method can either be an instance method or it can be a static method.
+ -- If that method is called outside of the class using object reference , then it behaves as an instance method.
+ -- If that method is called outside of the class using class name, then it behaves as a static method.
+
+Example - decorator less method  called using object reference acts as instance method
+---------------------------------------------------------------------------------------
+class Test:
+    def m2():								# method without decorator, can be a static method or an instance method
+        print("some method")
+t1 = Test()
+t1.m2()										# called by object reference , acts an instance method. 
+
+o/p -
+Traceback (most recent call last):
+  File "Test1.py", line 5, in <module>
+    t1.m2()
+TypeError: m2() takes 0 positional arguments but 1 was given		# error thrown, expecting self
+
+
+Example - decorator less method called using class name acts as instance method
+-------------------------------------------------------------------------------
+class Test:
+    def m2():								# method without decorator, can be a static method or an instance method
+        print("some method")
+Test.m2()									# called by class name , acts a static method. 
+									
+o/p -
+some method
+
+Example - method declared with decorator can be called by object reference
+--------------------------------------------------------------------------
+class Test:
+    @staticmethod
+    def m2():				    			# method with decorator, static method
+        print("some method")
+t1 = Test()								     
+t1.m2()	                                    # called by object reference , still acts a static method as decorator is declared
+								
+o/p -
+some method
+
+==============================================================================================================================================================================================================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,313 @@
+-----------------------------------------------------------------------------
+super() - super keyword
+-----------------------------------------------------------------------------
+
+super key word is used to call immediate parent class member from current class.
+
+examples-  Person class is parent to both Teacher and Student classes, super executes Person class methods or constructors when called from child class(Student and Teacher)
+----------
+
+class Person:
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+    def disp(self):
+        print("name is {} and age is {}".format(self.name,self.age))
+
+class Student(Person):
+    def __init__(self,name,age,roll,marks):
+        super().__init__(name,age)
+        self.roll = roll
+        self.marks = marks
+    
+    def disp(self):
+        super().disp()
+        print("roll is {} and marks is {}".format(self.roll,self.marks))
+    
+class Teacher(Person):
+    def __init__(self,name,age,subject,salary):
+        super().__init__(name,age)
+        self.subject = subject
+        self.salary = salary
+    def disp(self):
+        super().disp()
+        print("subject is {} and salary is {}".format(self.subject,self.salary))  
+        
+s = Student("anindya",25,127,86)
+s.disp()
+ 
+print("*"*50)
+ 
+t= Teacher("bhattacharya",55,"python",10000)
+t.disp()
+
+o/p-
+
+name is anindya and age is 25
+roll is 127 and marks is 86
+**************************************************
+name is bhattacharya and age is 55
+subject is python and salary is 10000
+
+
+example - calling the immediate parent class of child class using super
+-------   --------------------------------------------------------------
+class A:
+    def m1(self):
+        print("A class m1 method")
+class B(A):
+    def m1(self):
+        print("B class m1 method")
+class C(B):
+    def m1(self):
+        print("C class m1 method")
+class D(C):
+    def m1(self):
+        super().m1()              # calls m1() from immediate parent class of D 
+
+d = D()
+d.m1()
+
+o/p- C class m1 method
+
+
+example - calling the parent class of some other child class using super
+-------   -------------------------------------------------------------
+Below example we want to call A class m1() method from D class
+
+one way - super(childclass,self)
+```````
+class A:
+    def m1(self):
+        print("A class m1 method")
+class B(A):
+    def m1(self):
+        print("B class m1 method")
+class C(B):
+    def m1(self):
+        print("C class m1 method")
+class D(C):
+    def m1(self):
+        super(B,self).m1()              # calls m1() from parent class of B. 
+                                        # calling - super(B,self).m1() from D class will run m1() of A class. Because super of B class is A class.
+
+d = D()
+d.m1()
+
+o/p- A class m1 method
+
+other way - classname.methodname
+`````````
+class A:
+    def m1(self):
+        print("A class m1 method")
+class B(A):
+    def m1(self):
+        print("B class m1 method")
+class C(B):
+    def m1(self):
+        print("C class m1 method")
+class D(C):
+    def m1(self):
+        A.m1(self)          # calls m1() of A class from D class, directly using classname.
+
+d = D()
+d.m1()
+
+o/p- A class m1 method
+
+--------------------------------------------
+accessing parent class variables using super -
+--------------------------------------------
+
+super() can only be used to access the parent class static variables,
+super() can't access the parent class instance variables.
+
+class A:
+    a =10
+    def __init__(self):
+        self.b = 20
+
+class B(A):
+    def m1(self):
+        print(super().a)
+        print(super().b)      # can't access the parent class instance variable "b" using super
+b = B()
+b.m1()
+
+Error -
+
+File "Code1.py", line 9, in m1
+    print(super().b)
+AttributeError: 'super' object has no attribute 'b'
+
+calling all types of methods using super
+----------------------------------------
+
+class A:
+    
+    def __init__(self):
+        print("parent class constructor")
+
+    def m1(self):
+        print("parent class instance method")
+    
+    @classmethod
+    def m2(cls):
+        print("parent class class method")
+    
+    @staticmethod
+    def m3():
+        print("parent class static method")
+        
+class B(A):
+    
+    def __init__(self):
+        super().__init__()
+        super().m1()
+        super().m2()
+        super().m3()
+    
+b = B()
+      
+o/p-
+parent class constructor
+parent class instance method
+parent class class method
+parent class static method
+
+
+
+---------------------------------------
+Is A realtionship & Has A relationship
+---------------------------------------   
+
+Has A Relationship- When we have two classes and we want to use one class functionality in another class, then we use the concept of has a relationship, there is no need to extend the functionalities
+					simply we need to use them. Then we use the concept of Has a relationship.
+			
+					a Relationship is simply achieved by creating an object of one class in another class.
+
+			
+					Example - suppose there is  car class and a person class. and we say that the person has a car. then by the sentence itself we are saying that it is a " has a relationship".
+			
+					class Car :
+						def car(self):
+							print("Here is my car")
+
+					class Person :
+						def disp(self):
+							print("Please bring my car")
+							a = Car()
+							a.car()
+	
+					Here we are seeing that the person has a car and he is using the car. Thus it is showing a "has a relationship"
+
+Is A Relationship - This is the concept of inheritence , parent class and child class relationships. Constructors, variables, methods are inherited from the parent class to the child class..
+					Whenever we want to extend functionalties of one class then we create a "Is A Relationship
+
+					Is A Relationship is achieved by Inheritance
+
+					Example - Suppose there is a person class and an employee class, and we say that an employee is a person. then by sentence we are indicating that is goint to have a "Is A Relationship"
+
+					class Person :
+						def define(self):
+							print( "I have a head, 2 hand , 2 legs , 2 eyes etc etc, basically I am a human")
+        
+					class Employee(Person):
+						def define(self):
+							super().define()
+							print("I have all person attributes but aditionally  I also have emp no, emp sal, office name, etc etc ..")
+        
+						e = Employee()
+							e.define()
+
+					Here in the above example we see that "an employee is a person" i.e we have a "is a relationship".
+
+
+------------------------------------------------------
+Method Resolution Order (MRO) for Hybrid Inheritance
+-------------------------------------------------------
+
+When there is hybrid inheritance, then there is always a question: which method of which class is going to execute first, that order in which the method is going to execute is handled by MRO.
+First the method is searched in child classes , if it's not found then it searches for parent classes.
+
+Suppose there is a hybrid inheritance like -
+
+class A : pass
+class B(A) : pass
+class C(A) : pass
+class D(C) : pass
+class E(D,B) : pass
+
+print(E.mro())		# this shows the mro for class E
+
+o/p- [<class '__main__.E'>, <class '__main__.D'>, <class '__main__.C'>, <class '__main__.B'>, <class '__main__.A'>, <class 'object'>]
+
+Explaining MRO -
+
+We want to run a method say m1() and we have created an object of E class and we call E.m1()
+Then firstly it will check if the method is present in E class if found it will run the method defined in E class.
+If not found in E class then the question is - which classes it is going to search the m1() in ? That answer is provided by MRO : E.mro()
+
+The result of - E.mro()
+	print(E.mro()) is [<class '__main__.E'>, <class '__main__.D'>, <class '__main__.C'>, <class '__main__.B'>, <class '__main__.A'>, <class 'object'>]
+
+Which means if not found in E class, m1() method is searched in D class , if not found in D then searched in C class , then in B class then in A class , finally in object class.
+The class where the m1() method is first found is run. Say if finds the m1() method in C class it will run that.
+
+Example -
+-------
+class A:
+    def m1(self):
+        print("A class m1 method")
+    
+class B(A):
+    def m1(self):
+        print(" B class m1 method")
+
+class C(B):
+    def m1(self):
+        print(" C class m1 method")
+
+class D(C): pass
+
+class E(D):
+    def m1(self):
+        super().m1()
+    
+e = E()
+e.m1()
+
+o/p- C class m1 method
+
+No m1() found in D ( D being immediate parent to  E is searched first ) then it searches in C class and it finds m1() there and executes m1()
+
+==================================================================================================================================================================================================================================================================================================================================================================================================
+
+
+
+
+ 
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+		
+			        
+
+
+
+
+
+
